@@ -1,16 +1,16 @@
 <template>
-  <div class="navBarAuth">
-    <vs-navbar v-model="activeItem" color="#dedfff" class="nabarx" id="navBar">
+  <div class="navBarDeconnect">
+    <vs-navbar v-model="activeItem" v-bind:color="colorBG" class="nabarx" id="navBar">
       <div slot="title">
         <vs-navbar-title>
           Nom application
         </vs-navbar-title>
       </div>
       <vs-navbar-item index="0">
-        <vs-button v-bind:color="colorx" v-bind:gradient-color-secondary="colorx2" type="gradient" v-on:click="goSignUp">Inscription</vs-button>
+        <vs-button v-bind:color="color" type="flat" v-on:click="goSignIn">Connexion</vs-button>
       </vs-navbar-item>
       <vs-navbar-item index="1">
-        <vs-button v-bind:color="colorx" v-bind:gradient-color-secondary="colorx2" type="gradient" v-on:click="goSignIn">Connexion</vs-button>
+        <vs-button v-bind:color="color" type="filled" v-on:click="goSignUp">Inscription</vs-button>
       </vs-navbar-item>
     </vs-navbar>
   </div>
@@ -20,10 +20,14 @@
 
 export default {
   name: 'NavBarAuth',
+  props : {
+    p_colorBG: {type: String},
+    p_color: {type: String}
+  },
   data(){
     return {
-      colorx:'#8a94db',
-      colorx2:'#5252e8',
+      colorBG: this.p_colorBG,
+      color: this.p_color,
       activeItem: 0
     }
   },
@@ -39,8 +43,10 @@ export default {
 </script>
 
 <style scoped>
+.navBarDeconnect {
+  box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.2);
+}
 #navBar {
   padding: 10px 0;
 }
-
 </style>

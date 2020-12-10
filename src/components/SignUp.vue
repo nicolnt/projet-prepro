@@ -5,7 +5,7 @@
       <Input title="Prénom" type="text" name="prenom" v-bind:value.sync="m_valueFirstName" :verifInput="checkInput"/>
       <Input title="Email" type="email" name="email" v-bind:value.sync="m_valueEmail" :verifInput="checkInput"/>
       <Input title="Mot de passe" type="password" name="password" v-bind:value.sync="m_valuePassword" :verifInput="checkInput"/>
-      <vs-button color="#5252e8" type="filled" v-on:click="goSignUp" id="button">S'inscrire</vs-button>
+      <vs-button color="#FF8D8B" type="filled" v-on:click="goSignUp" id="button">S'inscrire</vs-button>
   </div>
 </template>
 
@@ -55,9 +55,7 @@ h2 {
     align-items: center;
 }
 #button {
-    background-color: white;
-    border: 1px solid rgba(119, 119, 119, 0.966);
-    border-radius: 6px;
+    border-radius: 16px;
     margin-top: 1vh;
 }
 </style>

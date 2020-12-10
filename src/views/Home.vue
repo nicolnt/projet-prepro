@@ -1,9 +1,9 @@
 <template>
   <div class="home">
-    <NavBarAuth/>
+    <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff" />
     <h1>Page d'accueil</h1>
-    <vs-button color="#8a94db" gradient-color-secondary="#5252e8" type="gradient" v-on:click="goSignIn" id="btnConnexion">Connexion</vs-button>
-    <Footer p_txtColor="rgb(82, 82, 232)" p_colorBG="#dedfff" />
+    <vs-button color="#FF8D8B" type="filled" v-on:click="goSignIn" id="btnSignUp">Inscription</vs-button>
+    <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 }
-#btnConnexion {
+#btnSignUp {
   display: flex;
   align-self: center;
 }

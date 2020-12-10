@@ -23,8 +23,6 @@ export default {
     return {
       txtColor: this.p_txtColor,
       colorBG: this.p_colorBG,
-      colorx:'#8a94db',
-      colorx2:'#5252e8',
       activeItem: 0
     }
   }

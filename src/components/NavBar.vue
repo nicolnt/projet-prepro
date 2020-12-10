@@ -1,13 +1,13 @@
 <template>
-  <div class="navBarAuth">
-    <vs-navbar v-model="activeItem" color="#fcfcff" class="nabarx" id="navBar">
+  <div class="navBarConnect">
+    <vs-navbar v-model="activeItem" color="#ffffff" class="nabarx" id="navBar">
       <div slot="title">
         <vs-navbar-title>
           Nom application
         </vs-navbar-title>
       </div>
       <vs-navbar-item index="0">
-        <vs-button type="flat" v-on:click="goHome">Déconnexion</vs-button>
+        <vs-button color="#000000" type="flat" v-on:click="goHome">Déconnexion</vs-button>
       </vs-navbar-item>
     </vs-navbar>
   </div>
@@ -31,6 +31,9 @@ export default {
 </script>
 
 <style scoped>
+.navBarConnect{
+  box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.2);
+}
 #navBar {
   padding: 10px 0;
 }

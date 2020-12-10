@@ -4,12 +4,17 @@
     <div id="dashboardContent">
       <SideBar/>
       <div id="content">
-        <h1>Liste des patients</h1>
-        <vs-input icon="search" placeholder="Search" v-model="valueInputSearch"/>
-        <div id="addClient"><vs-icon icon="add_circle_outline"/><p>Ajouter un client</p></div>
+        <h1 id="title">Liste des patients</h1>
+        <div id="actions">
+          <vs-input id="search" icon="search" placeholder="Search" v-model="valueInputSearch"/>
+          <vs-chip color="#9082FF">
+            Ajouter un patient  
+            <span class="material-icons">add_circle</span> 
+          </vs-chip>
+        </div>
       </div>
     </div>
-    <Footer p_txtColor="rgb(82, 82, 232)" p_colorBG="#fcfcff" />
+    <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
   </div>
 </template>
 
@@ -40,13 +45,16 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #8a94db;
+  background: linear-gradient(135deg, #ffffff, 80%, #EDEDED);
 }
 .vs-input-primary {
-  margin: 3% 0;
+  margin: 3% ;
 }
-.materials-icon {
-  margin-bottom: 2%;
+.material-icons {
+  margin-left: 2%;
+}
+.con-color {
+  height: 75%;
 }
 #dashboardContent {
   height: 100%;
@@ -60,9 +68,17 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+#actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 #addClient {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+#title {
+  width: 100%;
 }
 </style>

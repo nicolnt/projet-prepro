@@ -2,7 +2,7 @@
   <div class="psyInformations">
     <NavBar/>
     <h1>Informations du psychologue</h1>
-    <Footer p_txtColor="rgb(82, 82, 232)" p_colorBG="#fcfcff" />
+    <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
   </div>
 </template>
 

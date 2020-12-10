@@ -1,11 +1,11 @@
 <template>
   <div class="authSignIn">
-    <NavBarAuth/>
+    <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff"/>
     <router-link to="/" id="home">Accueil</router-link>
     <div id="authForm">
       <SignIn class="sign"/>
     </div>
-    <Footer p_txtColor="rgb(82, 82, 232)" p_colorBG="#dedfff" />
+    <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
   </div>
 </template>
 

@@ -1,12 +1,12 @@
 <template>
   <div class="sideBar">
     <div size="small" id="cardUser">
-      <vs-icon icon="account_box" color="rgb(163, 163, 163)" size="50px"></vs-icon>
+      <vs-icon icon="account_box" color="#ffffff" size="50px"></vs-icon>
       <div id="txtCardUser">
         <h3>Nom Prénom</h3>
         <p>Psychologue</p>
       </div>
-      <div id="settings"><vs-icon icon="settings" color="#ffffff"></vs-icon></div>
+      <div id="settings"><vs-icon icon="settings" color="rgb(189, 189, 189)"></vs-icon></div>
     </div>
     <div id="tag">
       <h3>Patients</h3>
@@ -29,7 +29,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color:#fcfcff;
+    background-color:#ffffff;
+    box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.2);
 }
 #cardUser {
     height: 12%;
@@ -38,7 +39,7 @@ export default {
     justify-content: center;
     align-items: center;
     align-content: center;
-    background-color: rgb(241, 241, 241);
+    background-color: #9082FF;
     padding: 0 15px;
     margin-top: 15px;
     border-radius: 10px;
@@ -52,7 +53,7 @@ export default {
     text-align: left;
 }
 #settings {
-    background-color: rgb(163, 163, 163);
+    background-color: white;
     border-radius: 5px;
     display: flex;
     justify-content: center;

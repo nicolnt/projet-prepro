@@ -2,7 +2,7 @@
   <div class="appParams">
     <NavBar/>
     <h1>Paramètres de l'application</h1>
-    <Footer p_txtColor="rgb(82, 82, 232)" p_colorBG="#dedfff" />
+    <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
   </div>
 </template>
 

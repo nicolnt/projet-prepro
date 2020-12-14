@@ -35,7 +35,7 @@ export default {
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.2);
 }
 #navBar {
-  padding: 10px 0;
+  padding: 10px 25px;
 }
 
 </style>

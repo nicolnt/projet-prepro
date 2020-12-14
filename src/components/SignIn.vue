@@ -42,15 +42,18 @@ export default {
 
 <style scoped>
 h2 {
-    margin-bottom: 2vh;
+  margin-bottom: 2vh;
 }
 .signIn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.73);
 }
 #button {
-    border-radius: 16px;
-    margin-top: 1vh;
+  border-radius: 16px;
+  margin-top: 1vh;
 }
 </style>

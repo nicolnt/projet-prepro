@@ -1,21 +1,21 @@
 <template>
   <div class="appParams">
-    <NavBar/>
+    <!--<NavBar/>-->
     <h1>Paramètres de l'application</h1>
-    <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
+    <!--<Footer p_txtColor="#000000" p_colorBG="#ffffff"/>-->
   </div>
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue'
-import Footer from '@/components/Footer.vue'
+/* import NavBar from '@/components/NavBar.vue'
+import Footer from '@/components/Footer.vue'*/
 
 export default {
-  name: 'AppParams',
+  name: 'AppParams'/*,
   components: {
     NavBar,
     Footer
-  }
+  }*/
 }
 </script>
 

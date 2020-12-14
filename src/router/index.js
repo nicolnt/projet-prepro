@@ -4,12 +4,12 @@ import Home from '../views/Home.vue'
 import AuthSignUp from '../views/AuthSignUp.vue'
 import AuthSignIn from '../views/AuthSignIn.vue'
 import Dashboard from '../views/Dashboard.vue'
-import PsyInformations from '../views/PsyInformations.vue'
+/*import PsyInformations from '../views/PsyInformations.vue'
 import Stats from '../views/Stats.vue'
 import AppParams from '../views/AppParams.vue'
 import PatientResults from '../views/PatientResults.vue'
 import PatientProfil from '../views/PatientProfil.vue'
-import TestList from '../views/TestList.vue'
+import TestList from '../views/TestList.vue'*/
 
 Vue.use(VueRouter)
 
@@ -34,7 +34,7 @@ const routes = [
     name: 'Dashboard',
     component: Dashboard
   },
-  {
+  /*{
     path: '/psy',
     name: 'PsyInformations',
     component: PsyInformations
@@ -63,7 +63,7 @@ const routes = [
     path: '/testList',
     name: 'TestList',
     component: TestList
-  },
+  },*/
   {
     path: '*',
     name: 'default',

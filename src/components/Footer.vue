@@ -32,6 +32,7 @@ export default {
 <style scoped>
 #navBar {
   padding: 10px 0;
+  justify-content: center;
 }
 
 </style>

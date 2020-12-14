@@ -2,16 +2,11 @@
   <div class="dashboard">
     <NavBar/>
     <div id="dashboardContent">
-      <SideBar/>
+      <SideBar ref="sideBar"/>
       <div id="content">
-        <h1 id="title">Liste des patients</h1>
-        <div id="actions">
-          <vs-input id="search" icon="search" placeholder="Search" v-model="valueInputSearch"/>
-          <vs-chip color="#9082FF">
-            Ajouter un patient  
-            <span class="material-icons">add_circle</span> 
-          </vs-chip>
-        </div>
+        <PatientsList v-if="this.isActivePatientsList"/>
+        <Stats v-if="this.isActiveStatsPage"/>
+        <AppParams v-if="this.isActiveAppParamsPage"/>
       </div>
     </div>
     <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
@@ -22,17 +17,43 @@
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 import SideBar from '@/components/SideBar.vue'
+import PatientsList from '@/components/PatientsList.vue'
+import Stats from '@/components/Stats.vue'
+import AppParams from '@/components/AppParams.vue'
 
 export default {
   name: 'Dashboard',
   components : {
     NavBar,
     Footer,
-    SideBar
+    SideBar,
+    PatientsList,
+    Stats,
+    AppParams
   },
-  data(){
+  data() {
     return {
-      valueInputSearch:''
+      isActivePatientsList: false,
+      isActiveStatsPage: false,
+      isActiveAppParamsPage: false
+    }
+  },
+  methods: {
+    updatePagesStates(){
+      this.isActivePatientsList = this.$refs.sideBar.isActivePatients
+      this.isActiveStatsPage = this.$refs.sideBar.isActiveStats
+      this.isActiveAppParamsPage = this.$refs.sideBar.isActiveParams
+      console.log("isActivePatientsList : " + this.isActivePatientsList)
+      console.log("isActiveStatsPage : " + this.isActiveStatsPage)
+      console.log("isActiveParamsPage : " + this.isActiveAppParamsPage)
+    }
+  },
+  mounted() {
+    this.updatePagesStates()
+  },
+  watch: {
+    function(){
+      this.updatePagesStates()
     }
   }
 }
@@ -47,38 +68,10 @@ export default {
   justify-content: space-between;
   background: linear-gradient(135deg, #ffffff, 80%, #EDEDED);
 }
-.vs-input-primary {
-  margin: 3% ;
-}
-.material-icons {
-  margin-left: 2%;
-}
-.con-color {
-  height: 75%;
-}
-#dashboardContent {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-}
 #content {
   width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-#actions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-#addClient {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-#title {
-  width: 100%;
 }
 </style>

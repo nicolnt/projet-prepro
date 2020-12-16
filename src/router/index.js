@@ -4,12 +4,13 @@ import Home from '../views/Home.vue'
 import AuthSignUp from '../views/AuthSignUp.vue'
 import AuthSignIn from '../views/AuthSignIn.vue'
 import Dashboard from '../views/Dashboard.vue'
-/*import PsyInformations from '../views/PsyInformations.vue'
-import Stats from '../views/Stats.vue'
-import AppParams from '../views/AppParams.vue'
-import PatientResults from '../views/PatientResults.vue'
-import PatientProfil from '../views/PatientProfil.vue'
-import TestList from '../views/TestList.vue'*/
+import PatientsList from '../components/PatientsList.vue'
+import PsyInformations from '../components/PsyInformations.vue'
+import Stats from '../components/Stats.vue'
+import AppParams from '../components/AppParams.vue'
+import PatientResults from '../components/PatientResults.vue'
+import PatientProfil from '../components/PatientProfil.vue'
+import TestList from '../components/TestList.vue'
 
 Vue.use(VueRouter)
 
@@ -32,38 +33,43 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    children: [{
+      path: '/dashboard/psy',
+      name: 'PsyInformations',
+      component: PsyInformations
+    },
+    {
+      path: '/dashboard/patientsList',
+      name: 'PatientsList',
+      component: PatientsList
+    },
+    {
+      path: '/dashboard/stats',
+      name: 'Stats',
+      component: Stats
+    },
+    {
+      path: '/dashboard/params',
+      name: 'AppParams',
+      component: AppParams
+    },
+    {
+      path: '/dashboard/patientResults',
+      name: 'PatientResults',
+      component: PatientResults
+    },
+    {
+      path: '/dashboard/patientProfil',
+      name: 'PatientProfil',
+      component: PatientProfil
+    },
+    {
+      path: '/dashboard/testList',
+      name: 'TestList',
+      component: TestList
+    }]
   },
-  /*{
-    path: '/psy',
-    name: 'PsyInformations',
-    component: PsyInformations
-  },
-  {
-    path: '/stats',
-    name: 'Stats',
-    component: Stats
-  },
-  {
-    path: '/params',
-    name: 'AppParams',
-    component: AppParams
-  },
-  {
-    path: '/patientResults',
-    name: 'PatientResults',
-    component: PatientResults
-  },
-  {
-    path: '/patientProfil',
-    name: 'PatientProfil',
-    component: PatientProfil
-  },
-  {
-    path: '/testList',
-    name: 'TestList',
-    component: TestList
-  },*/
   {
     path: '*',
     name: 'default',

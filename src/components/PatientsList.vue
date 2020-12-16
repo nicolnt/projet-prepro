@@ -3,20 +3,41 @@
     <h1 id="title">Liste des patients</h1>
     <div id="actions">
       <vs-input id="search" icon="search" placeholder="Search" v-model="valueInputSearch"/>
-      <vs-chip color="#9082FF">
-        Ajouter un patient  
-        <span class="material-icons">add_circle</span> 
-      </vs-chip>
+      <vs-button @click="toggleModal" color="#9082FF" type="filled" id="addPatient">
+        <p>Ajouter un patient</p>  
+        <div class="material-icons">add_circle</div>
+      </vs-button>
+      <AddPatientModal ref="addPatientModal"/>
+    </div>
+    <div id="list">
+      <ul>
+        <li v-on:click="goPatientProfil">Patient1</li>
+        <li v-on:click="goPatientProfil">Patient2</li>
+        <li v-on:click="goPatientProfil">Patient3</li>
+      </ul>
     </div>
   </div>
 </template>
     
 <script>
+import AddPatientModal from '@/components/AddPatientModal.vue'
+
 export default {
   name: 'PatientsList',
   data(){
     return {
       valueInputSearch:''
+    }
+  },
+  components: {
+    AddPatientModal
+  },
+  methods: {
+    goPatientProfil() {
+      this.$router.push({name:'PatientProfil'})
+    },
+    toggleModal() {
+      this.$refs.addPatientModal.toggle()
     }
   }
 }
@@ -43,7 +64,7 @@ export default {
   flex-direction: row;
   align-items: center;
 }
-#addClient {
+#addPatient {
   display: flex;
   flex-direction: row;
   align-items: center;

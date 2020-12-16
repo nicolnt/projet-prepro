@@ -83,18 +83,18 @@ export default {
 
 <style scoped>
 .input {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: 1vh 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 1vh 0;
 }
 .valInput {
-    background-color: #eaedf0;
-    border: 1px solid #2c3e50;
-    border-radius: 8px;
-    padding: 2%;
+  background-color: #eaedf0;
+  border: 1px solid #2c3e50;
+  border-radius: 8px;
+  padding: 2%;
 }
 #titleInput {
-    margin-bottom: 1vh;
+  margin-bottom: 1vh;
 }
 </style>

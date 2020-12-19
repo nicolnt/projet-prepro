@@ -4,6 +4,8 @@
       <Input title="Email" type="email" name="email" v-bind:value.sync="m_valueEmail" :verifInput="checkInput" required/>
       <Input title="Mot de passe" type="password" name="password" v-bind:value.sync="m_valuePassword" :verifInput="checkInput" required/>
       <vs-button color="#FF8D8B" type="filled" v-on:click="goSignIn" id="button">Se connecter</vs-button>
+      <p> Vous n'avez pas encore de compte ? <router-link to="/signUp"> Inscrivez-vous </router-link> </p>
+      <img class="plane" src="../assets/plane-illustration.svg"/>
   </div>
 </template>
 
@@ -51,9 +53,25 @@ h2 {
   padding: 50px;
   border-radius: 20px;
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.73);
+  background-color: #fff;
+  text-align: left;
+  position: relative;
+}
+p {
+  font-size: 12px;
+  margin-top: 2rem;
+}
+.plane {
+    position: absolute;
+    top: -21px;
+    right: -48px;
 }
 #button {
   border-radius: 16px;
-  margin-top: 1vh;
+  padding: .5rem 1.5rem;
+  margin-top: 1rem;
+}
+a {
+  color: #FF8D8B;
 }
 </style>

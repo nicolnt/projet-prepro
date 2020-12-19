@@ -1,6 +1,7 @@
 <template>
   <div class="authSignIn">
     <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff"/>
+    <img class="man" src="../assets/man-illustration.svg"/>
     <router-link to="/" id="home">Accueil</router-link>
     <div id="authForm">
       <SignIn class="sign"/>
@@ -32,12 +33,23 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-image: url("../assets/background.svg");
+  background-repeat: no-repeat;
+  background-position:right bottom;
+  font-weight: 400;
 }
 #authForm {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  width: 70%;
+  margin: auto;
+}
+.man {
+  position: absolute;
+  bottom: 150px;
+  left: 70px;
 }
 #home {
   position: absolute;

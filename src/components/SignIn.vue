@@ -47,6 +47,7 @@ h2 {
   margin-bottom: 2vh;
 }
 .signIn {
+  width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,15 +57,16 @@ h2 {
   background-color: #fff;
   text-align: left;
   position: relative;
+  max-width: 100%;
 }
 p {
   font-size: 12px;
   margin-top: 2rem;
 }
 .plane {
-    position: absolute;
-    top: -21px;
-    right: -48px;
+  position: absolute;
+  top: -21px;
+  right: -48px;
 }
 #button {
   border-radius: 16px;

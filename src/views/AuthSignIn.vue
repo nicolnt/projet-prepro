@@ -41,19 +41,24 @@ export default {
 #authForm {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 70%;
-  margin: auto;
+  place-content: center;
 }
 .man {
   position: absolute;
   bottom: 150px;
   left: 70px;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
 }
 #home {
   position: absolute;
   left: 10px;
   top: 80px;
+}
+@media screen and (max-width: 400px) {
+  .man {
+    left: 0;
+  }
 }
 </style>

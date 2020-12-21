@@ -1,6 +1,7 @@
 <template>
   <div class="authSignUp">
     <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff"/>
+    <img class="man-fauteuil" src="../assets/man-fauteuil-illustration.svg"/>
     <router-link to="/" id="home">Accueil</router-link>
     <div id="authForms">
       <SignUp class="sign"/>
@@ -32,16 +33,32 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-image: url("../assets/background.svg");
+  background-repeat: no-repeat;
+  background-position:right bottom;
+  font-weight: 400;
 }
 #authForms {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  place-content: center;
+}
+.man-fauteuil {
+  position: absolute;
+  bottom: 150px;
+  left: 70px;
+  /* width: 100%;
+  max-width: 300px;
+  height: auto; */
 }
 #home {
   position: absolute;
   left: 10px;
   top: 80px;
+}
+@media screen and (max-width: 400px) {
+  .man-fauteuil {
+    left: 0;
+  }
 }
 </style>

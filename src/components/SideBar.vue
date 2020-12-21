@@ -6,7 +6,7 @@
         <h3>Nom Prénom</h3>
         <p>Psychologue</p>
       </div>
-      <div id="settings"><vs-icon icon="settings" color="rgb(189, 189, 189)"></vs-icon></div>
+      <vs-icon icon="settings" color="rgb(255, 255, 255)" v-on:click="goPsyInformations"></vs-icon>
     </div>
     <div id="tag">
       <div v-bind:class="{selectedPage : isActivePatients, pages: !isActivePatients}" v-on:click="activePage('isActivePatients')">
@@ -45,18 +45,23 @@ export default {
         this.isActiveStats = false
         this.isActiveParams = false
         this.isActivePatients = !this.isActivePatients
+        this.$router.push({name:'PatientsList'})
       }
       if(isActive === 'isActiveStats') {
         this.isActiveParams = false
         this.isActivePatients = false
         this.isActiveStats = !this.isActiveStats
+        this.$router.push({name:'Stats'})
       }
       if(isActive === 'isActiveParams') {
         this.isActiveStats = false
         this.isActivePatients = false
         this.isActiveParams = !this.isActiveParams
+        this.$router.push({name:'AppParams'})
       }
-      this.$parent.updatePagesStates()
+    },
+    goPsyInformations() {
+      this.$router.push({name:'PsyInformations'})
     }
   }
 }
@@ -89,53 +94,45 @@ export default {
 }
 .line {
   height: 24px;
-  width: 4px;
+  width: 5px;
   border-radius: 9px;
   background-color: #a8a8a8;
   margin-right: 10px;
 }
 .selectedLine {
   height: 24px;
-  width: 4px;
+  width: 5px;
   border-radius: 9px;
   background-color: #9082FF;
   margin-right: 10px;
 }
 #cardUser {
-    height: 12%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    background-color: #9082FF;
-    padding: 0 6%px;
-    margin-top: 15px;
-    border-radius: 10px;
+  height: 80px;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  background-color: #9082FF;
+  margin-top: 15px;
+  border-radius: 10px;
 }
 #avatarUser {
-    margin: 0 15px 0 0;
+  margin: 0 15px 0 0;
 }
 #txtCardUser {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-#settings {
-    background-color: white;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2px;
-    margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-left: 4%;
 }
 #tag {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-    align-items: flex-start;
-    margin-left: 11%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  align-items: flex-start;
+  margin-left: 11%;
 }
 </style>

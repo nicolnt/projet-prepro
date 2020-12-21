@@ -1,20 +1,22 @@
 <template>
   <div class="patientProfil">
-    <NavBar/>
     <h1>Profil du patient</h1>
-    <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
+      <vs-button color="#9082FF" type="filled" v-on:click="goResults" class="btn">Voir les résultats</vs-button>
+      <vs-button color="#9082FF" type="filled" v-on:click="goListTests" class="btn">Démarrer un test</vs-button>
   </div>
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue'
-import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'PatientProfil',
-  components: {
-    NavBar,
-    Footer
+  methods: {
+    goResults() {
+      this.$router.push({name:'PatientResults'})
+    },
+    goListTests() {
+      this.$router.push({name:'TestList'})
+    }
   }
 }
 </script>
@@ -25,6 +27,10 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+}
+.btn {
+  border-radius: 16px;
+  margin: 10px 0;
 }
 </style>

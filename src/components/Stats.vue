@@ -1,21 +1,13 @@
 <template>
   <div class="stats">
-    <!--<NavBar/>-->
-    <h1>Statistiques</h1>
-    <!--<Footer p_txtColor="#000000" p_colorBG="#ffffff"/>-->
+    <h1>Statistiques des patients</h1>
   </div>
 </template>
 
 <script>
-/*import NavBar from '@/components/NavBar.vue'
-import Footer from '@/components/Footer.vue'*/
 
 export default {
-  name: 'Stats'/*,
-  components: {
-    NavBar,
-    Footer
-  }*/
+  name: 'Stats'
 }
 </script>
 

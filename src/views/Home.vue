@@ -5,7 +5,7 @@
       <div class="presentation-application">
         <h1> Lorem ipsum dolor sit amet </h1>
         <p> Lorem ipsum dolor sit amet, consectetur, Lorem ipsum dolor sit amet, consectetur </p>
-        <vs-button color="#FF8D8B" type="filled" v-on:click="goSignIn" id="btnSignUp">inscription</vs-button>
+        <vs-button color="#FF8D8B" type="filled" v-on:click="goSignUp" id="btnSignUp">inscription</vs-button>
       </div>
       <div class="illustration-application">
         <img src="../assets/illustration-home.svg"/>
@@ -26,8 +26,8 @@ export default {
     Footer
   },
   methods: {
-    goSignIn() {
-      this.$router.push({name:'AuthSignIn'})
+    goSignUp() {
+      this.$router.push({name:'AuthSignUp'})
     }
   }
 }

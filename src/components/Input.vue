@@ -1,7 +1,6 @@
 <template>
-  <div class="input">
-      <p id="titleInput">{{m_title}}</p>
-      <input class="valInput" type="this.m_type" name="this.m_name" oninput="this.onChangeInput" required>
+  <div class="input center content-inputs">
+    <vs-input v-model="value" v-bind:placeholder="m_title" type="this.m_type" name="this.m_name" oninput="this.onChangeInput" required/>
   </div>
 </template>
 
@@ -30,6 +29,7 @@ export default {
       m_title : "",
       m_type : "",
       m_name : "",
+      m_value: "",
       m_verifInput : null
     }
   },
@@ -80,21 +80,12 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 .input {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 1vh 0;
+  margin: .3rem auto;
+  width: 300px;
 }
-.valInput {
-  background-color: #eaedf0;
-  border: 1px solid #2c3e50;
-  border-radius: 8px;
-  padding: 2%;
-}
-#titleInput {
-  margin-bottom: 1vh;
+.vs-con-input-label {
+  width: auto;
 }
 </style>

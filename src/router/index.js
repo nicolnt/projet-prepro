@@ -11,6 +11,7 @@ import AppParams from '../components/AppParams.vue'
 import PatientResults from '../components/PatientResults.vue'
 import PatientProfil from '../components/PatientProfil.vue'
 import TestList from '../components/TestList.vue'
+import MotricityTest from '../tests/MotricityTest.vue'
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,11 @@ const routes = [
       name: 'TestList',
       component: TestList
     }]
+  },
+  {
+    path: '/MotricityTest',
+    name: 'MotricityTest',
+    component: MotricityTest
   },
   {
     path: '*',

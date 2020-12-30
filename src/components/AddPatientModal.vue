@@ -14,6 +14,7 @@
       <Input title="Ville" type="text" name="ville" v-bind:value.sync="m_valueCity" :verifInput="checkInput"/>
       <Input title="Raison passation du test" type="text" name="raisonTest" v-bind:value.sync="m_valueReason" :verifInput="checkInput"/>
       <vs-button color="#9082FF" type="filled" v-on:click="confirm" id="btnConfirm">Ajouter</vs-button>
+      <img class="plane" src="../assets/plane-purple-illustration.svg"/>
     </div>
     </vs-popup>
   </div>
@@ -83,6 +84,15 @@ export default {
 }
 .con-select .vs-select {
   width: 100%
+}
+.vs-popup--close--icon {
+  margin-right: 9%;
+  margin-top: 3%;
+}
+.plane {
+  position: absolute;
+  top: 17px;
+  right: 27%;
 }
 #modalContent {
   display: flex;

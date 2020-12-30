@@ -2,10 +2,10 @@
   <div class="navBarAuth">
     <vs-navbar v-model="activeItem" v-bind:color="colorBG" class="nabarx" id="navBar">
       <vs-navbar-item index="0">
-        <vs-button type="flat" v-bind:text-color="txtColor">Mentions légales</vs-button>
+        <vs-button type="flat" v-bind:text-color="txtColor" v-on:click="goLegalNotice">Mentions légales</vs-button>
       </vs-navbar-item>
       <vs-navbar-item index="1">
-        <vs-button type="flat" v-bind:text-color="txtColor">CGU</vs-button>
+        <vs-button type="flat" v-bind:text-color="txtColor" v-on:click="goCGU">CGU</vs-button>
       </vs-navbar-item>
     </vs-navbar>
   </div>
@@ -24,6 +24,14 @@ export default {
       txtColor: this.p_txtColor,
       colorBG: this.p_colorBG,
       activeItem: 0
+    }
+  },
+  methods: {
+    goLegalNotice() {
+      this.$router.push({name:'LegalNotice'})
+    },
+    goCGU() {
+      this.$router.push({name:'CGU'})
     }
   }
 }

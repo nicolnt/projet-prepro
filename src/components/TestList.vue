@@ -1,5 +1,6 @@
 <template>
   <div class="testList">
+    <span class="material-icons" id="icon_back" v-on:click="goPatientsList"> keyboard_backspace </span>
     <h1>Liste des tests</h1>
   </div>
 </template>
@@ -7,7 +8,12 @@
 <script>
 
 export default {
-  name: 'TestList'
+  name: 'TestList',
+  methods: {
+    goPatientsList() {
+      this.$router.push({name:'PatientsList'})
+    }
+  }
 }
 </script>
 

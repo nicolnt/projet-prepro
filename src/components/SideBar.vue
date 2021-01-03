@@ -1,12 +1,13 @@
 <template>
   <div class="sideBar">
     <div size="small" id="cardUser">
-      <vs-icon icon="account_box" color="#ffffff" size="50px"></vs-icon>
+      <!-- changer l'avatar en homme/femme en fonction de la connexion  -->
+      <img class="avatar" alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
       <div id="txtCardUser">
         <h3>Nom Prénom</h3>
         <p>Psychologue</p>
       </div>
-      <vs-icon icon="settings" color="rgb(255, 255, 255)" v-on:click="goPsyInformations"></vs-icon>
+      <vs-icon class="icon-settings" icon="settings" v-on:click="goPsyInformations"></vs-icon>
     </div>
     <div id="tag">
       <div v-bind:class="{selectedPage : isActivePatients, pages: !isActivePatients}" v-on:click="activePage('isActivePatients')">
@@ -25,6 +26,7 @@
         <h3 class="titlePages">Paramètres</h3>
       </div>
     </div>
+    <img class="leaf" src="../assets/leaf-illustration.svg"/>
   </div>
 </template>
 
@@ -69,19 +71,30 @@ export default {
 
 <style scoped>
 .sideBar {
-  width: 20%;
+  width: 285px;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color:#ffffff;
-  box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.2);
+  box-shadow: 17px 0px 30px -24px rgba(200, 200, 200, 0.2);
+  position: relative;
+  z-index: 2;
 }
 .pages {
   display: flex;
   justify-content: flex-start;
   margin: 10px 0;
   color: #a8a8a8;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.pages:hover {
+  color: #535353;
+  transform: translateX(10px);
+}
+.pages:hover .line {
+  background-color: #535353;
 }
 .titlePages {
   margin-left: 10px;
@@ -89,20 +102,22 @@ export default {
 .selectedPage {
   display: flex;
   justify-content: flex-start;
-  margin: 10px 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
   color: #9082FF;
 }
 .line {
   height: 24px;
   width: 5px;
-  border-radius: 9px;
+  border-radius: 0 20px 20px 0;
   background-color: #a8a8a8;
   margin-right: 10px;
 }
 .selectedLine {
   height: 24px;
   width: 5px;
-  border-radius: 9px;
+  border-radius: 0 20px 20px 0;
   background-color: #9082FF;
   margin-right: 10px;
 }
@@ -111,21 +126,32 @@ export default {
   width: 90%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   align-content: center;
   background-color: #9082FF;
   margin-top: 15px;
   border-radius: 10px;
+  padding: 10px;
 }
-#avatarUser {
-  margin: 0 15px 0 0;
+.avatar {
+  width: 50px;
 }
 #txtCardUser {
   display: flex;
   flex-direction: column;
   text-align: left;
-  margin-left: 4%;
+  color: #fff;
+}
+.icon-settings {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 3px;
+  color: #9082FF;
+  cursor: pointer;
+}
+.material-icons {
+  margin-left: 0;
 }
 #tag {
   width: 100%;
@@ -134,5 +160,10 @@ export default {
   margin-top: 10px;
   align-items: flex-start;
   margin-left: 11%;
+}
+.leaf {
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 </style>

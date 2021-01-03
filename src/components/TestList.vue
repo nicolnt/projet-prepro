@@ -1,22 +1,31 @@
 <template>
   <div class="testList">
-    <h1>Liste des tests</h1>
+    <Hero title="Liste des tests"/>
+    <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
   </div>
 </template>
 
 <script>
+import Hero from '@/components/Hero.vue'
 
 export default {
-  name: 'TestList'
+  name: 'TestList',
+  components: {
+    Hero,
+  },
 }
 </script>
 
 <style scoped>
 .testList {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: relative;
+  text-align: left;
+}
+.testList a {
+  position: absolute;
+  top: -40px;
+  left: -28px;
+  font-size: 30px;
+  cursor: pointer;
 }
 </style>

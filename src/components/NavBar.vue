@@ -35,7 +35,17 @@ export default {
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.2);
 }
 #navBar {
-  padding: 10px 25px;
+  height: 80px;
+  padding: 10px 50px;
+}
+.vs-navbar {
+  z-index: 1;
+}
+.vs-button {
+  font-size: 16px;
+}
+.vs-button:hover {
+  background: rgba(144, 130, 255, 0.2)!important;
 }
 
 </style>

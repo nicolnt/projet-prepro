@@ -1,13 +1,17 @@
 <template>
   <div class="stats">
-    <h1>Statistiques des patients</h1>
+    <Hero title="Statistiques des patients"/>
   </div>
 </template>
 
 <script>
+import Hero from '@/components/Hero.vue'
 
 export default {
-  name: 'Stats'
+  name: 'Stats',
+  components: {
+    Hero,
+  }
 }
 </script>
 
@@ -18,5 +22,6 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-align: left;
 }
 </style>

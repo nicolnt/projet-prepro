@@ -1,22 +1,31 @@
 <template>
   <div class="patientResults">
-    <h1>Résultats du patient</h1>
+    <Hero title="Résultats du patient"/>
+    <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
   </div>
 </template>
 
 <script>
+import Hero from '@/components/Hero.vue'
 
 export default {
-  name: 'PatientResults'
+  name: 'PatientResults',
+  components: {
+    Hero,
+  },
 }
 </script>
 
 <style scoped>
 .patientResults {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: relative;
+  text-align: left;
+}
+.patientResults a {
+  position: absolute;
+  top: -40px;
+  left: -28px;
+  font-size: 30px;
+  cursor: pointer;
 }
 </style>

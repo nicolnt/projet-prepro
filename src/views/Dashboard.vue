@@ -36,9 +36,7 @@ export default {
   background: linear-gradient(135deg, #ffffff, 80%, #EDEDED);
 }
 #content {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 3rem;
+  width: calc(100% - 285px);
 }
 </style>

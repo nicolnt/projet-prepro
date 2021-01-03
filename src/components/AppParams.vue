@@ -1,13 +1,17 @@
 <template>
   <div class="appParams">
-    <h1>Paramètres de l'application</h1>
+    <Hero title="Paramètres de l'application"/>
   </div>
 </template>
 
 <script>
+import Hero from '@/components/Hero.vue'
 
 export default {
-  name: 'AppParams'
+  name: 'AppParams',
+  components: {
+    Hero,
+  }
 }
 </script>
 
@@ -18,5 +22,6 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-align: left;
 }
 </style>

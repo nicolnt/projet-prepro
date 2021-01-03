@@ -1,26 +1,35 @@
 <template>
   <div class="psyInformations">
-    <h1>Informations du psychologue</h1>
+    <Hero title="Informations du psychologue"/>
     <vs-button color="#9082FF" type="filled" id="btnModif">Modifier les informations</vs-button>
+    <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
   </div>
 </template>
 
 <script>
+import Hero from '@/components/Hero.vue'
 
 export default {
-  name: 'PsyInformations'
+  name: 'PsyInformations',
+  components: {
+    Hero,
+  },
 }
 </script>
 
 <style scoped>
 .psyInformations {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
+  text-align: left;
 }
 #btnModif {
   border-radius: 16px;
+}
+.psyInformations a {
+  position: absolute;
+  top: -40px;
+  left: -28px;
+  font-size: 30px;
+  cursor: pointer;
 }
 </style>

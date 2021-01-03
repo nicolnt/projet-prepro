@@ -34,5 +34,14 @@ export default {
   padding: 10px 0;
   justify-content: center;
 }
+.vs-navbar {
+  z-index: 1;
+}
+.vs-button {
+  font-size: 16px;
+}
+.vs-button-primary.vs-button-flat:hover {
+  background: rgba(144, 130, 255, 0.2)!important;
+}
 
 </style>

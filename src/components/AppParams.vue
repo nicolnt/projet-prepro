@@ -21,7 +21,10 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  text-align: left;
+}
+#icon_back {
+  display: flex;
+  align-self: flex-start;
+  margin-top: 12px;
 }
 </style>

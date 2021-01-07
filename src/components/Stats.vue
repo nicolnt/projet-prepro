@@ -24,4 +24,9 @@ export default {
   justify-content: space-between;
   text-align: left;
 }
+#icon_back {
+  display: flex;
+  align-self: flex-start;
+  margin-top: 12px;
+}
 </style>

@@ -37,6 +37,7 @@ export default {
     setTitle() {
       if(this.title.length > 2 && this.title.length < 30) {
         this.m_title = this.title
+        this.$emit(this.title)
       } else {
         throw new Error("Le titre de l'input " + this.title + "doit posséder entre 2 et 30 caractères");
       }

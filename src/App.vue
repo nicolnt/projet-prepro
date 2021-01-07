@@ -5,9 +5,24 @@
 </template>
 
 <script>
+import { db } from './services/firebase'
 
 export default {
-  name: 'App'
+  
+  name: 'App',
+  created () {
+    this.checkDataBase()
+  },
+  methods: {
+    checkDataBase () {
+      var query = db.ref('patients').orderByKey()
+      query.once('value').then(function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+           console.log(childSnapshot.val())
+        })
+      })
+    }
+  }
 }
 </script>
 

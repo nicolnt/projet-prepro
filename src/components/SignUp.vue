@@ -7,33 +7,116 @@
         <img class="twitter" src="../assets/twitter-illustration.svg"/>
       </div>
       <hr>
-      <Input title="Nom" type="text" name="nom" v-bind:value.sync="m_valueLastName" :verifInput="checkInput"/>
-      <Input title="Prénom" type="text" name="prenom" v-bind:value.sync="m_valueFirstName" :verifInput="checkInput"/>
-      <Input title="Email" type="email" name="email" v-bind:value.sync="m_valueEmail" :verifInput="checkInput"/>
-      <Input title="Mot de passe" type="password" name="password" v-bind:value.sync="m_valuePassword" :verifInput="checkInput"/>
-      <vs-button color="#FF8D8B" type="filled" v-on:click="goSignUp" id="button">S'inscrire</vs-button>
+      <form action="#" @submit.prevent="submit">
+      <div>
+        <div>
+          <input
+            id="lastName"
+            type="text"
+            name="lastName"
+            placeholder="Nom"
+            required
+            autofocus
+            v-model="form.lastName"
+          />
+        </div>
+      </div>
+      <div>
+        <div>
+          <input
+            id="firstName"
+            type="text"
+            name="firstName"
+            placeholder="Prénom"
+            required
+            v-model="form.firstName"
+          />
+        </div>
+      </div>
+      <div>
+        <div>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Email"
+            value
+            required
+            v-model="form.email"
+          />
+        </div>
+      </div>
+      <div>
+        <div>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            placeholder="Mot de passe"
+            required
+            v-model="form.password"
+          />
+        </div>
+      </div>
+        <div v-if="error" class="connectionError">{{error}}</div>
+        <button color="#FF8D8B" type="submit" id="button">S'inscrire</button>
+      </form>
       <img class="cloud" src="../assets/cloud-illustration.svg"/>
   </div>
 </template>
 
 <script>
-
-import Input from '@/components/Input.vue'
+// import Input from '@/components/Input.vue'
+import firebase from 'firebase/app'
+require('firebase/auth')
+import { db } from '../services/firebase'
 
 export default {
   name: 'SignUp',
   components:{
-    Input
+    // Input
   },
   data() {
     return {
       m_valueLastName : "",
       m_valueFirstName : "",
       m_valueEmail : "",
-      m_valuePassword : ""
+      m_valuePassword : "",
+      form: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
+      },
     }
   },
+ 
   methods:{
+    submit() {
+      if(this.form.password.length >= 6) {
+        firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.form.email, this.form.password)
+        .then((user) => {
+          db.ref('users/' + user.user.uid).set({
+            firstName: this.form.firstName,
+            lastName: this.form.lastName,
+            email: this.form.email,
+          }).then(() => {
+            const user = firebase.auth().currentUser;
+            user.sendEmailVerification().then(() => {
+              this.$router.push({ name: 'PatientsList' }).catch(() => {})
+            })
+          })
+        })
+        .catch(() => {
+          this.error = 'Une erreur est survenue. Veuillez réessayer et nous contacter en cas de soucis';
+        });
+      }
+      else {
+         this.error = 'Le mot de passe doit contenir au moins 6 lettres ou chiffres.'
+      }
+    },
     goSignUp() {
       this.checkInput(this.m_valueEmail)
       this.checkInput(this.m_valuePassword)

@@ -3,7 +3,8 @@
     <div size="small" id="cardUser">
       <vs-icon icon="account_box" color="#ffffff" size="50px"></vs-icon>
       <div id="txtCardUser">
-        <h3>Nom Prénom</h3>
+        <h3>{{user.data.displayName}}</h3>
+        <p>{{user.data.email}}</p>
         <p>Psychologue</p>
       </div>
       <vs-icon icon="settings" color="rgb(255, 255, 255)" v-on:click="goPsyInformations"></vs-icon>
@@ -29,6 +30,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 
 export default {
   name: 'SideBar',
@@ -38,6 +40,12 @@ export default {
       isActiveStats: false,
       isActiveParams: false
     }
+  },
+  computed: {
+    ...mapGetters({
+// map `this.user` to `this.$store.getters.user`
+      user: "user"
+    })
   },
   methods: { 
     activePage(isActive){

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <NavBar/>
+    <NavBar p_color="" p_colorBG=""/>
     <div id="dashboardContent">
       <SideBar ref="sideBar"/>
       <div id="content">

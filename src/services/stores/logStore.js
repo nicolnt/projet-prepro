@@ -1,41 +1,68 @@
+import Vue from 'vue'
 import Vuex from 'vuex'
 
-export default logStore = new Vuex.Store({
+Vue.use(Vuex)
+
+export default new Vuex.Store({
     state: {
-      lastName: "",
-      firstName: "",
-      email: "",
-      password: ""
+      // lastName: "",
+      // firstName: "",
+      // email: "",
+      // password: "",
+      user: {
+        loggedIn: false,
+        data: null
+      }
     },
     getters: {
-        lastName() {
-            return lastName;
-        },
-        firstName() {
-            return firstName;
-        },
-        email() {
-            return email;
-        },
-        password() {
-            return password;
-        }
+      user(state){
+        return state.user
+      },
+      // lastName() {
+      //     return lastName;
+      // },
+      // firstName() {
+      //     return firstName;
+      // },
+      // email() {
+      //     return email;
+      // },
+      // password() {
+      //     return password;
+      // }
     },
     mutations: { // setters
-      setLastName (lastName) {
-        this.lastName = lastName
+      // setLastName (lastName) {
+      //   this.lastName = lastName
+      // },
+      // setFirstName (firstName) {
+      //   this.firstName = firstName
+      // },
+      // setEmail (email) {
+      //   this.email = email
+      // },
+      // setPassword (password) {
+      //   this.password = password
+      // },
+      SET_LOGGED_IN(state, value) {
+        state.user.loggedIn = value;
       },
-      setFirstName (firstName) {
-        this.firstName = firstName
-      },
-      setEmail (email) {
-        this.email = email
-      },
-      setPassword (password) {
-        this.password = password
+      SET_USER(state, data) {
+        state.user.data = data;
       }
     },
     actions: {
+      fetchUser({ commit }, user) {
+        commit("SET_LOGGED_IN", user !== null);
+        if (user) {
+          commit("SET_USER", {
+            displayName: user.displayName,
+            email: user.email
+          });
+        } else {
+          commit("SET_USER", null);
+        }
+      }
         // login
         // logout
     }

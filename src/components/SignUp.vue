@@ -88,6 +88,7 @@ export default {
         email: "",
         password: ""
       },
+      error: null
     }
   },
  
@@ -97,20 +98,26 @@ export default {
         firebase
         .auth()
         .createUserWithEmailAndPassword(this.form.email, this.form.password)
-        .then((user) => {
-          db.ref('users/' + user.user.uid).set({
+        .then((data) => {
+          data.user
+            .updateProfile({
+              displayName: this.form.firstName
+            })
+            .then(() => { db.ref('users/' + data.user.uid).set({
             firstName: this.form.firstName,
             lastName: this.form.lastName,
             email: this.form.email,
+            
           }).then(() => {
-            const user = firebase.auth().currentUser;
+            const user = firebase.auth().currentUser
             user.sendEmailVerification().then(() => {
               this.$router.push({ name: 'PatientsList' }).catch(() => {})
             })
-          })
+          })});
+         
         })
         .catch(() => {
-          this.error = 'Une erreur est survenue. Veuillez réessayer et nous contacter en cas de soucis';
+          this.error = 'Une erreur est survenue. Veuillez réessayer et nous contacter en cas de soucis'
         });
       }
       else {

@@ -1,9 +1,47 @@
 <template>
   <div class="signIn">
       <h2>Connexion</h2>
-      <Input title="Email" type="email" name="email" v-bind:value.sync="m_valueEmail" :verifInput="checkInput" required/>
+      <div v-if="error" class="connectionError">{{error}}</div>
+    <form action="#" @submit.prevent="submit">
+      <div class="">
+        <label for="email" class="">Adresse mail</label>
+        <div class="">
+          <input
+            id="email"
+            type="email"
+            name="email"
+            value
+            required
+            autofocus
+            v-model="form.email"
+          />
+        </div>
+      </div>
+      <div class="">
+        <label for="password" class="">Mot de passe</label>
+
+        <div class="">
+          <input
+            id="password"
+            type="password"
+            name="password"
+            required
+            v-model="form.password"
+          />
+        </div>
+      </div>
+      <div class="standartContainer">
+        <button type="submit" class="submit">Se connecter</button>
+      </div>
+      <div>
+        <div class="forgottenPass">
+          <div class="link">Mot de passe oublié ?</div>
+        </div>
+      </div>
+    </form>
+      <!-- <Input title="Email" type="email" name="email" v-bind:value.sync="m_valueEmail" :verifInput="checkInput" required/>
       <Input title="Mot de passe" type="password" name="password" v-bind:value.sync="m_valuePassword" :verifInput="checkInput" required/>
-      <vs-button color="#FF8D8B" type="filled" v-on:click="goSignIn" id="button">Se connecter</vs-button>
+      <vs-button color="#FF8D8B" type="filled" v-on:click="goSignIn" id="button">Se connecter</vs-button> -->
       <p> Vous n'avez pas encore de compte ? <router-link to="/signUp"> Inscrivez-vous </router-link> </p>
       <img class="plane" src="../assets/plane-illustration.svg"/>
   </div>
@@ -11,21 +49,43 @@
 
 <script>
 
-import Input from '@/components/Input.vue'
+// import Input from '@/components/Input.vue'
 //import logStore from '@/services/stores/logStore'
+import firebase from 'firebase/app'
+require('firebase/auth')
+import store from "../services/stores/logStore";
 
 export default {
   name: 'SignIn',
   components: {
-    Input
+    // Input
   },
   data() {
     return {
       m_valueEmail : "",
-      m_valuePassword : ""
+      m_valuePassword : "",
+      form: {
+        email: "",
+        password: ""
+      },
+      error: null
     }
   },
   methods:{
+    submit() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.form.email, this.form.password)
+        .then(() => {
+          const user = firebase.auth().currentUser
+          console.log(user)
+          store.dispatch("fetchUser", user)
+          this.$router.push({ name: 'PatientsList' })
+        })
+        .catch(() => {
+          this.error = 'Identifiant ou mot de passe incorrect.'
+        });
+    },
     goSignIn() {
       this.checkInput(this.m_valueEmail)
       this.checkInput(this.m_valuePassword)

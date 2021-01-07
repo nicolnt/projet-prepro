@@ -21,6 +21,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+  text-align: left;
 }
 #icon_back {
   display: flex;

@@ -2,7 +2,8 @@
   <div class="cgu">
     <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff" />
       <div>
-        <h1> CGU </h1>
+        <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
+        <Hero title="CGU"/>
         <p> Lorem ipsum dolor sit amet, consectetur, Lorem ipsum dolor sit amet, consectetur </p>
       </div>
     <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
@@ -11,12 +12,14 @@
 
 <script>
 import NavBarAuth from '@/components/NavBarAuth.vue'
+import Hero from '@/components/Hero.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'CGU',
   components: {
     NavBarAuth,
+    Hero,
     Footer
   }
 }
@@ -30,6 +33,14 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   font-weight: 400;
+  position: relative;
+}
+.cgu a {
+  position: absolute;
+  top: 78px;
+  left: 32px;
+  font-size: 30px;
+  cursor: pointer;
 }
 h1 {
   font-size: 48px;

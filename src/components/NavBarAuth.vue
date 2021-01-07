@@ -17,7 +17,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'NavBarAuth',
   props : {
@@ -48,5 +47,8 @@ export default {
 }
 #navBar {
   padding: 10px 25px;
+}
+.vs-button {
+  font-size: 16px;
 }
 </style>

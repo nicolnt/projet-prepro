@@ -7,7 +7,9 @@
         <h3>Nom Prénom</h3>
         <p>Psychologue</p>
       </div>
-      <vs-icon class="icon-settings" icon="settings" v-on:click="goPsyInformations"></vs-icon>
+      <div class="icon-settings">
+        <vs-icon class="icon-settings-animation" icon="settings" v-on:click="goPsyInformations"></vs-icon>
+      </div>
     </div>
     <div id="tag">
       <div v-bind:class="{selectedPage : isActivePatients, pages: !isActivePatients}" v-on:click="activePage('isActivePatients')">
@@ -144,11 +146,18 @@ export default {
   color: #fff;
 }
 .icon-settings {
+  display: flex;
   background-color: #fff;
   border-radius: 5px;
   padding: 3px;
   color: #9082FF;
   cursor: pointer;
+}
+.icon-settings-animation {
+  transition: all 2s ease;
+}
+.icon-settings-animation:hover {
+  transform: rotate(360deg) scale(1.2);
 }
 .material-icons {
   margin-left: 0;

@@ -14,9 +14,18 @@
     </div>
     <div id="list">
       <ul>
-        <li v-on:click="goPatientProfil">Patient 1</li>
-        <li v-on:click="goPatientProfil">Patient 2</li>
-        <li v-on:click="goPatientProfil">Patient 3</li>
+        <li v-on:click="goPatientProfil">
+          <img class="avatar" alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
+          Nom prénom patient 1
+        </li>
+        <li v-on:click="goPatientProfil">
+          <img class="avatar" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
+          Nom prénom patient 2
+        </li>
+        <li v-on:click="goPatientProfil">
+          <img class="avatar" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
+          Nom prénom patient 3
+        </li>
       </ul>
     </div>
   </div>
@@ -129,5 +138,19 @@ export default {
 }
 #list ul {
   list-style: none;
+  display: inline;
+}
+#list li {
+  cursor: pointer;
+  border-bottom: 1px solid rgb(241, 241, 241);
+  padding: 5px 0;
+  transition: all 0.5s ease;
+}
+#list li:hover {
+  background: linear-gradient(90deg, rgba(241,241,241,0) 0%, rgba(241,241,241,1) 10%, rgba(241,241,241,1) 50%, rgba(241,241,241,1) 90%, rgba(241,241,241,0) 100%);
+}
+#list img {
+  width: 40px;
+  vertical-align: middle;
 }
 </style>

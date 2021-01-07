@@ -2,8 +2,8 @@
   <div class="psyInformations">
     <Hero title="Informations du psychologue"/>
     <div id="psyDatas">
-      <img src="../assets/google-illustration.svg" alt="imgPatient" id="imgPatient">
-      <h1>Nom du psychologue</h1>
+      <img src="../assets/avatar-woman-illustration.svg" alt="imgPatient" id="imgPatient">
+      <h2>Nom du psychologue</h2>
     </div>
     <vs-button color="#9082FF" type="filled" id="btnModif">Modifier les informations</vs-button>
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
@@ -37,7 +37,7 @@ export default {
 #psyDatas {
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 #imgPatient {
   margin-right: 10px;

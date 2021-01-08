@@ -5,7 +5,8 @@
       <Input title="Nom" type="text" name="nom" v-bind:value.sync="m_valueLastName" :verifInput="checkInput"/>
       <Input title="Prénom" type="text" name="prenom" v-bind:value.sync="m_valueFirstName" :verifInput="checkInput"/>
       <Input title="Date de naissance" type="date" name="birthday" v-bind:value.sync="m_valueBirthday" :verifInput="checkInput"/>
-      <vs-select class="selectExample" label="Sexe" v-model="selectSex">
+      <vs-select class="selectExample" v-model="selectGenre">
+        <vs-select-item text="Genre" value="Genre" id="genreListTitle" disabled/>
         <vs-select-item v-bind:key="index" v-bind:value="item.value" v-bind:text="item.text" v-for="(item,index) in options"/>
       </vs-select>
       <Input title="Email" type="email" name="email" v-bind:value.sync="m_valueEmail" :verifInput="checkInput"/>
@@ -36,11 +37,10 @@ export default {
       m_valueCp: "",
       m_valueCity: "",
       m_valueReason : "",
-      selectSex: "",
+      selectGenre: "Genre",
       options:[
         {text: 'Homme', value: 1},
-        {text: 'Femme', value: 2},
-        {text: 'Autre', value: 3}
+        {text: 'Femme', value: 2}
       ]
     }
   },
@@ -76,7 +76,6 @@ export default {
   border-radius: 20px;
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.7);    
   width: 475px!important;
-  height: 340px!important;
 }
 .selectExample {
   margin: 10px;
@@ -86,8 +85,11 @@ export default {
   align-items: center;
   justify-content: center;
 }
+.con-select {
+  width: 300px !important;
+}
 .con-select .vs-select {
-  width: 100%
+  width: 300px !important;
 }
 .vs-popup--close--icon {
   margin-right: 9%;
@@ -113,6 +115,9 @@ export default {
   width: 110px;
   border-radius: 16px;
   margin-top: 1rem;
+}
+#genreListTitle {
+  font: 400 13.3333px Arial;
 }
 .plane-purple {
   position: absolute;

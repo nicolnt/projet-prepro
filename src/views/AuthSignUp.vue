@@ -2,7 +2,6 @@
   <div class="authSignUp">
     <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff"/>
     <img class="man-fauteuil" src="../assets/man-fauteuil-illustration.svg"/>
-    <router-link to="/" id="home">Accueil</router-link>
     <div id="authForms">
       <SignUp class="sign"/>
     </div>

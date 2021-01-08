@@ -1,13 +1,9 @@
 <template>
   <div class="patientProfil">
-    <Hero title="Profil du patient"/>
-    <vs-button color="#9082FF" type="filled" v-on:click="goResults" class="btn">Voir les résultats</vs-button>
-    <vs-button color="#9082FF" type="filled" v-on:click="goListTests" class="btn">Démarrer un test</vs-button>
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
-    <span class="material-icons" id="icon_back" v-on:click="goPatientsList"> keyboard_backspace </span>
     <div id="patientDatasActions">
       <div id="patientDatas">
-        <img src="../assets/google-illustration.svg" alt="imgPatient" id="imgPatient">
+        <img src="../assets/avatar-woman-illustration.svg" alt="imgPatient" id="imgPatient">
         <div id="patientTxtDatas">
           <h1>Nom du patient</h1>
           <h3>Date de naissance</h3>
@@ -16,35 +12,21 @@
         </div>
       </div>
       <div id="actions">
-        <vs-button color="#9082FF" type="filled" class="btn">Modifier les informations</vs-button>
-        <vs-button color="#9082FF" type="filled" class="btn">Supprimer ce patient</vs-button>
-        <vs-button color="#9082FF" type="filled" v-on:click="goResults" class="btn">Voir les résultats</vs-button>
-        <vs-button color="#9082FF" type="filled" v-on:click="goListTests" class="btn">Démarrer un test</vs-button>
+        <vs-button color="#9082FF" type="filled" class="btnPatient">Modifier les informations</vs-button>
+        <vs-button color="#9082FF" type="filled" class="btnPatient">Supprimer ce patient</vs-button>
       </div>
     </div>
-    <h1 id="titleTest">Résultats des 3 derniers tests</h1>
-    <div class="tests">
-      <div class="testBloc">
-        <p>Test 1</p>
-      </div>
-      <div class="testBloc">
-        <p>Test 2</p>
-      </div>
-      <div class="testBloc">
-        <p>Test 3</p>
-      </div>
+    <div id="tests-results">
+      <vs-button color="#9082FF" type="filled" v-on:click="goResults" class="btn">Voir les résultats</vs-button>
+      <vs-button color="#9082FF" type="filled" v-on:click="goListTests" class="btn">Démarrer un test</vs-button>
     </div>
   </div>
 </template>
 
 <script>
-import Hero from '@/components/Hero.vue'
 
 export default {
   name: 'PatientProfil',
-  components: {
-    Hero,
-  },
   methods: {
     goResults() {
       this.$router.push({name:'PatientResults'})
@@ -67,11 +49,16 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  /*align-items: center;*/
+  justify-content: center;
+}
+.btnPatient {
+  border-radius: 16px;
+  margin: 10px 0;
 }
 .btn {
   border-radius: 16px;
   margin: 10px 0;
+  width: 20%;
 }
 .patientProfil a {
   position: absolute;
@@ -79,23 +66,6 @@ export default {
   left: -28px;
   font-size: 30px;
   cursor: pointer;
-}
-.testBloc {
-  background-color: #F0F0F0;
-  border-radius: 8px;
-  height: 200px;
-  width: 20%;
-  margin: 40px 3%;
-}
-.tests {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-#icon_back {
-  display: flex;
-  align-self: flex-start;
-  margin-top: 12px;
 }
 #patientDatas {
   display: flex;
@@ -110,19 +80,23 @@ export default {
 }
 #actions {
   background-color: #F0F0F0;
-  border-radius: 8px;
+  border-radius: 15px;
   width: 20%;
   display: flex;
   flex-direction: column;
   align-content: flex-end;
+  padding: 15px;
 }
 #patientDatasActions {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-#titleTest {
-  margin-top: 10px;
+#tests-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
 }
 #imgPatient {
   margin: 10px;

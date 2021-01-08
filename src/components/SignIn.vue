@@ -3,6 +3,7 @@
       <h2>Connexion</h2>
       <Input title="Email" type="email" name="email" v-bind:value.sync="m_valueEmail" :verifInput="checkInput" required/>
       <Input title="Mot de passe" type="password" name="password" v-bind:value.sync="m_valuePassword" :verifInput="checkInput" required/>
+      <router-link to="/" id="forgotPass">Mot de passe oublié ?</router-link>
       <vs-button color="#FF8D8B" type="filled" v-on:click="goSignIn" id="button">Se connecter</vs-button>
       <p> Vous n'avez pas encore de compte ? <router-link to="/signUp"> Inscrivez-vous </router-link> </p>
       <img class="plane" src="../assets/plane-illustration.svg"/>
@@ -46,6 +47,13 @@ export default {
 h2 {
   margin-bottom: 2vh;
 }
+p {
+  font-size: 12px;
+  margin-top: 2rem;
+}
+a {
+  color: #FF8D8B;
+}
 .signIn {
   width: 400px;
   display: flex;
@@ -59,10 +67,6 @@ h2 {
   position: relative;
   max-width: 100%;
 }
-p {
-  font-size: 12px;
-  margin-top: 2rem;
-}
 .plane {
   position: absolute;
   top: -21px;
@@ -73,7 +77,8 @@ p {
   padding: .5rem 1.5rem;
   margin-top: 1rem;
 }
-a {
-  color: #FF8D8B;
+#forgotPass {
+   font-size: 15px;
+   margin-top: 10px;
 }
 </style>

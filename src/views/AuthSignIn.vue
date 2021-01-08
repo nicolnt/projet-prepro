@@ -2,7 +2,6 @@
   <div class="authSignIn">
     <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff"/>
     <img class="man" src="../assets/man-illustration.svg"/>
-    <router-link to="/" id="home">Accueil</router-link>
     <div id="authForm">
       <SignIn class="sign"/>
     </div>

@@ -1,26 +1,26 @@
 <template>
   <div class="patientResults">
-    <div class="resultsHeader">
+    <div class="patientResultsHeader">
       <h1>Résultats de [NOM DU PATIENT] - évaluation [VALIDATION]</h1>
-      <div class="resultsHeader-subtitle">
+      <div class="patientResultsHeaderSubtitle">
         <h3>Test effectué le [DATE CONSULTATION]</h3>
         <vs-button color="#9082FF" type="filled" v-on:click="download" id="btnDownload" icon="get_app">
           Télécharger les résultats
         </vs-button>
       </div>
     </div>
-    <div class="patientResults-content">
-      <div class="testMotricité">
-        <div class="testMotricité-header header">
+    <div class="patientResultsContent">
+      <div class="motricityResults results">
+        <div class="header">
           <h3>Test motricité fine<span> - réussi à 55%</span><span> - non validé</span></h3> 
         </div>
-        <div class="testMotricité-history">
+        <div class="motricityResultsHistory">
           <!-- J'ai fait quelques petites recherches quand on devra brancher ça sur la bdd on pourra faire avec v-for et des props-->
           <div class="circuit">
             <h4>Circuit 1</h4>
-            <div class = "circuit-info">
+            <div class = "circuitInfo">
               <img src="../assets/img-path.svg">
-              <div class="circuit-info-content">
+              <div class="circuitInfoContent">
                 <ul>
                   <li>Score : 90/100 </li>
                   <li>Nombre d’obstacles touchés : 2</li>
@@ -32,9 +32,9 @@
           </div>
           <div class="circuit">
             <h4>Circuit 2</h4>
-            <div class = "circuit-info">
+            <div class = "circuitInfo">
               <img src="../assets/img-path.svg">
-              <div class="circuit-info-content">
+              <div class="circuitInfoContent">
                 <ul>
                   <li>Score : 90/100 </li>
                   <li>Nombre d’obstacles touchés : 2</li>
@@ -46,18 +46,18 @@
           </div>  
         </div>
         <h3>Commentaire à propos du test : <strong>Motricité fine</strong></h3>
-        <div class ="testMotricité-comment">
+        <div class ="motricityResultsComment">
           <textarea placeholder="Ajouter un commentaire"></textarea>
-          <vs-button color="#9082FF" type="filled" id="btnMotComment">
+          <vs-button color="#9082FF" type="filled" id="btnMotricityComment">
             Enregistrer le commentaire
           </vs-button>
         </div> 
       </div>
-      <div class="globalComments">
-        <div class="globalComments-header header">
+      <div class="globalComment">
+        <div class="header">
           <h3>Commentaire global</h3>
         </div>
-        <div class="globalComments-content">
+        <div class="globalCommentContent">
           <textarea placeholder="Ajouter un commentaire"></textarea>
           <vs-button color="#9082FF" type="filled" id="btnSaveGlobalComment">
             Enregistrer le commentaire
@@ -88,7 +88,7 @@ export default {
   flex-direction: column;
   overflow-y: hidden;
 }
-.patientResults-content{
+.patientResultsContent{
   background-color : #F0F0F0;
   box-shadow: 0 4px 16px 0 rgba(0,0,0,.05);
   width: 98%;
@@ -99,7 +99,7 @@ export default {
   overflow-y: scroll;
   padding-bottom: 2%;
 }
-.testMotricité, .globalComments{
+.results, .globalComment{
   background-color: white;
   box-shadow: 0 4px 16px 0 rgba(0,0,0,.05);
   border-radius: 16px;
@@ -117,14 +117,14 @@ export default {
 .header h3, .header span {
   margin-left: 2%;
 }
-.resultsHeader{
+.patientResultsHeader{
   margin-top: 2%;
   text-align: left;
 }
-.resultsHeader h1{
+.patientResultsHeader h1{
   margin-left:3%;
 }
-.resultsHeader-subtitle{
+.patientResultsHeaderSubtitle{
   display: flex;
   flex-direction: row;
   margin-left:3%;
@@ -137,7 +137,7 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.globalComments-content, .testMotricité-comment{
+.globalCommentContent, .motricityResultsComment{
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -145,7 +145,7 @@ export default {
   margin-top: 2%;
   padding-bottom: 2%;
 }
-.globalComments-content textarea ,.testMotricité-comment textarea {
+.globalCommentContent textarea ,.motricityResultsComment textarea {
   width: 76%;
   height: 20vh;
   border: none;
@@ -153,15 +153,15 @@ export default {
   border-radius: 16px;
   padding: 10px;
 }
-.globalComments-content #btnSaveGlobalComment, .testMotricité-comment #btnMotComment{
+.globalCommentContent #btnSaveGlobalComment, .motricityResultsComment #btnMotricityComment{
   margin-left: 2%;
   width: 20%;
   border-radius: 16px;
 }
-.testMotricité h3{
+.motricityResults h3{
   margin-left: 2%;
 }
-.testMotricité-history{
+.motricityResultsHistory{
   display: flex;
   flex-direction: row;
   width:96%;
@@ -178,12 +178,12 @@ export default {
 .circuit img {
   width: 30%;
 }
-.circuit-info{
+.circuitInfo{
   display: flex;
   flex-direction: row;
 }
-.circuit-info .circuit-info-content li{
+.circuitInfo .circuitInfoContent li{
   list-style-type: none;
-  margin-left: 2%;
+  margin-left: 3%;
 }
 </style>

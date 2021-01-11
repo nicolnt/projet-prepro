@@ -1,0 +1,61 @@
+<template>
+  <div id="motricity-container">
+    <div class="canvasContainer">
+      <canvas id="backgroundTrack"></canvas>
+      <canvas id="traceCanvas"></canvas>
+    </div>
+	<canvas ref="canvas" id="pickerTrack"></canvas>
+  </div>
+</template>
+
+<script>
+import Level from '../../tests/motricity'
+
+export default {
+  name: 'MotricityTest',
+  data() {
+    return {
+      level: new Level()
+    }
+  },
+  created: function() {
+    this.$nextTick(function() {
+      this.level.setupLevel(require('../../tests/path.svg'), this.$refs['canvas'].clientWidth, this.$refs['canvas'].clientHeight)
+    })
+  }
+}
+</script>
+
+<style scoped>
+#motricity-container {
+  background: white;
+  height: 100%;
+  border-radius: 30px;
+}
+  canvas {
+    border: 1px solid #999;
+    height: 100%;
+    width: 100%;
+  }
+
+  .canvasContainer {
+    position: relative;
+    height: 100%;
+  }
+
+  canvas#backgroundTrack {
+    z-index: 0;
+  }
+
+  canvas#traceCanvas {
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  canvas#pickerTrack {
+    visibility: hidden;
+  }
+
+  </style>

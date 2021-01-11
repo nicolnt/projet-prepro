@@ -1,15 +1,15 @@
 <template>
   <div class="test">
     <NavBarTest testName="Motricité fine" p_color="#FF8D8B" p_colorBG="#ffffff" />
-    <div id="testContent">
-        <div id="barTest">
-          <p id="countTest">1/3</p>
+    <div class="test-content">
+        <div class="test-bar">
+          <span class="test-counter">1/3</span>
           <vs-button @click="ToggleInstructionsModal" radius type="flat" icon="help" color="#9082FF"></vs-button>
         </div>
         <h1>C'est parti !</h1>
         <TestInstructionsModal ref="TestInstructionsModal"/>
         <TestQuitModal ref="TestQuitModal"/>
-        <TestCompleteModal ref="TestCompleteModal"/>
+        <TestInfosModal ref="TestInfosModal"/>
     </div>
   </div>
 </template>
@@ -18,7 +18,7 @@
 import NavBarTest from '@/components/NavBarTest.vue'
 import TestInstructionsModal from '@/components/TestInstructionsModal.vue'
 import TestQuitModal from '@/components/TestQuitModal.vue'
-import TestCompleteModal from '@/components/TestCompleteModal.vue'
+import TestInfosModal from '@/components/TestInfosModal.vue'
 
 export default {
   name: 'MotricityTest',
@@ -26,7 +26,7 @@ export default {
     NavBarTest,
     TestInstructionsModal,
     TestQuitModal,
-    TestCompleteModal
+    TestInfosModal
   },
   methods: {
     ToggleInstructionsModal() {
@@ -35,7 +35,7 @@ export default {
   },
   data(){
     return {
-      quitPopupActiv:false,
+      quitPopupActiv:false
     }
   }
 }
@@ -48,21 +48,27 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: #EDEDED;
 }
-#testContent {
-  height: 100%;
-  padding: 20px;
-}
-#barTest {
-  width: 100%;
+.test-content {
+  flex-grow: 1;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  position: relative;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgba(200, 200, 200, 0.2);
 }
-h1 {
-  margin-top: 10%;
+.test-bar {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
-#countTest {
-  margin: 0.45rem;
+.test-bar > .test-counter {
+  padding: 10px;
+  line-height: 18px;
 }
 </style>

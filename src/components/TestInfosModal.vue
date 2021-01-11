@@ -1,21 +1,17 @@
 <template lang="html">
     <vs-popup :active.sync="popupActivo" title="" class="test-modal">
         <div class="test-modal-content">
-            <p>
-              Voulez-vous vraiment quitter le test ?<br/> 
-              Il ne sera pas enregistré.
-            </p>
+            <p><strong>Test terminé !</strong> Vous allez maintenant revenir à l'accueil.</p>
         </div>
-        <div class="test-modal-buttons">       
-            <vs-button id="btnQuitTest" color="#9082FF" v-on:click="stopTest">Quitter</vs-button>
-            <vs-button id="btnResumeTest" color="#9082FF" icon="play_arrow">Continuer</vs-button>
+        <div class="test-modal-buttons">
+            <vs-button id="btnEndTest" color="#9082FF">Ok</vs-button>
         </div>
     </vs-popup>
 </template>
 
 <script>
 export default {
-  name: 'TestQuitModal',
+  name: 'TestInfoseModal',
   data() {
     return { 
         popupActivo: false
@@ -24,9 +20,6 @@ export default {
   methods: {
     toggle() {
       this.popupActivo = !this.open;
-    },
-    stopTest() {
-      this.$router.push({name:'PatientProfil'})
     }
   }
 }

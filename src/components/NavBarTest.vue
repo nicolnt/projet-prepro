@@ -1,14 +1,14 @@
 <template>
-  <div class="navBarConnect">
+  <div class="test-navbar">
     <vs-navbar v-model="activeItem" color="#ffffff" class="nabarx" id="navBar">
       <div slot="title">
         <vs-navbar-title>
           Nom application
         </vs-navbar-title>
       </div>
-      <vs-navbar-title id="testName">
-        {{ testName }}
-      </vs-navbar-title>
+      <span class="test-navbar-title">
+        {{testName}}
+      </span>
       <vs-navbar-item index="0">
         <vs-button color="#000000" type="flat" v-on:click="stopTest">Quitter le test</vs-button>
       </vs-navbar-item>
@@ -31,23 +31,19 @@ export default {
     }
   },
   props: {
-    testName: String,
+    testName: String
   }
 }
 </script>
 
 <style scoped>
-.navBarConnect{
+.test-navbar{
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.2);
 }
 #navBar {
-  padding: 10px 0;
+  padding: 10px 25px;
 }
-#testName {
-  margin: auto;
-}
-.vs-con-items {
-  width: 100%;
-  background-color: blue;
+.test-navbar-title {
+  font-weight: 600;
 }
 </style>

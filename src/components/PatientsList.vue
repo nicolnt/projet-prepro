@@ -34,6 +34,8 @@
 <script>
 import Hero from '@/components/Hero.vue'
 import AddPatientModal from '@/components/AddPatientModal.vue'
+import { mapGetters } from "vuex";
+
 
 export default {
   name: 'PatientsList',
@@ -45,6 +47,12 @@ export default {
   components: {
     Hero,
     AddPatientModal
+  },
+  computed: {
+    // map `this.user` to `this.$store.getters.user`
+    ...mapGetters({
+      user: "user"
+    })
   },
   methods: {
     goPatientProfil() {

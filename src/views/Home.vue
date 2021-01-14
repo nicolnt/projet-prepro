@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff" />
+    <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/>
+    <!-- <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff" /> -->
     <div class="introduction-application">
       <div class="presentation-application">
         <h1> Lorem ipsum dolor sit amet </h1>
@@ -16,13 +17,15 @@
 </template>
 
 <script>
-import NavBarAuth from '@/components/NavBarAuth.vue'
+// import NavBarAuth from '@/components/NavBarAuth.vue'
+import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'Home',
   components: {
-    NavBarAuth,
+    // NavBarAuth,
+    NavBar,
     Footer
   },
   methods: {

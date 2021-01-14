@@ -20,6 +20,7 @@
 // import NavBarAuth from '@/components/NavBarAuth.vue'
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
+import { mapGetters } from "vuex";
 
 export default {
   name: 'Home',
@@ -32,7 +33,18 @@ export default {
     goSignUp() {
       this.$router.push({name:'AuthSignUp'})
     }
-  }
+  },
+  mounted: function(){
+    console.log(this.user)
+    if(this.user.loggedIn==true){
+      this.$router.push({name:'Dashboard'})
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
+  },
 }
 </script>
 

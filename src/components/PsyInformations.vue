@@ -3,7 +3,7 @@
     <Hero title="Informations du psychologue"/>
     <div id="psyDatas">
       <img src="../assets/avatar-woman-illustration.svg" alt="imgPatient" id="imgPatient">
-      <h2>Nom du psychologue</h2>
+      <h2>{{user.data.displayName}}</h2>
     </div>
     <vs-button color="#9082FF" type="filled" id="btnModif">Modifier les informations</vs-button>
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
@@ -12,11 +12,17 @@
 
 <script>
 import Hero from '@/components/Hero.vue'
+import { mapGetters } from "vuex"
 
 export default {
   name: 'PsyInformations',
   components: {
     Hero,
+  },
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
   },
 }
 </script>

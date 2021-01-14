@@ -3,12 +3,15 @@
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     <div id="patientDatasActions">
       <div id="patientDatas">
-        <img src="../assets/avatar-woman-illustration.svg" alt="imgPatient" id="imgPatient">
+        <img class="avatar" v-if="patient.gender == 1" alt="imgPatient" id="imgPatient" src="../assets/avatar-man-illustration.svg"/>
+          <img class="avatar" v-if="patient.gender == 0"  alt="imgPatient" id="imgPatient" src="../assets/avatar-woman-illustration.svg"/>
         <div id="patientTxtDatas">
-          <h1>Nom du patient</h1>
-          <h3>Date de naissance</h3>
-          <h3>Adresse</h3>
-          <p>Motif : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <h1>{{patient.firstName}} {{patient.lastName}}</h1>
+          <h3>Date de naissance : {{patient.birthday}}</h3>
+          <h3>Adresse : {{patient.address}}, {{patient.cp}} {{patient.city}}</h3>
+          <h3>Email : {{patient.email}}</h3>
+          <p>Motif : {{patient.testReason}}</p>
+          <p>Date de création : {{patient.dateCreation.toDate() }}</p>
         </div>
       </div>
       <div id="actions">
@@ -27,6 +30,14 @@
 
 export default {
   name: 'PatientProfil',
+  data () {
+    return {
+        patient:{}
+    }
+  },
+  created() {
+      this.patient = this.$route.params.patient;
+  },
   methods: {
     goResults() {
       this.$router.push({name:'PatientResults'})

@@ -14,7 +14,7 @@
     </div>
     <div id="list">
       <ul>
-        <li v-on:click="goPatientProfil" v-for="patient in patients" :key="patient.firstName">
+        <li v-on:click="goPatientProfil(patient)" v-for="patient in patients" :key="patient.firstName">
           <img class="avatar" v-if="patient.gender == 1" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
           <img class="avatar" v-if="patient.gender == 0"  alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
           {{patient.lastName}} {{patient.firstName}}
@@ -55,8 +55,8 @@ export default {
     this.getPatientList()
   },
   methods: {
-    goPatientProfil() {
-      this.$router.push({name:'PatientProfil'})
+    goPatientProfil(patient) {
+      this.$router.push({name:'PatientProfil',  params: { patient: patient } })
     },
     toggleModal() {
       this.$refs.addPatientModal.toggle()

@@ -2,6 +2,7 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
 import 'firebase/storage'
+import 'firebase/firestore';
 
 export const db = firebase
   .initializeApp({
@@ -14,7 +15,7 @@ export const db = firebase
     appId: "1:417546564734:web:d1826e669c1e013035542f",
     measurementId: "G-PZJJTNB44C"
   })
-  .database()
+  .firestore()
 
 export const fire = firebase
 

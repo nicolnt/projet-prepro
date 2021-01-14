@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { db } from './services/firebase'
+// import { db } from './services/firebase'
 
 
 export default {
@@ -16,12 +16,12 @@ export default {
   },
   methods: {
     checkDataBase () {
-      var query = db.ref('patients').orderByKey()
-      query.once('value').then(function (snapshot) {
-        snapshot.forEach(function (childSnapshot) {
-           console.log(childSnapshot.val())
-        })
-      })
+      // var query = db.ref('patients').orderByKey()
+      // query.once('value').then(function (snapshot) {
+      //   snapshot.forEach(function (childSnapshot) {
+      //      console.log(childSnapshot.val())
+      //   })
+      // })
     }
   }
 }

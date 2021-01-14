@@ -103,12 +103,19 @@ export default {
             .updateProfile({
               displayName: this.form.firstName
             })
-            .then(() => { db.ref('users/' + data.user.uid).set({
-            firstName: this.form.firstName,
-            lastName: this.form.lastName,
-            email: this.form.email,
-            
-          }).then(() => {
+            .then(() => { db.collection("users").add({
+              firstName: this.form.firstName,
+              lastName: this.form.lastName,
+              mail: this.form.mail,
+              codePin: 123,
+              dateCreation: new Date()
+            })
+            .then(function(docRef) {
+              console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error) {
+              console.error("Error adding document: ", error);
+            }).then(() => {
             const user = firebase.auth().currentUser
             user.sendEmailVerification().then(() => {
               this.$router.push({ name: 'PatientsList' }).catch(() => {})

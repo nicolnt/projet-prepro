@@ -106,7 +106,7 @@ export default {
             .then(() => { db.collection("users").add({
               firstName: this.form.firstName,
               lastName: this.form.lastName,
-              mail: this.form.email,
+              email: this.form.email,
               codePin: 123,
               dateCreation: new Date()
             })

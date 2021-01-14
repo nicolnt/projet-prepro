@@ -47,8 +47,6 @@ export default {
 // map `this.user` to `this.$store.getters.user`
       user: "user"
     })
-  },created () {
-    console.log(this.user)
   },
   methods:{
     goHome() {

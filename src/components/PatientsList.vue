@@ -14,17 +14,10 @@
     </div>
     <div id="list">
       <ul>
-        <li v-on:click="goPatientProfil">
-          <img class="avatar" alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
-          Nom prénom patient 1
-        </li>
-        <li v-on:click="goPatientProfil">
-          <img class="avatar" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
-          Nom prénom patient 2
-        </li>
-        <li v-on:click="goPatientProfil">
-          <img class="avatar" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
-          Nom prénom patient 3
+        <li v-on:click="goPatientProfil" v-for="patient in patients" :key="patient.firstName">
+          <img class="avatar" v-if="patient.gender == 1" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
+          <img class="avatar" v-if="patient.gender == 0"  alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
+          {{patient.lastName}} {{patient.firstName}}
         </li>
       </ul>
     </div>
@@ -35,13 +28,17 @@
 import Hero from '@/components/Hero.vue'
 import AddPatientModal from '@/components/AddPatientModal.vue'
 import { mapGetters } from "vuex";
-
+import { db } from '../services/firebase'
+import firebase from 'firebase/app'
+require('firebase/auth')
 
 export default {
   name: 'PatientsList',
   data(){
     return {
-      valueInputSearch:''
+      valueInputSearch:'',
+      patients: [],
+      id: null
     }
   },
   components: {
@@ -54,12 +51,35 @@ export default {
       user: "user"
     })
   },
+  mounted: function(){
+    this.getPatientList()
+  },
   methods: {
     goPatientProfil() {
       this.$router.push({name:'PatientProfil'})
     },
     toggleModal() {
       this.$refs.addPatientModal.toggle()
+    },
+    getPatientList(){
+      var tmp = null
+      var self = this
+      db.collection("users").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if(doc.data().email == firebase.auth().currentUser.email){
+              self.id = doc.id
+          }
+        });
+      })
+      db.collection("patients").orderBy("lastName").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if(doc.data().idUser == self.id){
+            tmp = doc.data()
+            tmp.id = doc.id
+            self.patients.push(tmp)
+          }
+        });
+      })
     }
   }
 }

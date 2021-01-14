@@ -101,12 +101,12 @@ export default {
         .then((data) => {
           data.user
             .updateProfile({
-              displayName: this.form.firstName
+              displayName: this.form.firstName + ' ' + this.form.lastName
             })
             .then(() => { db.collection("users").add({
               firstName: this.form.firstName,
               lastName: this.form.lastName,
-              mail: this.form.mail,
+              mail: this.form.email,
               codePin: 123,
               dateCreation: new Date()
             })

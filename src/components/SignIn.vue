@@ -55,6 +55,8 @@
 import firebase from 'firebase/app'
 require('firebase/auth')
 import store from "../services/stores/logStore";
+import { db } from '../services/firebase'
+
 
 export default {
   name: 'SignIn',
@@ -79,6 +81,16 @@ export default {
         .signInWithEmailAndPassword(this.form.email, this.form.password)
         .then(() => {
           const user = firebase.auth().currentUser
+          console.log(user.email)
+          db.collection("users").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              if(doc.data().mail == user.email){
+                user.updateProfile({
+                  displayName: doc.data().firstName + ' ' + doc.data().lastName
+                });
+              }
+            });
+          });
           console.log(user)
           store.dispatch("fetchUser", user)
           this.$router.push({ name: 'PatientsList' })

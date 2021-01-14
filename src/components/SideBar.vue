@@ -5,7 +5,7 @@
       <img class="avatar" alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
       <div id="txtCardUser">
         <h3>{{user.data.displayName}}</h3>
-        <p>{{user.data.email}}</p>
+        <p></p>
         <p>Psychologue</p>
       </div>
       <div class="icon-settings">

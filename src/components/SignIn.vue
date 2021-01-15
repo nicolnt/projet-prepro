@@ -19,7 +19,6 @@
       </div>
       <div class="">
         <label for="password" class="">Mot de passe</label>
-
         <div class="">
           <input
             id="password"
@@ -34,15 +33,14 @@
         <button type="submit" class="submit">Se connecter</button>
       </div>
       <div>
-        <div class="forgottenPass">
-          <div class="link">Mot de passe oublié ?</div>
-        </div>
+          <div class="forgotPass" @click="toggleModal">Mot de passe oublié ?</div>
       </div>
     </form>
+    <ForgotPass ref="forgotPassModal"/>
       <!-- <Input title="Email" type="email" name="email" v-bind:value.sync="m_valueEmail" :verifInput="checkInput" required/>
       <Input title="Mot de passe" type="password" name="password" v-bind:value.sync="m_valuePassword" :verifInput="checkInput" required/>
       <vs-button color="#FF8D8B" type="filled" v-on:click="goSignIn" id="button">Se connecter</vs-button> -->
-      <router-link to="/" id="forgotPass">Mot de passe oublié ?</router-link>
+      <!--<router-link to="/" id="forgotPass">Mot de passe oublié ?</router-link>-->
       <p> Vous n'avez pas encore de compte ? <router-link to="/signUp"> Inscrivez-vous </router-link> </p>
       <img class="plane" src="../assets/plane-illustration.svg"/>
   </div>
@@ -52,6 +50,7 @@
 
 // import Input from '@/components/Input.vue'
 //import logStore from '@/services/stores/logStore'
+import ForgotPass from '@/components/ForgotPass'
 import firebase from 'firebase/app'
 require('firebase/auth')
 import store from "../services/stores/logStore";
@@ -62,6 +61,7 @@ export default {
   name: 'SignIn',
   components: {
     // Input
+    ForgotPass
   },
   data() {
     return {
@@ -75,6 +75,9 @@ export default {
     }
   },
   methods:{
+    toggleModal() {
+      this.$refs.forgotPassModal.toggle()
+    },
     submit() {
       firebase
         .auth()
@@ -137,6 +140,11 @@ a {
   position: relative;
   max-width: 100%;
 }
+.forgotPass {
+  font-size: 15px;
+  margin-top: 10px;
+  color: #FF8D8B;
+}
 .plane {
   position: absolute;
   top: -21px;
@@ -147,8 +155,7 @@ a {
   padding: .5rem 1.5rem;
   margin-top: 1rem;
 }
-#forgotPass {
-   font-size: 15px;
-   margin-top: 10px;
+.forgotPass:hover {
+  cursor: default;
 }
 </style>

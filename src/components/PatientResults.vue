@@ -110,7 +110,7 @@ export default {
 }
 .header{
   background-color:#9082FF;
-  border-radius: 16px;
+  border-radius: 16px 16px 0 0;
   color: white;
   padding: 1.5% 0;
 }

@@ -9,18 +9,25 @@
 </template>
 
 <script>
-import Level from '../../tests/motricity'
+import Game from '../../tests/motricity'
 
 export default {
   name: 'MotricityTest',
   data() {
     return {
-      level: new Level()
+      game: new Game(require('../../tests/motricity.json'), this.myFunc),
+    }
+  },
+  methods: {
+    myFunc() {
+      console.log(this.game)
+      this.game.switchToNextLevel()
     }
   },
   created: function() {
     this.$nextTick(function() {
-      this.level.setupLevel(require('../../tests/path.svg'), this.$refs['canvas'].clientWidth, this.$refs['canvas'].clientHeight)
+      this.game.switchToNextLevel()
+      //this.level.setupLevel(require('../../tests/path.svg'), this.myFunc,  this.$refs['canvas'].clientWidth, this.$refs['canvas'].clientHeight)
     })
   }
 }

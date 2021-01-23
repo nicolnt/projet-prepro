@@ -1,58 +1,82 @@
 class Track {
-	trackReady = false
-	onload = () => {}
-	trackCanvas = document.getElementById('pickerTrack')
-	backgroundCanvas = document.getElementById('backgroundTrack')
-
-	constructor() {
-		this.trackImage = new Image()
-		// Build picker track used to check the type of underlying object
-		this.trackCanvasContext = this.trackCanvas.getContext('2d')
-		this.backgroundCanvasContext = this.backgroundCanvas.getContext('2d')
-	}
+	static trackReady = false
+  static trackImageBackground = new Image()
+  static trackImageTrack = new Image()
 
 	/**
 	 * Init a new track
 	 */
-	setTrack(trackImagePath, canvasWidth, canvasHeight) {
-		this.trackImage.src = trackImagePath
-		this.trackReady = false
+	static setTrack(trackImageName) {
+    Track.trackReady = false
 
-		this.trackImage.onload = () => {
-			this.trackCanvas.width = canvasWidth
-			this.trackCanvas.height = canvasHeight
-			this.trackCanvasContext.clearRect(0, 0, canvasWidth, canvasHeight)
-			this.trackCanvasContext.drawImage(this.trackImage, 0, 0, canvasWidth, canvasHeight)
+    Track.trackCanvas = document.getElementById('pickerTrack')
+    Track.backgroundCanvas = document.getElementById('backgroundTrack')
+    Track.trackCanvasContext = Track.trackCanvas.getContext('2d')
+    Track.backgroundCanvasContext = Track.backgroundCanvas.getContext('2d')
 
-			this.backgroundCanvas.width = canvasWidth
-			this.backgroundCanvas.height = canvasHeight
-			this.backgroundCanvasContext.clearRect(0, 0, canvasWidth, canvasHeight)
-			this.backgroundCanvasContext.drawImage(this.trackImage, 0, 0, canvasWidth, canvasHeight)
+    Track.traceCanvas = document.getElementById('traceCanvas')
+    Track.traceCanvasContext = Track.traceCanvas.getContext('2d')
 
-			this.trackReady = true
-			this.onload()
-		}
+		Track.trackImageBackground.src = require(`./${trackImageName}_background.svg`)
+		Track.trackImageTrack.src = require(`./${trackImageName}_track.svg`)
+
+		Track.trackImageBackground.onload = Track.trackLoaded
+		Track.trackImageTrack.onload = Track.trackLoaded
 	}
+
+  static setStrokeColorAccordingToType(type) {
+    if (type === 'path')
+      Track.traceCanvasContext.strokeStyle = 'blue'
+    else if (type === 'beforeStart')
+      Track.traceCanvasContext.strokeStyle = 'purple'
+    else
+      Track.traceCanvasContext.strokeStyle = 'red'
+  }
+
+
+  static trackLoaded() {
+    if (Track.trackImageBackground.complete && Track.trackImageTrack.complete) {
+      const imageRatio = Track.trackImageBackground.width / Track.trackImageBackground.height
+      const canvasWidth = Track.traceCanvas.clientWidth
+      const canvasHeight = Track.traceCanvas.clientHeight
+
+			Track.traceCanvas.width = canvasWidth
+			Track.traceCanvas.height = canvasHeight
+      Track.traceCanvasContext.clearRect(0, 0, canvasWidth, canvasHeight)
+
+			Track.trackCanvas.width = canvasWidth
+			Track.trackCanvas.height = canvasHeight
+			Track.trackCanvasContext.clearRect(0, 0, canvasWidth, canvasHeight)
+			Track.trackCanvasContext.drawImage(Track.trackImageTrack, 0, 0, canvasWidth, canvasWidth / imageRatio)
+
+			Track.backgroundCanvas.width = canvasWidth
+			Track.backgroundCanvas.height = canvasHeight
+			Track.backgroundCanvasContext.clearRect(0, 0, canvasWidth, canvasHeight)
+			Track.backgroundCanvasContext.drawImage(Track.trackImageBackground, 0, 0, canvasWidth, canvasWidth / imageRatio)
+
+			Track.trackReady = true
+    }
+  }
 
 	/**
 	 * Obtain the hex color code of a certain pixel from the picker canvas
 	 */
-	getColorFromCoords(coords) {
-		return this.trackCanvasContext.getImageData(coords.x, coords.y, 1, 1).data
-			.reduce((acc, curr) => acc + this.colorComponentToHex(curr), '')
+	static getColorFromCoords(coords) {
+		return Track.trackCanvasContext.getImageData(coords.x, coords.y, 1, 1).data
+			.reduce((acc, curr) => acc + Track.colorComponentToHex(curr), '')
 			.slice(0, 6)
 	}
 
 	/**
 	 * Convert 256 bit color to hex, preced by a '0' if lower than 10
 	 */
-	colorComponentToHex(colorValue) {
+	static colorComponentToHex(colorValue) {
 		var hex = colorValue.toString(16);
 		return hex.length == 1 ? "0" + hex : hex;
 	}
 
-	getTypeFromCoordInCheckerContext(coords) {
-		switch (this.getColorFromCoords(coords)) {
+	static getTypeFromCoordInCheckerContext(coords) {
+		switch (Track.getColorFromCoords(coords)) {
 			case '2469ff':
 				return 'path'
 			case '0fff00':
@@ -75,66 +99,65 @@ class Level {
 	drawing = false
 	length = {
 		inside: 0,
+		obstacle: 0,
+		beforeStart: 0,
 		outside: 0,
 	}
 	traces = 0
 	startValidated = false
 	timeElapsed = Date.now()
+  callback
 
-	setupLevel(trackImagePath, canvasWidth = 800, canvasHeight = 600) {
-    this.traceCanvas = document.getElementById('traceCanvas')
-		this.track = new Track()
-		this.traceCanvasContext = this.traceCanvas.getContext('2d')
-		this.traceCanvas.width = canvasWidth
-		this.traceCanvas.height = canvasHeight
-		this.traceCanvasContext.clearRect(0, 0, this.traceCanvas.width, this.traceCanvas.height)
-		this.track.setTrack(trackImagePath, canvasWidth, canvasHeight) // TODO lock drawing while not ready
+  static currentLevel
+
+	constructor(levelData, callback) {
+    this.callback = callback
+		Track.setTrack(levelData.name) // TODO lock drawing while not ready
 		this.pointSeries = []
 		this.length.inside = 0
 		this.length.outside = 0
 		this.traces = 0
 		this.drawing = false
-		this.startValidated = false
-		this.timeElapsed = Date.now()
+    if (levelData.startingPoint === true)
+      this.startValidated = false
+    else
+      this.startValidated = true
+    this.levelData = levelData
 		//setTimeout(this.initMeasures, 1000)
+    Level.currentLevel = this
 		this.initMeasures()
 	}
 
 	initMeasures() {
-		this.traceCanvas.addEventListener('mousedown', pointer => {
+		Track.traceCanvas.addEventListener('mousedown', pointer => {
 			// Create a new series
-			this.drawing = true
-			const coords = { x: pointer.offsetX, y: pointer.offsetY }
+      if (Track.trackReady) {
+        Level.currentLevel.drawing = true
+        const coords = { x: pointer.offsetX, y: pointer.offsetY }
 
-			this.addPoint(coords, true)
-			this.traces++
+        Level.currentLevel.addPoint(coords, true)
+        Level.currentLevel.traces++
+      }
 		})
 
-		this.traceCanvas.addEventListener('mousemove', pointer => {
-			if (this.drawing === true) {
+		Track.traceCanvas.addEventListener('mousemove', pointer => {
+			if (Level.currentLevel.drawing === true) {
 				const coords = { x: pointer.offsetX, y: pointer.offsetY }
-				this.addPoint(coords)
+				Level.currentLevel.addPoint(coords)
 			}
 		})
-		this.traceCanvas.addEventListener('mouseup', pointer => {
-			const coords = { x: pointer.offsetX, y: pointer.offsetY }
-			this.addPoint(coords, false, true)
-			this.drawing = false
-		})
-	}
-
-	setStrokeColorAccordingToType(type) {
-		if (type === 'path')
-			this.traceCanvasContext.strokeStyle = 'blue'
-		else if (type === 'beforeStart')
-			this.traceCanvasContext.strokeStyle = 'purple'
-		else
-			this.traceCanvasContext.strokeStyle = 'red'
+		Track.traceCanvas.addEventListener('mouseup', pointer => {
+			if (Level.currentLevel.drawing === true) {
+        const coords = { x: pointer.offsetX, y: pointer.offsetY }
+        Level.currentLevel.addPoint(coords, false, true)
+        Level.currentLevel.drawing = false
+      }
+    })
 	}
 
 	addNewSeries(type) {
-		this.traceCanvasContext.beginPath()
-		this.setStrokeColorAccordingToType(type)
+		Track.traceCanvasContext.beginPath()
+    Track.setStrokeColorAccordingToType(type)
 		this.pointSeries.push({
 			type,
 			points: []
@@ -147,11 +170,15 @@ class Level {
 			const length = Level.computeLength(currentSeries.points[currentSeries.points.length - 2], currentSeries.points[currentSeries.points.length - 1])
 			if (currentSeries.type === 'out')
 				this.length.outside += length
+      else if (currentSeries.type === 'obstacle')
+				this.length.obstacle += length
+      else if (currentSeries.type === 'beforeStart')
+				this.length.beforeStart += length
 			else
 				this.length.inside += length
 		}
 
-		console.log('inside:', this.length.inside, '\noutside:', this.length.outside)
+		console.log('inside:', this.length.inside, '\nobstacle', this.length.obstacle, '\nbeforeStart:', this.length.beforeStart, '\noutside:', this.length.outside)
 	}
 
 	getTraceLength() {
@@ -178,8 +205,7 @@ class Level {
 	}
 
 	addPoint(coords, newSeries = false, forcePoint = false) {
-		let type = this.track.getTypeFromCoordInCheckerContext(coords)
-
+		let type = Track.getTypeFromCoordInCheckerContext(coords)
 		if (this.startValidated === false && type !== 'start') {
 			type = 'beforeStart'
 		}
@@ -189,8 +215,12 @@ class Level {
 		}
 
 		if (newSeries === true || (this.pointSeries[this.pointSeries.length - 1].type !== type && type !== 'beforeStart')) {
-			this.traceCanvasContext.lineWidth = 10
-			this.traceCanvasContext.moveTo(coords.x, coords.y)
+      if (this.pointSeries.length === 0) {
+        this.startingPoint = coords
+        this.timeElapsed = Date.now()
+      }
+			Track.traceCanvasContext.lineWidth = 10
+			Track.traceCanvasContext.moveTo(coords.x, coords.y)
 			this.addNewSeries(type)
 		}
 
@@ -198,7 +228,7 @@ class Level {
 		const prevSeries = this.pointSeries[this.pointSeries.length - 2]
 		if (newSeries === false && prevSeries && prevSeries.type !== type && this.pointSeries[this.pointSeries.length - 1].points.length === 0) {
 			const prevPoint = prevSeries.points[prevSeries.points.length - 1]
-			this.traceCanvasContext.moveTo(prevPoint.x, prevPoint.y)
+			Track.traceCanvasContext.moveTo(prevPoint.x, prevPoint.y)
 			this.pointSeries[this.pointSeries.length - 1].points.push({x: prevPoint.x, y: prevPoint.y})
 		}
 
@@ -206,23 +236,64 @@ class Level {
 		const prevPoint = currentSeries.points[currentSeries.points.length - 1]
 		if (forcePoint || currentSeries.points.length === 0 || (prevPoint && (Level.computeLength(prevPoint, coords) > 5))) {
 			if (currentSeries.points.length) {
-				this.traceCanvasContext.lineTo(coords.x, coords.y)
-				this.traceCanvasContext.stroke()
+				Track.traceCanvasContext.lineTo(coords.x, coords.y)
+				Track.traceCanvasContext.stroke()
 			}
 			this.pointSeries[this.pointSeries.length - 1].points.push(coords)
 			this.updateLength()
 		}
-		if (type === 'end')
+
+    // NOTE end of the level
+    if (type === 'end' || (this.levelData.startingPoint === false &&  (this.length.inside + this.length.obstacle + this.length.outside)/Track.traceCanvas.width >= this.levelData.meanLength * 0.66 && Level.computeLength(coords, this.startingPoint) <= 10))
 			this.stopLevel()
 	}
+
 	stopLevel() {
 		this.timeElapsed = Date.now() - this.timeElapsed
-		console.log(this.timeElapsed)
-		this.setupLevel('path2.svg')
+    this.drawing = false
+		//console.log(this.timeElapsed)
+    Level.callback()
+		//this.setupLevel('path2.svg')
 	}
 }
 
-export default Level
+class Game {
+  state = {
+    trainingComplete: false,
+    currentLevel: -1
+  }
+
+  constructor(gameData, callAfterSuccess) {
+    this.gameData = gameData
+    Level.callback = callAfterSuccess
+  }
+
+  switchToNextLevel() {
+    if (this.gameData.training.length && this.state.trainingComplete === false && this.gameData.training.length === this.state.currentLevel + 1) {
+      this.state.trainingComplete = true
+      this.state.currentLevel = 0
+    } else {
+      this.state.currentLevel++
+    }
+    this.startLevel()
+  }
+
+
+
+  startLevel() {
+    let currentLevelData
+    if (this.gameData.training.length && this.state.trainingComplete === false)
+      currentLevelData = this.gameData.training[this.state.currentLevel]
+    else
+      currentLevelData = this.gameData.tests[this.state.currentLevel]
+
+    currentLevelData.level = new Level(currentLevelData)
+  }
+}
+
+//export default Level
+export default Game
+
 //level.setupLevel('path.svg', 800, 600)
 
 // TODO check https://stackoverflow.com/questions/16968945/convert-base64-png-data-to-javascript-file-objects

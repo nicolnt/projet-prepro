@@ -38,6 +38,8 @@ export default {
   background: white;
   height: 100%;
   border-radius: 30px;
+  width: 100%;
+  overflow: hidden;
 }
   canvas {
     border: 1px solid #999;

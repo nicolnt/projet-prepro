@@ -14,6 +14,7 @@ import PatientResults from '../components/PatientResults.vue'
 import PatientProfil from '../components/PatientProfil.vue'
 import TestList from '../components/TestList.vue'
 import MotricityTest from '../components/tests/MotricityTest.vue'
+//import MotricityTest from '../tests/MotricityTest.vue'
 
 Vue.use(VueRouter)
 

@@ -91,6 +91,20 @@ class Track {
 	}
 }
 
+function finPos(target, offset) {
+  let left = 0;
+  let top = 0;
+  if (target.offsetParent) {
+    do {
+      left += target.offsetLeft
+      top += target.offsetTop
+      /* eslint no-cond-assign: "off" */
+    } while (target = target.offsetParent) 
+  }
+  offset.x = left
+  offset.y = top
+}
+
 /**
  * Top level class that manage the level : track + user path
  */
@@ -129,6 +143,39 @@ class Level {
 	}
 
 	initMeasures() {
+    const offset = {
+      x: 0,
+      y: 0
+    }
+
+		Track.traceCanvas.addEventListener('touchstart', pointer => {
+			// Create a new series
+      if (Track.trackReady) {
+        if (offset.x === 0) {
+          finPos(pointer.target, offset)
+        }
+
+        Level.currentLevel.drawing = true
+        const coords = { x: pointer.changedTouches[0].pageX - offset.x, y: pointer.changedTouches[0].pageY - offset.y }
+
+        Level.currentLevel.addPoint(coords, true)
+        Level.currentLevel.traces++
+      }
+		})
+
+		Track.traceCanvas.addEventListener('touchmove', pointer => {
+			if (Level.currentLevel.drawing === true) {
+				const coords = { x: pointer.changedTouches[0].pageX - offset.x, y: pointer.changedTouches[0].pageY - offset.y }
+				Level.currentLevel.addPoint(coords)
+			}
+		})
+		Track.traceCanvas.addEventListener('touchend', pointer => {
+			if (Level.currentLevel.drawing === true) {
+        const coords = { x: pointer.changedTouches[0].pageX  - offset.x, y: pointer.changedTouches[0].pageY - offset.y }
+        Level.currentLevel.addPoint(coords, false, true)
+        Level.currentLevel.drawing = false
+      }
+    })
 		Track.traceCanvas.addEventListener('mousedown', pointer => {
 			// Create a new series
       if (Track.trackReady) {

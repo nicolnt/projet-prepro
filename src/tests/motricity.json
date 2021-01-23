@@ -1,0 +1,16 @@
+{
+	"training" : [
+	],
+	"tests": [
+		{
+			"name": "test1",
+			"startingPoint": false,
+			"meanLength": 1.62
+		},
+		{
+			"name": "test2",
+			"startingPoint": true,
+			"meanLength": 5.26
+		}
+	]
+}

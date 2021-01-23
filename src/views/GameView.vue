@@ -6,7 +6,7 @@
           <span class="test-counter">1/3</span>
           <vs-button @click="ToggleInstructionsModal" radius type="flat" icon="help" color="#9082FF"></vs-button>
         </div>
-        <h1>C'est parti !</h1>
+        <router-view></router-view>
         <TestInstructionsModal ref="TestInstructionsModal"/>
         <TestQuitModal ref="TestQuitModal"/>
         <TestInfosModal ref="TestInfosModal"/>
@@ -32,6 +32,7 @@ export default {
     ToggleInstructionsModal() {
       this.$refs.TestInstructionsModal.toggle()
     }
+
   },
   data(){
     return {
@@ -51,15 +52,13 @@ export default {
   background-color: #EDEDED;
 }
 .test-content {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px;
-  position: relative;
   background-color: #FFFFFF;
   border-radius: 20px;
   box-shadow: 0px 0px 20px rgba(200, 200, 200, 0.2);
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+  margin: 20px;
 }
 .test-bar {
   display: flex;

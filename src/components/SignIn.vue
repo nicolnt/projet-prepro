@@ -32,7 +32,7 @@
         />
         <span class="focus-input"></span>
         <span class="symbol-input">
-          <i class="material-icons" aria-hidden="true">email</i>
+          <i class="material-icons" aria-hidden="true">lock_outline</i>
         </span>
       </div>
       <div class="btn-submit">

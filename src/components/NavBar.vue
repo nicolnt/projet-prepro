@@ -1,12 +1,11 @@
 <template>
   <div class="navBarConnect">
     <vs-navbar v-model="activeItem" color="#ffffff" class="nabarx" id="navBar">
-      <div slot="title">
+      <div class="titleApp" v-on:click="goDashboard" slot="title">
         <vs-navbar-title>
-          Nom application
+          Tapitap
         </vs-navbar-title>
       </div>
-      
      <template v-if="user.loggedIn">
       <vs-navbar-item index="0" v-if="user.loggedIn">
         <vs-button color="#000000" type="flat" @click.prevent="signOut">Déconnexion</vs-button>
@@ -67,6 +66,9 @@ export default {
     },
     goSignUp() {
         this.$router.push({name:'AuthSignUp'})
+    },
+    goDashboard() {
+      this.$router.push({name:'PatientsList'})
     }
   }
 }
@@ -82,6 +84,9 @@ export default {
 }
 .vs-navbar {
   z-index: 1;
+}
+.titleApp {
+  cursor: pointer;
 }
 .vs-button {
   font-size: 16px;

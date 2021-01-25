@@ -1,9 +1,9 @@
 <template>
   <div class="navBarDeconnect">
     <vs-navbar v-model="activeItem" v-bind:color="colorBG" class="nabarx" id="navBar">
-      <div slot="title">
+      <div class="titleApp" v-on:click="goHome" slot="title">
         <vs-navbar-title>
-          Nom application
+          Tapitap
         </vs-navbar-title>
       </div>
       <vs-navbar-item index="0">
@@ -36,7 +36,10 @@ export default {
     },
     goSignUp() {
         this.$router.push({name:'AuthSignUp'})
-    }
+    },
+    goHome(){
+      this.$router.push({name:'Home'})
+    },
   }
 }
 </script>
@@ -46,7 +49,11 @@ export default {
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.2);
 }
 #navBar {
-  padding: 10px 25px;
+  height: 80px;
+  padding: 10px 50px;
+}
+.titleApp {
+  cursor: pointer;
 }
 .vs-button {
   font-size: 16px;

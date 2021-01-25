@@ -191,6 +191,12 @@ h2 {
   z-index: 1;
   margin-bottom: 1.5rem;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+  box-shadow: 0 0 0 30px white inset !important;
+}
 .input {
   font-size: 14px;
   line-height: 1.5;

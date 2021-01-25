@@ -1,7 +1,12 @@
 <template>
   <div class="navBarConnect">
     <vs-navbar v-model="activeItem" color="#ffffff" class="nabarx" id="navBar">
-      <div class="titleApp" v-on:click="goDashboard" slot="title">
+      <div v-if="user.loggedIn" class="titleApp" v-on:click="goDashboard" slot="title">
+        <vs-navbar-title>
+          Tapitap
+        </vs-navbar-title>
+      </div>
+      <div v-else class="titleApp" v-on:click="goHome" slot="title">
         <vs-navbar-title>
           Tapitap
         </vs-navbar-title>
@@ -48,9 +53,6 @@ export default {
     })
   },
   methods:{
-    goHome() {
-      this.$router.push({name:'Home'})
-    },
     signOut() {
       firebase
         .auth()
@@ -66,6 +68,9 @@ export default {
     },
     goSignUp() {
         this.$router.push({name:'AuthSignUp'})
+    },
+    goHome() {
+      this.$router.push({name:'Home'})
     },
     goDashboard() {
       this.$router.push({name:'PatientsList'})
@@ -91,8 +96,4 @@ export default {
 .vs-button {
   font-size: 16px;
 }
-.vs-button:hover {
-  background: rgba(144, 130, 255, 0.2)!important;
-}
-
 </style>

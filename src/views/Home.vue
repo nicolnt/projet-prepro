@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/>
-    <!-- <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff" /> -->
     <div class="introduction-application">
       <div class="presentation-application">
         <h1> Lorem ipsum dolor sit amet </h1>
@@ -17,7 +16,6 @@
 </template>
 
 <script>
-// import NavBarAuth from '@/components/NavBarAuth.vue'
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 import { mapGetters } from "vuex";
@@ -25,7 +23,6 @@ import { mapGetters } from "vuex";
 export default {
   name: 'Home',
   components: {
-    // NavBarAuth,
     NavBar,
     Footer
   },
@@ -83,6 +80,12 @@ p {
 }
 img {
   max-width: 100%;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  box-shadow: 0 0 0 30px white inset !important;
 }
 #btnSignUp {
   display: flex;

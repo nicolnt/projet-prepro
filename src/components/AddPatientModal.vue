@@ -2,7 +2,60 @@
   <div id="modalPatient">
     <vs-popup title="Ajouter un patient" :active.sync="popupActivo">
     <div id="modalContent">
-      <Input title="Nom" type="text" name="nom" v-bind:value.sync="m_valueLastName" :verifInput="checkInput"/>
+      <form action="#" @submit.prevent="submit">
+      <div>
+        <div>
+          <input id="lastName" type="text" name="lastName" placeholder="Nom" required autofocus v-model="form.lastName"/>
+        </div>
+      </div>
+      <div>
+        <div>
+          <input id="firstName" type="text" name="firstName" placeholder="Prénom" required v-model="form.firstName"/>
+        </div>
+      </div>
+      <div>
+        <div>
+          <input id="birthday" type="date" name="birthday" placeholder="Date de naissance" required v-model="form.birthday"/>
+        </div>
+      </div>
+      <div>
+        <div>
+          <input id="email" type="email" name="email" placeholder="Email" required v-model="form.email"/>
+        </div>
+      </div>
+      <div>
+        <div>
+          <select id="gender" name="gender" placeholder="Genre" required v-model="form.gender">
+            <option value="" disabled>--Merci de choisir--</option>
+            <option value="0">Femme</option>
+            <option value="1">Homme</option>
+        </select>
+      </div>
+      <div>
+        <div>
+          <input id="address" type="text" name="address" placeholder="Adresse" required v-model="form.address"/>
+        </div>
+      </div>
+      <div>
+        <div>
+          <input id="cp" type="number" name="cp" placeholder="Code postal" required v-model="form.cp"/>
+        </div>
+      </div>
+      <div>
+        <div>
+          <input id="city" type="text" name="city" placeholder="Ville" required v-model="form.city"/>
+        </div>
+      </div>
+       <div>
+        <div>
+          <input id="reason" type="text" name="reason" placeholder="Raison du test" required v-model="form.reason"/>
+        </div>
+      </div>
+      </div>
+        <div v-if="error" class="connectionError">{{error}}</div>
+        <button color="#9082FF" type="submit" id="button">Ajouter</button>
+      </form>
+      <!-- <Input title="Nom" type="text" name="nom" v-bind:value.sync="m_valueLastName" :verifInput="checkInput"/>
       <Input title="Prénom" type="text" name="prenom" v-bind:value.sync="m_valueFirstName" :verifInput="checkInput"/>
       <Input title="Date de naissance" type="date" name="birthday" v-bind:value.sync="m_valueBirthday" :verifInput="checkInput"/>
       <vs-select class="selectExample" v-model="selectGenre">
@@ -13,8 +66,8 @@
       <Input title="Adresse" type="text" name="adresse" v-bind:value.sync="m_valueAddress" :verifInput="checkInput"/>
       <Input title="Code postal" type="number" name="cp" v-bind:value.sync="m_valueCp" :verifInput="checkInput"/>
       <Input title="Ville" type="text" name="ville" v-bind:value.sync="m_valueCity" :verifInput="checkInput"/>
-      <Input title="Raison passation du test" type="text" name="raisonTest" v-bind:value.sync="m_valueReason" :verifInput="checkInput"/>
-      <vs-button color="#9082FF" type="filled" v-on:click="confirm" id="btnConfirm">Ajouter</vs-button>
+      <Input title="Raison passation du test" type="text" name="raisonTest" v-bind:value.sync="m_valueReason" :verifInput="checkInput"/> -->
+      <!-- <vs-button color="#9082FF" type="filled" v-on:click="confirm" id="btnConfirm">Ajouter</vs-button> -->
       <img class="plane-purple" src="../assets/plane-purple-illustration.svg"/>
     </div>
     </vs-popup>
@@ -22,7 +75,11 @@
 </template>
 
 <script>
-import Input from '@/components/Input.vue'
+// import Input from '@/components/Input.vue'
+import { db } from '../services/firebase'
+import { mapGetters } from "vuex";
+import firebase from 'firebase/app'
+require('firebase/auth')
 
 export default {
   name: 'AddPatientModal',
@@ -41,13 +98,65 @@ export default {
       options:[
         {text: 'Homme', value: 1},
         {text: 'Femme', value: 2}
-      ]
+      ],
+      form: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        birthday: "",
+        address: "",
+        cp: "",
+        city: "",
+        reason: "",
+        gender: ""
+      },
+      error: null,
+      id:null
     }
   },
   components: {
-    Input
+    // Input
+  },
+  computed: {
+    ...mapGetters({
+// map `this.user` to `this.$store.getters.user`
+      user: "user"
+    })
   },
   methods: {
+    submit() {
+      var self = this
+      const user = firebase.auth().currentUser
+      db.collection("users").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if(doc.data().email == user.email){
+              self.id = doc.id
+          }
+        });
+      }).then(function() {
+        db.collection("patients").add({
+        firstName: self.form.firstName,
+        lastName: self.form.lastName,
+        email: self.form.email,
+        birthday: self.form.birthday,
+        address: self.form.address,
+        cp: self.form.cp,
+        city: self.form.city,
+        testReason: self.form.reason,
+        gender: self.form.gender,
+        dateCreation: new Date(),
+        idUser: self.id
+        })
+        .then(function(docRef) {
+          console.log("Document written with ID: ", docRef.id);
+          self.confirm()
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error);
+        })
+      })
+      
+    },
     toggle() {
       this.popupActivo = !this.open;
     },
@@ -63,6 +172,7 @@ export default {
       this.checkInput(this.m_valueLastName)
       this.checkInput(this.m_valueFirstName)*/
       this.popupActivo = !this.popupActivo
+      this.$router.go(0)
     }
   }
 }

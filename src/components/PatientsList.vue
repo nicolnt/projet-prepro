@@ -3,7 +3,8 @@
     <Hero title="Liste des patients"/>
     <div id="actions">
       <form class="form">
-        <input type="text" class="form-field" placeholder="Rechercher un patient" />
+        <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient" />
+      
         <button type="button" class="btn--search btn--inside"><i class="material-icons">search</i></button>
       </form>
       <button class="add-patient" @click="toggleModal">
@@ -14,17 +15,10 @@
     </div>
     <div id="list">
       <ul>
-        <li v-on:click="goPatientProfil">
-          <img class="avatar" alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
-          Nom prénom patient 1
-        </li>
-        <li v-on:click="goPatientProfil">
-          <img class="avatar" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
-          Nom prénom patient 2
-        </li>
-        <li v-on:click="goPatientProfil">
-          <img class="avatar" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
-          Nom prénom patient 3
+        <li v-on:click="goPatientProfil(patient)" v-for="patient in patients" :key="patient.firstName">
+          <img class="avatar" v-if="patient.gender == 1" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
+          <img class="avatar" v-if="patient.gender == 0"  alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
+          {{patient.lastName}} {{patient.firstName}}
         </li>
       </ul>
     </div>
@@ -34,24 +28,76 @@
 <script>
 import Hero from '@/components/Hero.vue'
 import AddPatientModal from '@/components/AddPatientModal.vue'
+import { mapGetters } from "vuex";
+import { db } from '../services/firebase'
+import firebase from 'firebase/app'
+require('firebase/auth')
 
 export default {
   name: 'PatientsList',
   data(){
     return {
-      valueInputSearch:''
+      valueInputSearch:'',
+      patients: [],
+      patientsBackup: [],
+      id: null,
+      message: null
     }
   },
   components: {
     Hero,
     AddPatientModal
   },
+  watch: {
+    message: function (val) {
+      if(val.length > 0){
+        this.patients= this.patientsBackup.filter(patient => (patient.firstName.toLowerCase().trim().includes(val.toLowerCase().trim()) ||
+        patient.lastName.toLowerCase().trim().includes(val.toLowerCase().trim())))
+      }
+      else{
+        this.patients = this.patientsBackup
+      }
+    }
+  },
+  computed: {
+    // map `this.user` to `this.$store.getters.user`
+    ...mapGetters({
+      user: "user"
+    })
+  },
+  mounted: function(){
+    this.getPatientList()
+  },
   methods: {
-    goPatientProfil() {
-      this.$router.push({name:'PatientProfil'})
+    search(){
+      
+    },
+    goPatientProfil(patient) {
+      this.$router.push({name:'PatientProfil',  params: { patient: patient } })
     },
     toggleModal() {
       this.$refs.addPatientModal.toggle()
+    },
+    getPatientList(){
+      var tmp = null
+      var self = this
+      db.collection("users").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if(doc.data().email == firebase.auth().currentUser.email){
+              self.id = doc.id
+          }
+        });
+      })
+      db.collection("patients").orderBy("lastName").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if(doc.data().idUser == self.id){
+            tmp = doc.data()
+            tmp.id = doc.id
+            self.patients.push(tmp)
+            self.patientsBackup.push(tmp)
+          }
+        });
+      })
     }
   }
 }

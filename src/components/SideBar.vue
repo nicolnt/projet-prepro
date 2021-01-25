@@ -4,7 +4,7 @@
       <!-- changer l'avatar en homme/femme en fonction de la connexion  -->
       <img class="avatar" alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
       <div id="txtCardUser">
-        <h3>Nom Prénom</h3>
+        <h3>{{user.data.displayName}}</h3>
         <p>Psychologue</p>
       </div>
       <div class="icon-settings">
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 
 export default {
   name: 'SideBar',
@@ -42,6 +43,12 @@ export default {
       isActiveStats: false,
       isActiveParams: false
     }
+  },
+  computed: {
+    ...mapGetters({
+// map `this.user` to `this.$store.getters.user`
+      user: "user"
+    })
   },
   methods: { 
     activePage(isActive){

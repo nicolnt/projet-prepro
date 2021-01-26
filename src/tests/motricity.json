@@ -1,26 +1,46 @@
 {
 	"training" : [
 		{
-			"name": "test1",
-			"startingPoint": false,
-			"meanLength": 1.62
+			"name": "training1",
+			"startingPoint": true,
+			"meanLength": 1
 		},
 		{
-			"name": "test2",
+			"name": "training2",
+			"startingPoint": false,
+			"meanLength": 1
+		},
+		{
+			"name": "training3",
 			"startingPoint": true,
-			"meanLength": 5.26
+			"meanLength": 1
 		}
 	],
 	"tests": [
 		{
+			"name": "test1",
+			"startingPoint": false,
+			"meanLength": 1
+		},
+		{
+			"name": "test2",
+			"startingPoint": true,
+			"meanLength": 1
+		},
+		{
 			"name": "test3",
 			"startingPoint": false,
-			"meanLength": 5.26
+			"meanLength": 1
 		},
 		{
 			"name": "test4",
 			"startingPoint": true,
-			"meanLength": 5.26
+			"meanLength": 1
+		},
+		{
+			"name": "test5",
+			"startingPoint": false,
+			"meanLength": 1
 		}
 	]
 }

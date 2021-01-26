@@ -63,7 +63,7 @@ export default {
   overflow: hidden;
 }
   canvas {
-    border: 1px solid #999;
+    border: none;
     height: 100%;
     width: 100%;
   }

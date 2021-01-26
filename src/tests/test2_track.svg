@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 1380 680" width="1380" height="680" style="enable-background:new 0 0 1380 680;" xml:space="preserve">
+	 viewBox="0 0 1380 680" style="enable-background:new 0 0 1380 680;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#2469FF;}
-	.st1{fill:#FF0000;}
-	.st2{fill:#0FFF00;}
-	.st3{fill:#FFFD07;}
+	.st1{fill:#0FFF00;}
+	.st2{fill:#FFFD07;}
+	.st3{fill:#FF0000;}
 </style>
 <g>
 	<g>
@@ -92,24 +92,16 @@
 </g>
 <g>
 	<g>
-		<path class="st1" d="M229.7,272.8c15.4,0,15.5-24,0-24C214.3,248.8,214.2,272.8,229.7,272.8L229.7,272.8z"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st1" d="M848.3,468.6c15.4,0,15.5-24,0-24C832.9,444.6,832.9,468.6,848.3,468.6L848.3,468.6z"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st2" d="M414.8,438.3c14.1,0,27.7-12.4,27-27c-0.7-14.6-11.9-27-27-27c-14.1,0-27.7,12.4-27,27
+		<path class="st1" d="M414.8,438.3c14.1,0,27.7-12.4,27-27c-0.7-14.6-11.9-27-27-27c-14.1,0-27.7,12.4-27,27
 			C388.5,425.9,399.7,438.3,414.8,438.3L414.8,438.3z"/>
 	</g>
 </g>
 <g>
 	<g>
-		<path class="st3" d="M1043.1,374.5c14.1,0,27.7-12.4,27-27c-0.7-14.6-11.9-27-27-27c-14.1,0-27.7,12.4-27,27
+		<path class="st2" d="M1043.1,374.5c14.1,0,27.7-12.4,27-27c-0.7-14.6-11.9-27-27-27c-14.1,0-27.7,12.4-27,27
 			C1016.7,362.2,1028,374.5,1043.1,374.5L1043.1,374.5z"/>
 	</g>
 </g>
+<polygon class="st3" points="229.7,238.4 211.2,270.5 248.3,270.5 "/>
+<polygon class="st3" points="866.9,445.6 829.8,445.6 848.3,477.7 "/>
 </svg>

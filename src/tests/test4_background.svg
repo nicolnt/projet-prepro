@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 1380 680" width="1380" height="680" style="enable-background:new 0 0 1380 680;" xml:space="preserve">
+	 viewBox="0 0 1380 680" style="enable-background:new 0 0 1380 680;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#2469FF;}
 	.st1{fill:#FFFD07;}
@@ -148,24 +148,8 @@
 			C621.4,259.5,632.6,271.9,647.7,271.9L647.7,271.9z"/>
 	</g>
 </g>
-<g>
-	<g>
-		<path class="st3" d="M409.2,444.6c15.4,0,15.5-24,0-24C393.8,420.6,393.7,444.6,409.2,444.6L409.2,444.6z"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st3" d="M630.3,159.2c15.4,0,15.5-24,0-24C614.9,135.2,614.8,159.2,630.3,159.2L630.3,159.2z"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st3" d="M988.6,364.5c15.4,0,15.5-24,0-24C973.2,340.5,973.1,364.5,988.6,364.5L988.6,364.5z"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st3" d="M787.4,538.1c15.4,0,15.5-24,0-24C771.9,514.1,771.9,538.1,787.4,538.1L787.4,538.1z"/>
-	</g>
-</g>
+<polygon class="st3" points="780.2,537.8 816.3,532.2 793.4,503.8 "/>
+<polygon class="st3" points="993.9,313.7 975.7,345.3 1012.1,345.3 "/>
+<polygon class="st3" points="608,137.6 574.7,152.5 604.3,173.9 "/>
+<polygon class="st3" points="384.7,423.6 395.6,458.4 420.3,431.5 "/>
 </svg>

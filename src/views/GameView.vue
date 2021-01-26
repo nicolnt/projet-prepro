@@ -2,8 +2,8 @@
   <div class="test">
     <NavBarTest testName="Motricité fine" p_color="#FF8D8B" p_colorBG="#ffffff" />
     <div class="test-content">
-        <router-view @toggleHelp="ToggleInstructionsModal"></router-view>
-        <TestInstructionsModal ref="TestInstructionsModal"/>
+        <router-view ref="test" @toggleHelp="ToggleInstructionsModal"></router-view>
+        <TestInstructionsModal @train="$refs.test.train()" @play='$refs.test.play()' ref="TestInstructionsModal"/>
         <TestQuitModal ref="TestQuitModal"/>
         <TestInfosModal ref="TestInfosModal"/>
     </div>

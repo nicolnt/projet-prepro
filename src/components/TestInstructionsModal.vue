@@ -11,8 +11,8 @@
             </figure>
         </div>
         <div class="test-modal-buttons">       
-            <vs-button id="btnTrainTest" color="#9082FF">S'entraîner</vs-button>
-            <vs-button id="btnStartTest" color="#9082FF" icon="play_arrow">Commencer</vs-button>
+            <vs-button id="btnTrainTest" @click="toggle(); $emit('train'); popupActivo = false" color="#9082FF">S'entraîner</vs-button>
+            <vs-button id="btnStartTest" @click="toggle(); $emit('play'); popupActivo = false" color="#9082FF" icon="play_arrow">Commencer</vs-button>
         </div>
     </vs-popup>
 </template>

@@ -42,6 +42,9 @@ export default {
     },
     myFunc() {
       console.log(this.game)
+      if(this.game.state.trainingComplete === false && this.currentLevelNumber == this.totalLevelForCurrentType) {
+        this.$emit('toggleHelp')
+      }
       this.game.switchToNextLevel()
     }
   },

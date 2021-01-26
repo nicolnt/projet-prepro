@@ -2,11 +2,7 @@
   <div class="test">
     <NavBarTest testName="Motricité fine" p_color="#FF8D8B" p_colorBG="#ffffff" />
     <div class="test-content">
-        <div class="test-bar">
-          <span class="test-counter">1/3</span>
-          <vs-button @click="ToggleInstructionsModal" radius type="flat" icon="help" color="#9082FF"></vs-button>
-        </div>
-        <router-view></router-view>
+        <router-view @toggleHelp="ToggleInstructionsModal"></router-view>
         <TestInstructionsModal ref="TestInstructionsModal"/>
         <TestQuitModal ref="TestQuitModal"/>
         <TestInfosModal ref="TestInfosModal"/>
@@ -59,15 +55,5 @@ export default {
   position: relative;
   overflow: hidden;
   margin: 20px;
-}
-.test-bar {
-  display: flex;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-.test-bar > .test-counter {
-  padding: 10px;
-  line-height: 18px;
 }
 </style>

@@ -1,7 +1,5 @@
 {
 	"training" : [
-	],
-	"tests": [
 		{
 			"name": "test1",
 			"startingPoint": false,
@@ -9,6 +7,18 @@
 		},
 		{
 			"name": "test2",
+			"startingPoint": true,
+			"meanLength": 5.26
+		}
+	],
+	"tests": [
+		{
+			"name": "test3",
+			"startingPoint": false,
+			"meanLength": 5.26
+		},
+		{
+			"name": "test4",
 			"startingPoint": true,
 			"meanLength": 5.26
 		}

@@ -1,5 +1,9 @@
 <template>
   <div id="motricity-container">
+    <div class="test-bar">
+      <span class="test-counter">{{ currentLevelNumber }}/{{ totalLevelForCurrentType }}</span>
+      <vs-button @click="$emit('toggleHelp')" radius type="flat" icon="help" color="#9082FF"></vs-button>
+    </div>
     <div class="canvasContainer">
       <canvas id="backgroundTrack"></canvas>
       <canvas id="traceCanvas"></canvas>
@@ -16,6 +20,17 @@ export default {
   data() {
     return {
       game: new Game(require('../../tests/motricity.json'), this.myFunc),
+    }
+  },
+  computed: {
+    currentLevelNumber() {
+        return this.game.state.currentLevel + 1
+    },
+    totalLevelForCurrentType() {
+      if (this.game.state.trainingComplete === true)
+        return this.game.gameData.tests.length
+      else 
+        return this.game.gameData.training.length
     }
   },
   methods: {
@@ -66,5 +81,15 @@ export default {
   canvas#pickerTrack {
     visibility: hidden;
   }
+.test-bar {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.test-bar > .test-counter {
+  padding: 10px;
+  line-height: 18px;
+}
 
   </style>

@@ -325,6 +325,12 @@ class Game {
     this.startLevel()
   }
 
+  skipTraining() {
+    this.state.trainingComplete = true
+    this.state.currentLevel = 0
+    this.startLevel()
+  }
+
 
 
   startLevel() {

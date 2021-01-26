@@ -34,6 +34,12 @@ export default {
     }
   },
   methods: {
+    train() {
+      this.game.state.trainingComplete = false
+    },
+    play() {
+      this.game.skipTraining()
+    },
     myFunc() {
       console.log(this.game)
       this.game.switchToNextLevel()

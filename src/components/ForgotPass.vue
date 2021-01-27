@@ -16,9 +16,9 @@
 
 <script>
 /*import { db } from '../services/firebase'
-import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";*/
 import firebase from 'firebase/app'
-require('firebase/auth')*/
+require('firebase/auth')
 
 export default {
   name: 'ForgotPass',
@@ -39,6 +39,18 @@ export default {
     confirm() {
       this.popupActivo = !this.popupActivo
       this.$router.go(0)
+    },
+    submit(){
+      firebase.auth().useDeviceLanguage()
+      var auth = firebase.auth()
+      var emailAddress = this.form.email;
+      var self=this
+      auth.sendPasswordResetEmail(emailAddress).then(function() {
+        // Email sent.
+        self.confirm()
+      }).catch(function(error) {
+        console.log(error)
+      });
     }
   }
 }

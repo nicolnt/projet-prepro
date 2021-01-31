@@ -3,44 +3,44 @@
 		{
 			"name": "training1",
 			"startingPoint": true,
-			"meanLength": 1
+			"meanLength": 0.75
 		},
 		{
 			"name": "training2",
 			"startingPoint": false,
-			"meanLength": 1
+			"meanLength": 1.2
 		},
 		{
 			"name": "training3",
 			"startingPoint": true,
-			"meanLength": 1
+			"meanLength": 1.68
 		}
 	],
 	"tests": [
 		{
 			"name": "test1",
 			"startingPoint": false,
-			"meanLength": 1
+			"meanLength": 1.6
 		},
 		{
 			"name": "test2",
 			"startingPoint": true,
-			"meanLength": 1
+			"meanLength": 2.8
 		},
 		{
 			"name": "test3",
 			"startingPoint": false,
-			"meanLength": 1
+			"meanLength": 2.92
 		},
 		{
 			"name": "test4",
 			"startingPoint": true,
-			"meanLength": 1
+			"meanLength": 2.9
 		},
 		{
 			"name": "test5",
 			"startingPoint": false,
-			"meanLength": 1
+			"meanLength": 4.08
 		}
 	]
 }

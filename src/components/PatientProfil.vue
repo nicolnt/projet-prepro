@@ -111,5 +111,6 @@ export default {
 }
 #imgPatient {
   margin: 10px;
+  width: 24%;
 }
 </style>

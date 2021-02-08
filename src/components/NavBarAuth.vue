@@ -49,8 +49,7 @@ export default {
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.2);
 }
 #navBar {
-  height: 80px;
-  padding: 10px 50px;
+  padding: 18px 50px;
 }
 .titleApp {
   cursor: pointer;

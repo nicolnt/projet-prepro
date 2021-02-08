@@ -195,7 +195,7 @@ export default {
   background-color: #eaedf0;
   border-radius: 20px;
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.7);    
-  width: 475px!important;
+  width: 600px!important;
 }
 .selectExample {
   margin: 10px;

@@ -84,8 +84,7 @@ export default {
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.2);
 }
 #navBar {
-  height: 80px;
-  padding: 10px 50px;
+  padding: 18px 50px;
 }
 .vs-navbar {
   z-index: 1;
@@ -95,5 +94,14 @@ export default {
 }
 .vs-button {
   font-size: 16px;
+}
+
+@media screen and (max-width: 800px) {
+  button >>> .vs-navbar--btn-responsive {
+    order: 1;
+  }
+  .vs-button {
+    margin-right: 0;
+  }
 }
 </style>

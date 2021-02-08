@@ -199,4 +199,24 @@ export default {
   width: 40px;
   vertical-align: middle;
 }
+
+@media screen and (max-width: 1024px) {
+  .form {
+    margin-right: 1rem;
+  }
+  #actions {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  .add-patient {
+    margin-top: 1rem;
+    padding: .5rem;
+  }
+}
 </style>

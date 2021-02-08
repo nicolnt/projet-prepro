@@ -3,8 +3,8 @@
     <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/>
     <div class="introduction-application">
       <div class="presentation-application">
-        <h1> Lorem ipsum dolor sit amet </h1>
-        <p> Lorem ipsum dolor sit amet, consectetur, Lorem ipsum dolor sit amet, consectetur </p>
+        <h1> Tapitap, l’application destinée aux psychologues </h1>
+        <p> Gagnez du temps afin de faire passer l’habilitation au permis de conduire à vos patients. </p>
         <vs-button color="#FF8D8B" type="filled" v-on:click="goSignUp" id="btnSignUp">inscription</vs-button>
       </div>
       <div class="illustration-application">
@@ -92,5 +92,34 @@ input:-webkit-autofill:active  {
   align-self: center;
   padding: .5rem 1rem;
   font-size: 16px;
+}
+@media screen and (max-width: 1024px) {
+  .introduction-application {
+    width: 85%;
+  }
+  h1 {
+    font-size: 28px;
+  }
+}
+@media screen and (max-width: 780px) {
+  .introduction-application {
+    flex-direction: column;
+  }
+  .presentation-application {
+    text-align: center;
+    margin-right: 0;
+  }
+  .illustration-application {
+    margin-top: 3rem;
+  }
+  h1 {
+    font-size: 28px;
+  }
+  img {
+    max-width: 70%;
+  }
+  #btnSignUp {
+    display: initial;
+  }
 }
 </style>

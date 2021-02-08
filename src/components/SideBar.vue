@@ -55,19 +55,19 @@ export default {
       if(isActive === 'isActivePatients') {
         this.isActiveStats = false
         this.isActiveParams = false
-        this.isActivePatients = !this.isActivePatients
+        this.isActivePatients = true
         this.$router.push({name:'PatientsList'})
       }
       if(isActive === 'isActiveStats') {
         this.isActiveParams = false
         this.isActivePatients = false
-        this.isActiveStats = !this.isActiveStats
+        this.isActiveStats = true
         this.$router.push({name:'Stats'})
       }
       if(isActive === 'isActiveParams') {
         this.isActiveStats = false
         this.isActivePatients = false
-        this.isActiveParams = !this.isActiveParams
+        this.isActiveParams = true
         this.$router.push({name:'AppParams'})
       }
     },

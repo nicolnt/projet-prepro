@@ -1,7 +1,7 @@
 <template>
   <div class="navBarConnect">
     <vs-navbar v-model="activeItem" color="#ffffff" class="nabarx" id="navBar">
-      <div v-if="user.loggedIn" class="titleApp" v-on:click="goDashboard" slot="title">
+      <div v-if="user.loggedIn" class="titleApp" v-on:click="goHome" slot="title">
         <vs-navbar-title>
           Tapitap
         </vs-navbar-title>

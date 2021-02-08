@@ -15,9 +15,10 @@
         </div>
       </div>
       <div id="actions">
-        <vs-button color="#9082FF" type="filled" class="btnPatient">Modifier les informations</vs-button>
+        <vs-button color="#9082FF" type="filled" class="btnPatient" @click="toggleModal">Modifier les informations</vs-button>
         <vs-button color="#9082FF" type="filled" class="btnPatient">Supprimer ce patient</vs-button>
       </div>
+      <UpdateDataModal ref="updateDatasModal" :person="patient" :personType="'patient'"/>
     </div>
     <div id="tests-results">
       <vs-button color="#9082FF" type="filled" v-on:click="goResults" class="btn">Voir les résultats</vs-button>
@@ -27,18 +28,25 @@
 </template>
 
 <script>
+import UpdateDataModal from '@/components/UpdateDataModal.vue'
 
 export default {
   name: 'PatientProfil',
+  components : {
+    UpdateDataModal
+  },
   data () {
     return {
-        patient:{}
+      patient:{}
     }
   },
   created() {
       this.patient = this.$route.params.patient;
   },
   methods: {
+    toggleModal() {
+      this.$refs.updateDatasModal.toggle()
+    },
     goResults() {
       this.$router.push({name:'PatientResults'})
     },

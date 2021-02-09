@@ -71,26 +71,26 @@
       <div v-if="personType === 'psy'" id="modalContentPsy">
         <form action="#" @submit.prevent="submit">
           <div class="wrapperInfosForm">
-            <div class="wrap-input validate-input"  data-validate = "Valid last name is required">
+            <div class="wrap-input validate-input" data-validate = "Valid last name is required">
               <input class="input" id="lastName" type="text" name="lastName" required autofocus v-model="form.lastName"/>
               <span class="focus-input"></span>
               <span class="symbol-input">
                 <i class="material-icons" aria-hidden="true">person</i>
               </span>
             </div>
-            <div class="wrap-input validate-input"  data-validate = "Valid first name is required">
-              <input class="input" id="firstName" type="text" name="firstName" required autofocus v-model="form.firstName"/>
+            <div class="wrap-input validate-input" data-validate = "Valid first name is required">
+              <input class="input" id="firstName" type="text" name="firstName" required v-model="form.firstName"/>
               <span class="focus-input"></span>
               <span class="symbol-input">
                 <i class="material-icons" aria-hidden="true">person</i>
               </span>
             </div>
             <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-              <input class="input" id="email" type="email" name="email" required autofocus v-model="form.email"/>
+              <input class="input" id="email" type="email" name="email" required v-model="form.email"/>
               <span class="focus-input"></span>
               <span class="symbol-input">
                 <i class="material-icons" aria-hidden="true">email</i>
-              </span> 
+              </span>            
             </div>
             <div v-if="error" class="connectionError">{{error}}</div>
             <button color="#9082FF" type="submit" class="button">Modifier</button>

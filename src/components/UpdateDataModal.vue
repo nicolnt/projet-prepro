@@ -1,88 +1,109 @@
 <template lang="html">
   <div id="modalPatient">
     <vs-popup title="Modifier les informations" :active.sync="popupActivo">
-    <div v-if="personType === 'patient'" id="modalContentClient">
-      <form action="#" @submit.prevent="submit">
-        <div>
-          <div>
-            <input id="lastName" type="text" name="lastName" :placeholder="person.lastName" required autofocus v-model="form.lastName"/>
+      <div v-if="personType === 'patient'" id="modalContentClient">
+        <form action="#" @submit.prevent="submit">
+          <div class="wrapperInfosForm">
+            <div class="wrap-input validate-input" data-validate = "Valid last name is required">
+              <input class="input" id="lastName" type="text" name="lastName" required autofocus v-model="form.lastName"/>
+              <span class="focus-input"></span>
+              <span class="symbol-input">
+                <i class="material-icons" aria-hidden="true">person</i>
+              </span>
+            </div>
+            <div class="wrap-input validate-input" data-validate = "Valid first name is required">
+              <input class="input" id="firstName" type="text" name="firstName" required v-model="form.firstName"/>
+              <span class="focus-input"></span>
+              <span class="symbol-input">
+                <i class="material-icons" aria-hidden="true">person</i>
+              </span>
+            </div>
+            <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+              <input class="input" id="email" type="email" name="email" required v-model="form.email"/>
+              <span class="focus-input"></span>
+              <span class="symbol-input">
+                <i class="material-icons" aria-hidden="true">email</i>
+              </span>            
+            </div>
+            <div class="wrap-input validate-input" data-validate = "Valid birthday is required: 10/05/21">
+              <input class="input" id="birthday" type="date" name="birthday" required v-model="form.birthday"/>
+              <span class="focus-input"></span>
+            </div>
+            <div class="wrap-input validate-input" data-validate = "Selection is required">
+              <select class="input" id="gender" name="gender" required v-model="form.gender">
+                <option value="0">Femme</option>
+                <option value="1">Homme</option>
+              </select>
+              <span class="focus-input"></span>
+            </div>
+            <div class="wrap-input validate-input" data-validate = "Valid address is required">
+              <input class="input" id="address" type="text" name="address" required v-model="form.address"/>
+              <span class="focus-input"></span>
+              <span class="symbol-input">
+                <i class="material-icons" aria-hidden="true">place</i>
+              </span>
+            </div>
+            <div class="wrap-input validate-input" data-validate = "Valid code postal is required: 26730">
+              <input class="input" id="cp" type="number" name="cp" required v-model="form.cp"/>
+              <span class="focus-input"></span>
+              <span class="symbol-input">
+                <i class="material-icons" aria-hidden="true">place</i>
+              </span>
+            </div>
+            <div class="wrap-input validate-input" data-validate = "Valid city is required">
+              <input class="input" id="city" type="text" name="city" required v-model="form.city"/>
+              <span class="focus-input"></span>
+              <span class="symbol-input">
+                <i class="material-icons" aria-hidden="true">place</i>
+              </span>
+            </div>
+            <div class="wrap-input validate-input" data-validate = "Valid reason is required">
+              <input class="input" id="reason" type="text" name="reason" required v-model="form.reason"/>
+              <span class="reason focus-input"></span>
+            </div>
+            <div v-if="error" class="connectionError">{{error}}</div>
+            <button color="#9082FF" type="submit" class="button">Modifier</button>
           </div>
-        </div>
-        <div>
-          <div>
-            <input id="firstName" type="text" name="firstName" :placeholder="person.firstName" required v-model="form.firstName"/>
-          </div>
-        </div>
-        <div>
-          <div>
-            <input id="birthday" type="date" name="birthday" :placeholder="person.birthday" required v-model="form.birthday"/>
-          </div>
-        </div>
-        <div>
-          <div>
-            <input id="email" type="email" name="email" :placeholder="person.email" required v-model="form.email"/>
-          </div>
-        </div>
-        <div>
-          <div>
-            <select id="gender" name="gender" :placeholder="person.gender" required v-model="form.gender">
-              <option value="" disabled>--Merci de choisir--</option>
-              <option value="0">Femme</option>
-              <option value="1">Homme</option>
-          </select>
-        </div>
-        <div>
-          <div>
-            <input id="address" type="text" name="address" :placeholder="person.address" required v-model="form.address"/>
-          </div>
-        </div>
-        <div>
-          <div>
-            <input id="cp" type="number" name="cp" :placeholder="person.cp" required v-model="form.cp"/>
-          </div>
-        </div>
-        <div>
-          <div>
-            <input id="city" type="text" name="city" :placeholder="person.city" required v-model="form.city"/>
-          </div>
-        </div>
-        <div>
-          <div>
-            <input id="reason" type="text" name="reason" :placeholder="person.testReason" required v-model="form.reason"/>
-          </div>
-        </div>
-        </div>
-        <div v-if="error" class="connectionError">{{error}}</div>
-        <button color="#9082FF" type="submit" id="button">Modifier</button>
-      </form>
-      <img class="plane-purple" src="../assets/plane-purple-illustration.svg"/>
-    </div>
+        </form>
+        <img class="plane-purple" src="../assets/plane-purple-illustration.svg"/>
+      </div>
 
-    <div v-if="personType === 'psy'" id="modalContentClient">
-      <form action="#" @submit.prevent="submit">
-        <div>
-          <div>
-            <input id="lastName" type="text" name="lastName" :placeholder="person.displayName" required autofocus v-model="form.lastName"/>
+      <div v-if="personType === 'psy'" id="modalContentPsy">
+        <form action="#" @submit.prevent="submit">
+          <div class="wrapperInfosForm">
+            <div class="wrap-input validate-input"  data-validate = "Valid last name is required">
+              <input class="input" id="lastName" type="text" name="lastName" required autofocus v-model="form.lastName"/>
+              <span class="focus-input"></span>
+              <span class="symbol-input">
+                <i class="material-icons" aria-hidden="true">person</i>
+              </span>
+            </div>
+            <div class="wrap-input validate-input"  data-validate = "Valid first name is required">
+              <input class="input" id="firstName" type="text" name="firstName" required autofocus v-model="form.firstName"/>
+              <span class="focus-input"></span>
+              <span class="symbol-input">
+                <i class="material-icons" aria-hidden="true">person</i>
+              </span>
+            </div>
+            <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+              <input class="input" id="email" type="email" name="email" required autofocus v-model="form.email"/>
+              <span class="focus-input"></span>
+              <span class="symbol-input">
+                <i class="material-icons" aria-hidden="true">email</i>
+              </span> 
+            </div>
+            <div v-if="error" class="connectionError">{{error}}</div>
+            <button color="#9082FF" type="submit" class="button">Modifier</button>
           </div>
-        </div>
-        <div>
-          <div>
-            <input id="firstName" type="text" name="firstName" :placeholder="person.displayName" required autofocus v-model="form.firstName"/>
-          </div>
-        </div>
-        <div>
-          <div>
-            <input id="email" type="email" name="email" :placeholder="person.email" required autofocus v-model="form.email"/>
-          </div>
-        </div>
-      </form>
-    </div>
+        </form>
+        <img class="plane-purple" src="../assets/plane-purple-illustration.svg"/>
+      </div>
+
     </vs-popup>
   </div>
 </template>
 
 <script>
-// import Input from '@/components/Input.vue'
 import { db } from '../services/firebase'
 import { mapGetters } from "vuex";
 import firebase from 'firebase/app'
@@ -112,15 +133,15 @@ export default {
         {text: 'Femme', value: 2}
       ],
       form: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        birthday: "",
-        address: "",
-        cp: "",
-        city: "",
-        reason: "",
-        gender: "",
+        firstName: this.person.firstName,
+        lastName: this.person.lastName,
+        email: this.person.email,
+        birthday: this.person.birthday,
+        address: this.person.address,
+        cp: this.person.cp,
+        city: this.person.city,
+        reason: this.person.reason,
+        gender: this.person.gender,
       },
       error: null,
       id:null
@@ -130,10 +151,7 @@ export default {
     ...mapGetters({
     // map `this.user` to `this.$store.getters.user`
       user: "user"
-    }),
-    created: {
-      // filtrer pour retenir que le nom et prenom
-    }
+    })
   },
   methods: {
     submit() {
@@ -172,6 +190,13 @@ export default {
     toggle() {
       console.log(this.person)
       this.popupActivo = !this.open;
+      if(this.popupActivo) {
+        if(this.personType === "psy"){
+          const names = this.person.displayName.split(" ")
+          this.form.firstName = names[0]
+          this.form.lastName = names[1]
+        }
+      }
     },
     checkInput(value) {
       if(value != null && value != undefined && value != "") {
@@ -189,13 +214,21 @@ export default {
 </script>
 
 <style lang="css">
-.vs-popup {
+#modalPatient .vs-popup {
   position: relative;
   font-family: Poppins;
   background-color: #eaedf0;
   border-radius: 20px;
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.7);    
   width: 600px!important;
+}
+.wrapperInfosForm {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+.wrapperInfosForm > div { 
+  width: 48%;
 }
 .selectExample {
   margin: 10px;
@@ -220,10 +253,93 @@ export default {
   top: 17px;
   right: 27%;
 }
-#modalContent {
+.wrap-input {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  margin-bottom: 1.5rem;
+}
+.input {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgb(118, 118, 118);
+  display: block;
+  width: 100%;
+  border: 1px solid #EBEBEB;
+  height: 45px;
+  border-radius: 25px;
+  padding: 0 30px 0 68px;
+}
+#modalContentClient, #modalContentPsy {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+#birthday, #gender {
+  padding: 0 30px;
+}
+#reason {
+  border-radius: 0px;
+  height: 80px;
+  font-family: Arial;
+  padding: 10px 30px;
+}
+.reason.focus-input {
+  border-radius: 0;
+}
+.focus-input {
+  display: block;
+  position: absolute;
+  border-radius: 25px;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 0px 0px;
+  color: #FF8D8B;
+}
+.input:focus + .focus-input {
+  -webkit-animation: anim-shadow 0.5s ease-in-out forwards;
+  animation: anim-shadow 0.5s ease-in-out forwards;
+}
+@-webkit-keyframes anim-shadow {
+  to {
+    box-shadow: 0px 0px 70px 25px;
+    opacity: 0;
+  }
+}
+@keyframes anim-shadow {
+  to {
+    box-shadow: 0px 0px 70px 25px;
+    opacity: 0;
+  }
+}
+.symbol-input {
+  font-size: 15px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  border-radius: 25px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding-left: 35px;
+  pointer-events: none;
+  color: #B0B0B0;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+.input:focus + .focus-input + .symbol-input {
+  color: #FF8D8B;
+  padding-left: 28px;
 }
 .vs-popup--content {
   display: flex;
@@ -235,6 +351,25 @@ export default {
   width: 110px;
   border-radius: 16px;
   margin-top: 1rem;
+}
+.btn-submit {
+  display: flex;
+  justify-content: center;
+}
+.button {
+  font-size: 14px;
+  border-radius: 25px;
+  height: 45px;
+  width: 45%;
+  border: none;
+  background-color: #FF8D8B;
+  color: #FFFFFF;
+  padding: .5rem 1.5rem;
+  cursor: pointer;
+  transition: all .5s ease-in-out;
+}
+.button:hover {
+  background-color: #9082FF;
 }
 #genreListTitle {
   font: 400 13.3333px Arial;

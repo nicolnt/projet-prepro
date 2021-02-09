@@ -77,14 +77,14 @@
               autofocus
               v-model="form.gender"
             >
-              <option value="" disabled>--Merci de choisir--</option>
+              <option value="" disabled>Genre</option>
               <option value="0">Femme</option>
               <option value="1">Homme</option>
             </select>
             <span class="focus-input"></span>
           </div>
         </div>
-        <div class="wrap-input validate-input" data-validate = "Valid adress is required">
+        <div class="wrap-input validate-input" data-validate = "Valid address is required">
           <input 
             id="adress"
             class="input"

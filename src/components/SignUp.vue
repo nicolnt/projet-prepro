@@ -146,7 +146,8 @@ export default {
       this.checkInput(this.m_valuePassword)
       this.checkInput(this.m_valueLastName)
       this.checkInput(this.m_valueFirstName)
-      this.$router.push({name:'PatientsList'})
+      if(this.$route.name != 'PatientsList')
+        this.$router.push({name:'PatientsList'})
     },
     checkInput(value) {
       if(value != null && value != undefined && value != "") {

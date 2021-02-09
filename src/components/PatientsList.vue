@@ -73,7 +73,8 @@ export default {
       
     },
     goPatientProfil(patient) {
-      this.$router.push({name:'PatientProfil',  params: { patient: patient } })
+      if(this.$route.name != 'PatientProfil')
+        this.$router.push({name:'PatientProfil',  params: { patient: patient } })
     },
     toggleModal() {
       this.$refs.addPatientModal.toggle()

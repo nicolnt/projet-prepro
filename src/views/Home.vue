@@ -28,7 +28,8 @@ export default {
   },
   methods: {
     goSignUp() {
-      this.$router.push({name:'AuthSignUp'})
+      if(this.$route.name != 'AuthSignUp')
+        this.$router.push({name:'AuthSignUp'})
     }
   },
   mounted: function(){

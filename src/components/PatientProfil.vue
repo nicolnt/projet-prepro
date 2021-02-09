@@ -43,20 +43,23 @@ export default {
     }
   },
   created() {
-      this.patient = this.$route.params.patient;
+    this.patient = this.$route.params.patient;
   },
   methods: {
     toggleModal() {
       this.$refs.updateDatasModal.toggle()
     },
     goResults() {
-      this.$router.push({name:'PatientResults'})
+      if(this.$route.name != 'PatientResults')
+        this.$router.push({name:'PatientResults'})
     },
     goListTests() {
-      this.$router.push({name:'TestList'})
+      if(this.$route.name != 'TestList')
+        this.$router.push({name:'TestList'})
     },
     goPatientsList() {
-      this.$router.push({name:'PatientsList'})
+      if(this.$route.name != 'PatientsList')
+        this.$router.push({name:'PatientsList'})
     }
   }
 }

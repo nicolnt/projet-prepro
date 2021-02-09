@@ -26,10 +26,12 @@ export default {
   },
   methods : {
     goHome(){
-      this.$router.push({name:'Home'})
+      if(this.$route.name != 'Home')
+        this.$router.push({name:'Home'})
     },
     goDashboard() {
-      this.$router.push({name:'PatientsList'})
+      if(this.$route.name != 'PatientsList')
+        this.$router.push({name:'PatientsList'})
     }
   },
   computed: {

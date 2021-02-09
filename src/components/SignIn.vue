@@ -105,7 +105,8 @@ export default {
     goSignIn() {
       this.checkInput(this.m_valueEmail)
       this.checkInput(this.m_valuePassword)
-      this.$router.push({name:'PatientsList'})
+      if(this.$route.name != 'PatientsList')
+        this.$router.push({name:'PatientsList'})
     },
     checkInput(value) {
       if(value != null && value != undefined && value != "") {

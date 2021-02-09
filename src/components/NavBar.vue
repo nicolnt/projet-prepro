@@ -64,16 +64,20 @@ export default {
         });
     },
     goSignIn() {
+      if(this.$route.name != 'AuthSignIn')
         this.$router.push({name:'AuthSignIn'})
     },
     goSignUp() {
+      if(this.$route.name != 'AuthSignUp')
         this.$router.push({name:'AuthSignUp'})
     },
     goHome() {
-      this.$router.push({name:'Home'})
+      if(this.$route.name != 'Home')
+        this.$router.push({name:'Home'})
     },
     goDashboard() {
-      this.$router.push({name:'PatientsList'})
+      if(this.$route.name != 'PatientsList')
+        this.$router.push({name:'PatientsList'})
     }
   }
 }

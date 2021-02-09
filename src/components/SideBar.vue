@@ -52,19 +52,19 @@ export default {
   },
   methods: { 
     activePage(isActive){
-      if(isActive === 'isActivePatients') {
+      if(isActive === 'isActivePatients' && this.$route.name != 'PatientsList') {
         this.isActiveStats = false
         this.isActiveParams = false
         this.isActivePatients = true
         this.$router.push({name:'PatientsList'})
       }
-      if(isActive === 'isActiveStats') {
+      if(isActive === 'isActiveStats' && this.$route.name != 'Stats') {
         this.isActiveParams = false
         this.isActivePatients = false
         this.isActiveStats = true
         this.$router.push({name:'Stats'})
       }
-      if(isActive === 'isActiveParams') {
+      if(isActive === 'isActiveParams' && this.$route.name != 'AppParams') {
         this.isActiveStats = false
         this.isActivePatients = false
         this.isActiveParams = true
@@ -72,7 +72,8 @@ export default {
       }
     },
     goPsyInformations() {
-      this.$router.push({name:'PsyInformations'})
+      if(this.$route.name != 'PsyInformations')
+        this.$router.push({name:'PsyInformations'})
     }
   }
 }

@@ -1,13 +1,17 @@
 <template>
   <div class="psyInformations">
     <Hero title="Informations du psychologue"/>
-    <div id="psyDatas">
-      <img src="../assets/avatar-woman-illustration.svg" alt="imgPatient" id="imgPatient">
-      <h2>{{user.data.displayName}}</h2>
+    <div class="wrapperPsyInformations">
+      <div id="psyDatas">
+        <img src="../assets/avatar-woman-illustration.svg" alt="imgPatient" id="imgPatient">
+        <div class="contentPsyDatas">
+          <h2>{{user.data.displayName}}</h2>
+          <vs-button color="#9082FF" type="filled" id="btnModif" @click="toggleModal">Modifier les informations</vs-button>
+        </div>
+      </div>
+      <UpdateDataModal ref="updateDatasModal" :person="user.data" :personType="'psy'"/>
+      <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     </div>
-    <vs-button color="#9082FF" type="filled" id="btnModif" @click="toggleModal">Modifier les informations</vs-button>
-    <UpdateDataModal ref="updateDatasModal" :person="user.data" :personType="'psy'"/>
-    <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
   </div>
 </template>
 
@@ -40,6 +44,13 @@ export default {
   position: relative;
   text-align: left;
 }
+.wrapperPsyInformations {
+  background-color: #F0F0F0;
+  box-shadow: 0 4px 16px 0 rgb(0 0 0 / 5%);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
 #icon_back {
   display: flex;
   align-self: flex-start;
@@ -47,15 +58,20 @@ export default {
 }
 #btnModif {
   border-radius: 16px;
+  font-size: 15px;
+  margin-top: 1rem;
 }
 #psyDatas {
   display: flex;
   flex-direction: row;
   margin: 20px 0;
 }
+.contentPsyDatas {
+  margin-left: 2rem;
+}
 #imgPatient {
   margin-right: 10px;
-  width: 24%;
+  width: 14%;
 }
 .psyInformations a {
   position: absolute;
@@ -63,5 +79,20 @@ export default {
   left: -28px;
   font-size: 30px;
   cursor: pointer;
+}
+@media screen and (max-width: 800px) {
+  #psyDatas {
+    flex-direction: column;
+    margin: 0;
+    align-items: center;
+  }
+  #imgPatient {
+    width: 50%;
+    margin: auto;
+  }
+  .contentPsyDatas {
+    margin-left: 0;
+    margin-top: 2rem;
+  }
 }
 </style>

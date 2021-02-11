@@ -95,7 +95,8 @@ export default {
               }
             });
           });
-          store.dispatch("fetchUser", user)
+          //store.dispatch("FETCH_USER", user)
+          store.commit('SET_USER', user)
           this.$router.push({ name: 'PatientsList' })
         })
         .catch(() => {

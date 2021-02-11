@@ -1,17 +1,17 @@
 <template>
-  <div class="patientProfil">
+  <div class="patientProfil" v-if="patient != null">
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     <div id="patientDatasActions">
       <div id="patientDatas">
-        <img class="avatar" v-if="patient.gender == 1" alt="imgPatient" id="imgPatient" src="../assets/avatar-man-illustration.svg"/>
-          <img class="avatar" v-if="patient.gender == 0"  alt="imgPatient" id="imgPatient" src="../assets/avatar-woman-illustration.svg"/>
+        <img class="avatar" v-if="patient.gender!= null && patient.gender == 1" alt="imgPatient" id="imgPatient" src="../assets/avatar-man-illustration.svg"/>
+          <img class="avatar" v-if="patient.gender!= null && patient.gender == 0" alt="imgPatient" id="imgPatient" src="../assets/avatar-woman-illustration.svg"/>
         <div id="patientTxtDatas">
           <h1>{{patient.firstName}} {{patient.lastName}}</h1>
           <h3>Date de naissance : {{patient.birthday}}</h3>
           <h3>Adresse : {{patient.address}}, {{patient.cp}} {{patient.city}}</h3>
           <h3>Email : {{patient.email}}</h3>
           <p>Motif : {{patient.testReason}}</p>
-          <p>Date de création : {{patient.dateCreation.toDate() }}</p>
+          <p>Date de création : {{patient.dateCreation.toDate()}}</p>
         </div>
       </div>
       <div id="actions">
@@ -29,6 +29,7 @@
 
 <script>
 import UpdateDataModal from '@/components/UpdateDataModal.vue'
+import  {mapState} from 'vuex'
 
 export default {
   name: 'PatientProfil',
@@ -37,11 +38,18 @@ export default {
   },
   data () {
     return {
-      patient:{}
+      //patient:{}
     }
   },
+  computed: {
+    ...mapState({
+      patient: 'currentPatient'
+    })
+  },
   created() {
-    this.patient = this.$route.params.patient;
+    if(this.patient === null) {
+      this.goPatientsList()
+    }
   },
   methods: {
     toggleModal() {

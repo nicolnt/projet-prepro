@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index'
 import Vuesax from 'vuesax'
-import firebase from 'firebase/app'
+//import firebase from 'firebase/app'
 import 'firebase/auth'
 
 import 'vuesax/dist/vuesax.css' //Vuesax styles
@@ -16,10 +16,7 @@ Vue.config.productionTip = false
 
 Vue.use(Vuesax);
 
-firebase.auth().onAuthStateChanged(user => {
-  store.dispatch("fetchUser", user);
-});
-
+store.dispatch("FETCH_USER");
 
 new Vue({
   router,

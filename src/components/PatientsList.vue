@@ -75,6 +75,8 @@ export default {
     goPatientProfil(patient) {
       if(this.$route.name != 'PatientProfil')
         this.$router.push({name:'PatientProfil',  params: { patient: patient } })
+        this.$store.commit("SET_CURRENT_PATIENT", patient)
+        // store pour faire renseigner user courant
     },
     toggleModal() {
       this.$refs.addPatientModal.toggle()

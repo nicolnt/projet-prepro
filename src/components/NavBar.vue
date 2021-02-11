@@ -58,9 +58,12 @@ export default {
         .auth()
         .signOut()
         .then(() => {
+          // commit pour mutation
+          
           this.$router.replace({
             name: "Home"
           });
+          //this.$store.commit("SET_LOGGED_OUT")
         });
     },
     goSignIn() {

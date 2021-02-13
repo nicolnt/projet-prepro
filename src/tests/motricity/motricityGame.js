@@ -17,8 +17,8 @@ class Track {
 		Track.traceCanvas = document.getElementById('traceCanvas')
 		Track.traceCanvasContext = Track.traceCanvas.getContext('2d')
 
-    Track.trackImageBackground.src = require(`./${trackImageName}_background.svg`)
-    Track.trackImageTrack.src = require(`./${trackImageName}_track.svg`)
+    Track.trackImageBackground.src = require(`./paths/${trackImageName}_background.svg`)
+    Track.trackImageTrack.src = require(`./paths/${trackImageName}_track.svg`)
 
     Track.trackImageBackground.onload = Track.trackLoaded
     Track.trackImageTrack.onload = Track.trackLoaded
@@ -50,12 +50,12 @@ class Track {
       Track.trackCanvas.width = canvasWidth
       Track.trackCanvas.height = canvasHeight
       Track.trackCanvasContext.clearRect(0, 0, canvasWidth, canvasHeight)
-      Track.trackCanvasContext.drawImage(Track.trackImageTrack, 0, 0, canvasWidth, canvasWidth / imageRatio)
+      Track.trackCanvasContext.drawImage(Track.trackImageTrack, 0, canvasHeight*0.5 - (canvasWidth/imageRatio)*0.5, canvasWidth, canvasWidth / imageRatio)
 
       Track.backgroundCanvas.width = canvasWidth
       Track.backgroundCanvas.height = canvasHeight
       Track.backgroundCanvasContext.clearRect(0, 0, canvasWidth, canvasHeight)
-      Track.backgroundCanvasContext.drawImage(Track.trackImageBackground, 0, 0, canvasWidth, canvasWidth / imageRatio)
+      Track.backgroundCanvasContext.drawImage(Track.trackImageBackground, 0, canvasHeight*0.5 - (canvasWidth/imageRatio)*0.5, canvasWidth, canvasWidth / imageRatio)
 
       Track.trackReady = true
     }
@@ -172,6 +172,7 @@ class Level {
         Level.currentLevel.addPoint(coords)
       }
     })
+
     Track.traceCanvas.addEventListener('touchend', pointer => {
       if (Level.currentLevel.drawing === true) {
         const coords = { x: pointer.changedTouches[0].pageX  - offset.x, y: pointer.changedTouches[0].pageY - offset.y }
@@ -179,6 +180,7 @@ class Level {
         Level.currentLevel.drawing = false
       }
     })
+
     Track.traceCanvas.addEventListener('mousedown', pointer => {
       // Create a new series
       if (Track.trackReady) {
@@ -196,6 +198,7 @@ class Level {
         Level.currentLevel.addPoint(coords)
       }
     })
+
     Track.traceCanvas.addEventListener('mouseup', pointer => {
       if (Level.currentLevel.drawing === true) {
         const coords = { x: pointer.offsetX, y: pointer.offsetY }
@@ -227,7 +230,6 @@ class Level {
       else
         this.length.inside += length
     }
-
     console.log('inside:', this.length.inside, '\nobstacle', this.length.obstacle, '\nbeforeStart:', this.length.beforeStart, '\noutside:', this.length.outside)
   }
 
@@ -273,7 +275,6 @@ class Level {
       Track.traceCanvasContext.moveTo(coords.x, coords.y)
       this.addNewSeries(type)
     }
-
 
     const prevSeries = this.pointSeries[this.pointSeries.length - 2]
     if (newSeries === false && prevSeries && prevSeries.type !== type && this.pointSeries[this.pointSeries.length - 1].points.length === 0) {
@@ -336,7 +337,7 @@ class Level {
 
 class Game {
   state = {
-    trainingComplete: false,
+    doTraining: false,
     currentLevel: -1
   }
 
@@ -345,39 +346,48 @@ class Game {
     Level.callback = callAfterSuccess
   }
 
-  switchToNextLevel() {
-    if (this.gameData.training.length && this.state.trainingComplete === false && this.gameData.training.length === this.state.currentLevel + 1) {
-      this.state.trainingComplete = true
-      this.state.currentLevel = 0
-    } else {
-      this.state.currentLevel++
-    }
-    this.startLevel()
-  }
-
-  skipTraining() {
-    this.state.trainingComplete = true
+  beginTraining() {
+    this.state.doTraining = true
     this.state.currentLevel = 0
     this.startLevel()
   }
 
+  beginTest() {
+    this.state.doTraining = false
+    this.state.currentLevel = 0
+    this.startLevel()
+  }
 
+  switchToNextLevel() {
+    this.state.currentLevel++
+    this.startLevel()
+  }
 
   startLevel() {
     let currentLevelData
-    if (this.gameData.training.length && this.state.trainingComplete === false)
-      currentLevelData = this.gameData.training[this.state.currentLevel]
-    else
-      currentLevelData = this.gameData.tests[this.state.currentLevel]
-
-    //this.gameData. = new Level(currentLevelData)
+    if (this.gameData.trainingPaths.length && this.state.doTraining === true) {
+      currentLevelData = this.gameData.trainingPaths[this.state.currentLevel]
+    } else {
+      currentLevelData = this.gameData.testPaths[this.state.currentLevel]
+    }
     currentLevelData.level = new Level(currentLevelData)
+  }
+
+  currentLevelNumber() {
+    return this.state.currentLevel + 1;
+  }
+
+  totalLevelForCurrentType() {
+    if (this.state.doTraining === false) {
+      return this.gameData.testPaths.length
+    } else {
+      return this.gameData.trainingPaths.length
+    }
   }
 }
 
-//export default Level
 export default Game
-
+//export default Level
 //level.setupLevel('path.svg', 800, 600)
 
 // TODO check https://stackoverflow.com/questions/16968945/convert-base64-png-data-to-javascript-file-objects

@@ -13,8 +13,7 @@ import AppParams from '../components/AppParams.vue'
 import PatientResults from '../components/PatientResults.vue'
 import PatientProfil from '../components/PatientProfil.vue'
 import TestList from '../components/TestList.vue'
-import MotricityTest from '../components/tests/MotricityTest.vue'
-//import MotricityTest from '../tests/MotricityTest.vue'
+import MotricityTest from '../tests/motricity/MotricityTest.vue'
 
 Vue.use(VueRouter)
 
@@ -83,7 +82,7 @@ const routes = [
     }]
   },
   {
-    path: '/MotricityTest',
+    path: '/motricityTest',
     name: 'MotricityTest',
     component: MotricityTest
   },

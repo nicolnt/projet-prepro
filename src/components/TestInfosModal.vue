@@ -4,7 +4,7 @@
             <p><strong>Test terminé !</strong> Vous allez maintenant revenir à l'accueil.</p>
         </div>
         <div class="test-modal-buttons">
-            <vs-button id="btnEndTest" color="#9082FF">Ok</vs-button>
+            <vs-button id="btnEndTest" color="#9082FF" @click="endTest">Ok</vs-button>
         </div>
     </vs-popup>
 </template>
@@ -19,7 +19,10 @@ export default {
   },
   methods: {
     toggle() {
-      this.popupActivo = !this.open;
+      this.popupActivo = !this.popupActivo;
+    },
+    endTest() {
+      this.$router.push({name:'PatientProfil'})
     }
   }
 }

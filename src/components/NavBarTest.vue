@@ -10,7 +10,7 @@
         {{testName}}
       </span>
       <vs-navbar-item index="0">
-        <vs-button color="#000000" type="flat" v-on:click="stopTest">Quitter le test</vs-button>
+        <vs-button color="#000000" type="flat" @click="$emit('ToggleQuitModal')">Quitter le test</vs-button>
       </vs-navbar-item>
     </vs-navbar>
   </div>

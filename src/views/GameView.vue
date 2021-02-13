@@ -1,8 +1,8 @@
 <template>
   <div class="test">
-    <NavBarTest testName="Motricité fine" p_color="#FF8D8B" p_colorBG="#ffffff" />
+    <NavBarTest @ToggleQuitModal="ToggleQuitModal" testName="Motricité fine" p_color="#FF8D8B" p_colorBG="#FFFFFF" />
     <div class="test-content">
-        <router-view ref="test" @toggleHelp="ToggleInstructionsModal"></router-view>
+        <router-view ref="test" @ToggleInstructionsModal="ToggleInstructionsModal" @ToggleInfosModal="ToggleInfosModal"></router-view>
         <TestInstructionsModal @train="$refs.test.train()" @play='$refs.test.play()' ref="TestInstructionsModal"/>
         <TestQuitModal ref="TestQuitModal"/>
         <TestInfosModal ref="TestInfosModal"/>
@@ -27,12 +27,16 @@ export default {
   methods: {
     ToggleInstructionsModal() {
       this.$refs.TestInstructionsModal.toggle()
+    },
+    ToggleQuitModal() {
+      this.$refs.TestQuitModal.toggle()
+    },
+    ToggleInfosModal() {
+      this.$refs.TestInfosModal.toggle()
     }
-
   },
   data(){
     return {
-      quitPopupActiv:false
     }
   }
 }

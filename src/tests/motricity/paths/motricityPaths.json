@@ -1,5 +1,5 @@
 {
-	"training" : [
+	"trainingPaths" : [
 		{
 			"name": "training1",
 			"startingPoint": true,
@@ -16,7 +16,7 @@
 			"meanLength": 1.68
 		}
 	],
-	"tests": [
+	"testPaths": [
 		{
 			"name": "test1",
 			"startingPoint": false,

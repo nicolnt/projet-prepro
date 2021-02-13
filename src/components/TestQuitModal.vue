@@ -7,8 +7,8 @@
             </p>
         </div>
         <div class="test-modal-buttons">       
-            <vs-button id="btnQuitTest" color="#9082FF" v-on:click="stopTest">Quitter</vs-button>
-            <vs-button id="btnResumeTest" color="#9082FF" icon="play_arrow">Continuer</vs-button>
+            <vs-button id="btnQuitTest" color="#9082FF" @click="stopTest">Quitter</vs-button>
+            <vs-button id="btnResumeTest" color="#9082FF" icon="play_arrow" @click="toggle">Continuer</vs-button>
         </div>
     </vs-popup>
 </template>
@@ -18,12 +18,12 @@ export default {
   name: 'TestQuitModal',
   data() {
     return { 
-        popupActivo: false
+      popupActivo: false
     }
   },
   methods: {
     toggle() {
-      this.popupActivo = !this.open;
+      this.popupActivo = !this.popupActivo;
     },
     stopTest() {
       this.$router.push({name:'PatientProfil'})

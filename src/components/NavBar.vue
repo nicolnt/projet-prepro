@@ -59,7 +59,7 @@ export default {
         .signOut()
         .then(() => {
           // commit pour mutation
-          
+          this.$store.dispatch("SIGN_OUT")
           this.$router.replace({
             name: "Home"
           });

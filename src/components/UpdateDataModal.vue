@@ -105,7 +105,7 @@
 
 <script>
 import { db } from '../services/firebase'
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import firebase from 'firebase/app'
 require('firebase/auth')
 
@@ -151,6 +151,9 @@ export default {
     ...mapGetters({
     // map `this.user` to `this.$store.getters.user`
       user: "user"
+    }),
+    ...mapState({
+      patient: 'currentPatient'
     })
   },
   methods: {
@@ -163,32 +166,37 @@ export default {
               self.id = doc.id
           }
         });
-      }).then(function() {
-        db.collection("patients").add({
-        firstName: self.form.firstName,
-        lastName: self.form.lastName,
-        email: self.form.email,
-        birthday: self.form.birthday,
-        address: self.form.address,
-        cp: self.form.cp,
-        city: self.form.city,
-        testReason: self.form.reason,
-        gender: self.form.gender,
-        dateCreation: new Date(),
-        idUser: self.id
-        })
-        .then(function(docRef) {
-          console.log("Document written with ID: ", docRef.id);
-          self.confirm()
-        })
-        .catch(function(error) {
-          console.error("Error adding document: ", error);
-        })
       })
-      
+      if(this.personType === 'psy') {
+        user.updateProfile({
+          displayName: self.form.firstName + ' ' + self.form.lastName,
+          email: self.form.email
+        }).then(function() {
+          db.collection("users").doc(self.id).update({
+            firstName: self.form.firstName,
+            lastName: self.form.lastName,
+            email: self.form.email
+          })
+        }).catch(function(error) {
+          console.error("Error adding document: ", error);
+        });
+      } else if(this.personType === 'patient') {
+        db.collection("patients").doc(self.patient.id).update({
+            firstName: self.form.firstName,
+            lastName: self.form.lastName,
+            email: self.form.email,
+            birthday: self.form.birthday,
+            address: self.form.address,
+            cp: self.form.cp,
+            city: self.form.city,
+            reason: self.form.reason,
+            gender: self.form.gender
+        }).catch(function(error) {
+          console.error("Error adding document: ", error);
+        });
+      }
     },
     toggle() {
-      console.log(this.person)
       this.popupActivo = !this.open;
       if(this.popupActivo) {
         if(this.personType === "psy"){

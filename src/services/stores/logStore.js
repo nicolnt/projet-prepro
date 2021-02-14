@@ -71,8 +71,12 @@ export default new Vuex.Store({
         // await ....
         firebase.auth().onAuthStateChanged(user => {
           commit("SET_USER", user);
-        });
-               
+        })     
+      },
+      SIGN_OUT({commit}) {
+        firebase.auth().signOut().then( () => {
+          commit("SET_LOGGED_OUT");
+        })
       }
         // login
         // logout

@@ -48,7 +48,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
 .vs-popup {
   font-family: Poppins;
   background-color: #eaedf0;

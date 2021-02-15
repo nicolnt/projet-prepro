@@ -7,7 +7,7 @@
         </vs-navbar-title>
       </div>
       <span class="test-navbar-title">
-        {{testName}}
+        {{ testName }}
       </span>
       <vs-navbar-item index="0">
         <vs-button color="#000000" type="flat" @click="$emit('ToggleQuitModal')">Quitter le test</vs-button>
@@ -45,5 +45,14 @@ export default {
 }
 .test-navbar-title {
   font-weight: 600;
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .test-navbar-title {
+    position: static;
+  }
 }
 </style>

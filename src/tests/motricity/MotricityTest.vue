@@ -3,7 +3,7 @@
     <div class="test-bar">
       <span class="test-counter">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
       <vs-button
-        @click="$emit('ToggleInstructionsModal')"
+        @click="ToggleHelpModal()"
         radius
         type="flat"
         icon="help"
@@ -15,20 +15,46 @@
       <canvas id="traceCanvas"></canvas>
     </div>
     <canvas ref="canvas" id="pickerTrack"></canvas>
+    <TestBeginModal :instructions="instructions" @train="train()" @play='play()' ref="TestBeginModal"/>
+    <TestHelpModal :instructions="instructions" ref="TestHelpModal"/>
   </div>
 </template>
 
 <script>
-import Game from "./motricityGame";
+import Game from "./motricityGame"
+import TestBeginModal from '@/components/TestBeginModal.vue'
+import TestHelpModal from '@/components/TestHelpModal.vue'
 
 export default {
   name: "MotricityTest",
+  components: {
+    TestBeginModal,
+    TestHelpModal
+  },
   data() {
     return {
       game: new Game(require("./paths/motricityPaths.json"), this.doAfterSuccess),
-    };
+      instructions: [
+        {
+          img: 'tests_visuals/motricityTest_success.jpg',
+          altImg: 'Un utilisateur trace le chemin',
+          desc: "Tracez les chemins, sans sortir de leurs contours et en un seul trait.",
+        },
+        {
+          img: 'tests_visuals/motricityTest_failure.jpg',
+          altImg: 'Un utilisateur passe sur un obstacle',
+          desc: "Évitez tous les obstacles sur votre tracé",
+        }
+      ]
+    }
   },
   methods: {
+    ToggleBeginModal() {
+      this.$refs.TestBeginModal.toggle()
+    },
+    ToggleHelpModal() {
+      this.$refs.TestHelpModal.toggle()
+    },
     train() {
       this.game.beginTraining();
     },
@@ -44,7 +70,7 @@ export default {
         //End training
         this.game.state.doTraining = false
         this.game.state.currentLevel = -1
-        this.$emit("ToggleInstructionsModal");
+        this.ToggleBeginModal()
       }
       this.game.switchToNextLevel();
     }

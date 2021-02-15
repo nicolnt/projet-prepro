@@ -2,8 +2,7 @@
   <div class="test">
     <NavBarTest @ToggleQuitModal="ToggleQuitModal" testName="Motricité fine" p_color="#FF8D8B" p_colorBG="#FFFFFF" />
     <div class="test-content">
-        <router-view ref="test" @ToggleInstructionsModal="ToggleInstructionsModal" @ToggleInfosModal="ToggleInfosModal"></router-view>
-        <TestInstructionsModal @train="$refs.test.train()" @play='$refs.test.play()' ref="TestInstructionsModal"/>
+        <router-view ref="test" @ToggleInfosModal="ToggleInfosModal"></router-view>
         <TestQuitModal ref="TestQuitModal"/>
         <TestInfosModal ref="TestInfosModal"/>
     </div>
@@ -12,7 +11,6 @@
 
 <script>
 import NavBarTest from '@/components/NavBarTest.vue'
-import TestInstructionsModal from '@/components/TestInstructionsModal.vue'
 import TestQuitModal from '@/components/TestQuitModal.vue'
 import TestInfosModal from '@/components/TestInfosModal.vue'
 
@@ -20,14 +18,10 @@ export default {
   name: 'MotricityTest',
   components: {
     NavBarTest,
-    TestInstructionsModal,
     TestQuitModal,
     TestInfosModal
   },
   methods: {
-    ToggleInstructionsModal() {
-      this.$refs.TestInstructionsModal.toggle()
-    },
     ToggleQuitModal() {
       this.$refs.TestQuitModal.toggle()
     },
@@ -50,6 +44,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   background-color: #EDEDED;
+  user-select: none;
 }
 .test-content {
   background-color: #FFFFFF;

@@ -1,5 +1,5 @@
 <template lang="html">
-    <vs-popup :active.sync="popupActivo" title="" class="test-modal">
+    <VsPopupCustom :active.sync="popupActivo" title="Quitter le test ?" class="test-modal">
         <div class="test-modal-content">
             <p>
               Voulez-vous vraiment quitter le test ?<br/> 
@@ -10,12 +10,17 @@
             <vs-button id="btnQuitTest" color="#9082FF" @click="stopTest">Quitter</vs-button>
             <vs-button id="btnResumeTest" color="#9082FF" icon="play_arrow" @click="toggle">Continuer</vs-button>
         </div>
-    </vs-popup>
+    </VsPopupCustom>
 </template>
 
 <script>
+import VsPopupCustom from '@/components/VsPopupCustom.vue'
+
 export default {
   name: 'TestQuitModal',
+  components: {
+    VsPopupCustom
+  },
   data() {
     return { 
       popupActivo: false
@@ -36,12 +41,18 @@ export default {
 .test-modal {
   text-align: center;
   font-family: Poppins;
+  user-select: none;
 }
 .test-modal >>> header {
-  display: none;
+  /* display: none; */
 }
 .test-modal >>> .vs-popup--content {
   margin: 15px 0;
+}
+.test-modal >>> .vs-popup--close {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 .test-modal-content {
   margin-bottom: 20px;

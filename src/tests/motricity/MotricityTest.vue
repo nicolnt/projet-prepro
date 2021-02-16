@@ -25,6 +25,9 @@ import Game from "./motricityGame"
 import TestBeginModal from '@/components/TestBeginModal.vue'
 import TestHelpModal from '@/components/TestHelpModal.vue'
 
+import { db } from '../../services/firebase'
+require('firebase/auth')
+
 export default {
   name: "MotricityTest",
   components: {
@@ -61,7 +64,30 @@ export default {
     play() {
       this.game.beginTest();
     },
+    sendLastestTestToDB(level) {
+      let game = this.game.gameData.testPaths[level]
+      db.collection("tentatives").add({
+        idPatient: 'patientID',
+        idTest: 'motricity',
+        idParcours: level,
+        patientTime: 100,
+        testCapture: game.level.traceImage,
+        dateTime: Date.now(),
+        succeed: (game.level.score >= 0.5) ? true : false,
+        score: game.level.score
+      })
+        .then(function(docRef) {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error);
+        })
+    },
     doAfterSuccess() {
+      if (this.game.state.doTraining === false) {
+        // Level done (not trainings)
+        this.sendLastestTestToDB(this.game.state.currentLevel)
+      }
       if (this.game.state.doTraining === false && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End test
         this.game.state.currentLevel = -1

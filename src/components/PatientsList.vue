@@ -3,8 +3,7 @@
     <Hero title="Liste des patients"/>
     <div id="actions">
       <form class="form">
-        <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient" />
-      
+        <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient"/>
         <button type="button" class="btn--search btn--inside"><i class="material-icons">search</i></button>
       </form>
       <button class="add-patient" @click="toggleModal">
@@ -210,7 +209,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1025px) {
   #actions {
     flex-direction: column;
     align-items: center;

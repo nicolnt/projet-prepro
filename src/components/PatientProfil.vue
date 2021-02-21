@@ -73,7 +73,6 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
 }
 .btnPatient {
   border-radius: 16px;
@@ -87,7 +86,6 @@ export default {
 .btn {
   border-radius: 16px;
   margin: 10px 0;
-  /* width: 20%; */
   font-size: 15px;
 }
 .patientProfil a {
@@ -159,7 +157,7 @@ export default {
     margin-top: 1rem;
   }
   #imgPatient {
-    width: 50%;
+    width: 20%;
   }
 }
 </style>

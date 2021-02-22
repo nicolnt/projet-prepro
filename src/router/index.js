@@ -6,6 +6,8 @@ import AuthSignIn from '../views/AuthSignIn.vue'
 import CGU from '../views/CGU.vue'
 import LegalNotice from '../views/LegalNotice.vue'
 import Dashboard from '../views/Dashboard.vue'
+import GameView from '../views/GameView.vue'
+
 import PatientsList from '../components/PatientsList.vue'
 import PsyInformations from '../components/PsyInformations.vue'
 import Stats from '../components/Stats.vue'
@@ -13,6 +15,7 @@ import AppParams from '../components/AppParams.vue'
 import PatientResults from '../components/PatientResults.vue'
 import PatientProfil from '../components/PatientProfil.vue'
 import TestList from '../components/TestList.vue'
+import MotricityTest from '../tests/motricity/MotricityTest.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +44,14 @@ const routes = [
     path: '/legalNotice',
     name: 'LegalNotice',
     component: LegalNotice
+  },
+  {
+    path: '/game',
+    component: GameView,
+    children: [{
+      path: 'motricity',
+      component: MotricityTest
+    }]
   },
   {
     path: '/dashboard',
@@ -81,6 +92,11 @@ const routes = [
       name: 'TestList',
       component: TestList
     }]
+  },
+  {
+    path: '/motricityTest',
+    name: 'MotricityTest',
+    component: MotricityTest
   },
   {
     path: '*',

@@ -178,7 +178,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
 .vs-popup {
   position: relative;
   font-family: Poppins;

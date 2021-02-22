@@ -42,8 +42,14 @@ export default {
   width: 100%;
 }
 body {
-  height: 100vh;
-  width: 100vw;
+  /*height: 92vh;*/
+  /*width: 100vw;*/
+  position: absolute;
+  max-height: 100%;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  left: 0;
 }
 h1, h2, h3, p {
   margin: 0;

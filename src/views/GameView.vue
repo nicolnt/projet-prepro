@@ -21,6 +21,10 @@ export default {
     TestQuitModal,
     TestInfosModal
   },
+  beforeMount() {
+    if (!this.$store.state.currentPatient)
+      this.$router.push({name: 'Dashboard'})
+  },
   methods: {
     ToggleQuitModal() {
       this.$refs.TestQuitModal.toggle()

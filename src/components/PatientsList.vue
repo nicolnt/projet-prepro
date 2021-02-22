@@ -72,10 +72,10 @@ export default {
       
     },
     goPatientProfil(patient) {
-     this.$store.commit('SET_PATIENT', patient.id)
-      if(this.$route.name != 'PatientProfil')
+      if(this.$route.name !== 'PatientProfil')
         this.$router.push({name:'PatientProfil',  params: { patient: patient } })
-        this.$store.commit("SET_CURRENT_PATIENT", patient)
+      this.$store.commit("SET_CURRENT_PATIENT", patient)
+      console.log(this.$store.state)
         // store pour faire renseigner user courant
     },
     toggleModal() {

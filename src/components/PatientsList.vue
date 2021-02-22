@@ -14,7 +14,7 @@
     </div>
     <div id="list">
       <ul>
-        <li v-on:click="goPatientProfil" v-for="patient in patients" :key="patient.firstName">
+        <li v-on:click="goPatientProfil(patient)" v-for="patient in patients" :key="patient.firstName">
           <img class="avatar" v-if="patient.gender == 1" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
           <img class="avatar" v-if="patient.gender == 0"  alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
           {{patient.lastName}} {{patient.firstName}}
@@ -55,8 +55,9 @@ export default {
     this.getPatientList()
   },
   methods: {
-    goPatientProfil() {
-      this.$router.push({name:'PatientProfil'})
+    goPatientProfil({ id }) {
+     this.$store.commit('SET_PATIENT', id)
+       this.$router.push({name:'PatientProfil'})
     },
     toggleModal() {
       this.$refs.addPatientModal.toggle()
@@ -105,13 +106,13 @@ export default {
 .btn--search {
   width: 50px;
   display: inline-block;
-	background-color: #9082FF;
+  background-color: #9082FF;
   color: #fff;
   border-radius: 25px;
-	border: 0;
-	outline: 0;
-	padding: 10px;
-	cursor: pointer;
+  border: 0;
+  outline: 0;
+  padding: 10px;
+  cursor: pointer;
   transition: all 0.5s ease;
 }
 .btn--search i {

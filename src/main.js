@@ -18,6 +18,7 @@ Vue.use(Vuesax);
 
 firebase.auth().onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);
+  router.push({ path: '/dashboard' })
 });
 
 new Vue({

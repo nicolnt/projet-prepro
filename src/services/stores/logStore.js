@@ -49,7 +49,10 @@ export default new Vuex.Store({
       },
       SET_USER(state, data) {
         state.user.data = data;
-      }
+      },
+      SET_PATIENT(state, patient) {
+        state.user.patient = patient;
+      },
     },
     actions: {
       fetchUser({ commit }, user) {

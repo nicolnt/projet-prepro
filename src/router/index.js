@@ -47,6 +47,7 @@ const routes = [
   },
   {
     path: '/game',
+    name: 'game',
     component: GameView,
     children: [{
       path: 'motricity',

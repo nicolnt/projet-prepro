@@ -67,7 +67,7 @@ export default {
     sendLastestTestToDB(level) {
       let game = this.game.gameData.testPaths[level]
       db.collection("tentatives").add({
-        idPatient: 'patientID',
+        idPatient: this.$store.state.user.patient,
         idTest: 'motricity',
         idParcours: level,
         patientTime: 100,

@@ -1,6 +1,6 @@
 <template>
   <div class="authSignUp">
-    <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff"/>
+    <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/>
     <img class="man-fauteuil" src="../assets/man-fauteuil-illustration.svg"/>
     <div id="authForms">
       <SignUp class="sign"/>
@@ -12,14 +12,14 @@
 <script>
 
 import SignUp from '@/components/SignUp.vue'
-import NavBarAuth from '@/components/NavBarAuth.vue'
+import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'AuthSignUp',
   components: {
     SignUp,
-    NavBarAuth,
+    NavBar,
     Footer
   }
 }

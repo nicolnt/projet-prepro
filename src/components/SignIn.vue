@@ -50,25 +50,19 @@
 
 <script>
 
-// import Input from '@/components/Input.vue'
-//import logStore from '@/services/stores/logStore'
 import ForgotPass from '@/components/ForgotPass'
 import firebase from 'firebase/app'
 require('firebase/auth')
-import store from "../services/stores/logStore";
 import { db } from '../services/firebase'
 
 
 export default {
   name: 'SignIn',
   components: {
-    // Input
     ForgotPass
   },
   data() {
     return {
-      m_valueEmail : "",
-      m_valuePassword : "",
       form: {
         email: "",
         password: ""
@@ -95,27 +89,12 @@ export default {
               }
             });
           });
-          //store.dispatch("FETCH_USER", user)
-          store.commit('SET_USER', user)
           this.$router.push({ name: 'PatientsList' })
         })
         .catch(() => {
           this.error = 'Identifiant ou mot de passe incorrect.'
         });
     },
-    goSignIn() {
-      this.checkInput(this.m_valueEmail)
-      this.checkInput(this.m_valuePassword)
-      if(this.$route.name != 'PatientsList')
-        this.$router.push({name:'PatientsList'})
-    },
-    checkInput(value) {
-      if(value != null && value != undefined && value != "") {
-        return true
-      } else {
-        return false
-      }
-    }
   }
 }
 </script>

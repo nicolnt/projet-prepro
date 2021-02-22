@@ -76,7 +76,6 @@
 </template>
 
 <script>
-// import Input from '@/components/Input.vue'
 import firebase from 'firebase/app'
 require('firebase/auth')
 import { db } from '../services/firebase'
@@ -84,14 +83,9 @@ import { db } from '../services/firebase'
 export default {
   name: 'SignUp',
   components:{
-    // Input
   },
   data() {
     return {
-      m_valueLastName : "",
-      m_valueFirstName : "",
-      m_valueEmail : "",
-      m_valuePassword : "",
       form: {
         firstName: "",
         lastName: "",
@@ -141,21 +135,6 @@ export default {
          this.error = 'Le mot de passe doit contenir au moins 6 lettres ou chiffres.'
       }
     },
-    goSignUp() {
-      this.checkInput(this.m_valueEmail)
-      this.checkInput(this.m_valuePassword)
-      this.checkInput(this.m_valueLastName)
-      this.checkInput(this.m_valueFirstName)
-      if(this.$route.name != 'PatientsList')
-        this.$router.push({name:'PatientsList'})
-    },
-    checkInput(value) {
-      if(value != null && value != undefined && value != "") {
-        return true
-      } else {
-        return false
-      }
-    }
   }
 }
 </script>

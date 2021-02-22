@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index'
 import Vuesax from 'vuesax'
-//import firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import 'firebase/auth'
 
 import 'vuesax/dist/vuesax.css' //Vuesax styles
@@ -18,8 +18,13 @@ Vue.use(Vuesax);
 
 store.dispatch("FETCH_USER");
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app')
+let app;
+firebase.auth().onAuthStateChanged(() => {
+  if(!app) {
+    app = new Vue({
+      router,
+      store,
+      render: h => h(App),
+    }).$mount('#app')
+  }
+})

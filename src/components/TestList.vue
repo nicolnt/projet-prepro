@@ -25,11 +25,6 @@ export default {
 </script>
 
 <style scoped>
-.btn {
-  border-radius: 16px;
-  margin: 10px 0;
-  width: 20%;
-}
 
 .testList {
   position: relative;

@@ -16,6 +16,7 @@ import PatientResults from '../components/PatientResults.vue'
 import PatientProfil from '../components/PatientProfil.vue'
 import TestList from '../components/TestList.vue'
 import MotricityTest from '../tests/motricity/MotricityTest.vue'
+import firebase from 'firebase/app'
 
 Vue.use(VueRouter)
 
@@ -28,12 +29,18 @@ const routes = [
   {
     path: '/signUp',
     name: 'AuthSignUp',
-    component: AuthSignUp
+    component: AuthSignUp,
+    meta: {
+      requiresGuest: true
+    },
   },
   {
     path: '/signIn',
     name: 'AuthSignIn',
-    component: AuthSignIn
+    component: AuthSignIn,
+    meta: {
+      requiresGuest: true
+    },
   },
   {
     path: '/cgu',
@@ -58,6 +65,9 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    meta: {
+      requiresAuth: true
+    },
     children: [{
       path: '/dashboard/psy',
       name: 'PsyInformations',
@@ -109,6 +119,42 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  // check for requiresAuth guard
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    // check if not logged in
+    if(!firebase.auth().currentUser) {
+      // go to login
+      next({
+        path: '/signIn',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+    } else {
+      // proceed to the route
+      next()
+    }
+  } else if (to.matched.some(record => record.meta.requiresGuest)) {
+    // check if logged in
+    if(firebase.auth().currentUser) {
+      // go to login
+      next({
+        path: '/dashboard/patientList',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+    } else {
+      // proceed to the route
+      next()
+    }
+  } else {
+    // proceed to the route
+    next()
+  }
 })
 
 export default router

@@ -3,18 +3,18 @@
     <vs-navbar v-model="activeItem" color="#ffffff" class="nabarx" id="navBar">
       <div v-if="user.loggedIn" class="titleApp" v-on:click="goDashboard" slot="title">
         <vs-navbar-title>
-          Tapitap
+          Tapitap co
         </vs-navbar-title>
       </div>
       <div v-else class="titleApp" v-on:click="goHome" slot="title">
         <vs-navbar-title>
-          Tapitap
+          Tapitap non co
         </vs-navbar-title>
       </div>
-     <template v-if="user.loggedIn">
-      <vs-navbar-item index="0" v-if="user.loggedIn">
-        <vs-button color="#000000" type="flat" @click.prevent="signOut">Déconnexion</vs-button>
-      </vs-navbar-item>
+      <template v-if="user.loggedIn">
+        <vs-navbar-item index="0">
+          <vs-button color="#000000" type="flat" @click.prevent="signOut">Déconnexion</vs-button>
+        </vs-navbar-item>
       </template>
       <template v-else>
         <vs-navbar-item index="0">
@@ -23,7 +23,7 @@
         <vs-navbar-item index="1">
           <vs-button v-bind:color="color" type="filled" v-on:click="goSignUp">Inscription</vs-button>
         </vs-navbar-item>
-    </template>
+      </template>
     </vs-navbar>
   </div>
 </template>
@@ -34,7 +34,7 @@ import firebase from 'firebase/app'
 require('firebase/auth')
 
 export default {
-  name: 'NavBarAuth',
+  name: 'NavBar',
   data(){
     return {
       activeItem: 0,
@@ -58,9 +58,12 @@ export default {
         .auth()
         .signOut()
         .then(() => {
+          // commit pour mutation
+          this.$store.dispatch("SIGN_OUT")
           this.$router.replace({
             name: "Home"
           });
+          //this.$store.commit("SET_LOGGED_OUT")
         });
     },
     goSignIn() {

@@ -3,7 +3,7 @@
     <Hero title="Liste des patients"/>
     <div id="actions">
       <form class="form">
-        <input type="text" class="form-field" placeholder="Rechercher un patient" />
+        <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient"/>
         <button type="button" class="btn--search btn--inside"><i class="material-icons">search</i></button>
       </form>
       <button class="add-patient" @click="toggleModal">
@@ -38,12 +38,25 @@ export default {
     return {
       valueInputSearch:'',
       patients: [],
-      id: null
+      patientsBackup: [],
+      id: null,
+      message: null
     }
   },
   components: {
     Hero,
     AddPatientModal
+  },
+  watch: {
+    message: function (val) {
+      if(val.length > 0){
+        this.patients= this.patientsBackup.filter(patient => (patient.firstName.toLowerCase().trim().includes(val.toLowerCase().trim()) ||
+        patient.lastName.toLowerCase().trim().includes(val.toLowerCase().trim())))
+      }
+      else{
+        this.patients = this.patientsBackup
+      }
+    }
   },
   computed: {
     // map `this.user` to `this.$store.getters.user`
@@ -55,9 +68,13 @@ export default {
     this.getPatientList()
   },
   methods: {
-    goPatientProfil({ id }) {
-     this.$store.commit('SET_PATIENT', id)
-       this.$router.push({name:'PatientProfil'})
+    search(){
+      
+    },
+    goPatientProfil(patient) {
+     this.$store.commit('SET_PATIENT', patient.id)
+      if(this.$route.name != 'PatientProfil')
+        this.$router.push({name:'PatientProfil',  params: { patient: patient } })
     },
     toggleModal() {
       this.$refs.addPatientModal.toggle()
@@ -78,6 +95,7 @@ export default {
             tmp = doc.data()
             tmp.id = doc.id
             self.patients.push(tmp)
+            self.patientsBackup.push(tmp)
           }
         });
       })
@@ -181,5 +199,25 @@ export default {
 #list img {
   width: 40px;
   vertical-align: middle;
+}
+
+@media screen and (max-width: 1024px) {
+  .form {
+    margin-right: 1rem;
+  }
+  #actions {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 1025px) {
+  #actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  .add-patient {
+    margin-top: 1rem;
+    padding: .5rem;
+  }
 }
 </style>

@@ -29,6 +29,7 @@
       </div>
     </div>
     <img class="leaf" src="../assets/leaf-illustration.svg"/>
+    <img class="leaf-responsive" src="../assets/leaf-illustration-responsive.svg"/>
   </div>
 </template>
 
@@ -46,33 +47,34 @@ export default {
   },
   computed: {
     ...mapGetters({
-// map `this.user` to `this.$store.getters.user`
+      // map `this.user` to `this.$store.getters.user`
       user: "user"
     })
   },
   methods: { 
     activePage(isActive){
-      if(isActive === 'isActivePatients') {
+      if(isActive === 'isActivePatients' && this.$route.name != 'PatientsList') {
         this.isActiveStats = false
         this.isActiveParams = false
-        this.isActivePatients = !this.isActivePatients
+        this.isActivePatients = true
         this.$router.push({name:'PatientsList'})
       }
-      if(isActive === 'isActiveStats') {
+      if(isActive === 'isActiveStats' && this.$route.name != 'Stats') {
         this.isActiveParams = false
         this.isActivePatients = false
-        this.isActiveStats = !this.isActiveStats
+        this.isActiveStats = true
         this.$router.push({name:'Stats'})
       }
-      if(isActive === 'isActiveParams') {
+      if(isActive === 'isActiveParams' && this.$route.name != 'AppParams') {
         this.isActiveStats = false
         this.isActivePatients = false
-        this.isActiveParams = !this.isActiveParams
+        this.isActiveParams = true
         this.$router.push({name:'AppParams'})
       }
     },
     goPsyInformations() {
-      this.$router.push({name:'PsyInformations'})
+      if(this.$route.name != 'PsyInformations')
+        this.$router.push({name:'PsyInformations'})
     }
   }
 }
@@ -117,6 +119,7 @@ export default {
   color: #9082FF;
 }
 .line {
+  display: block;
   height: 24px;
   width: 5px;
   border-radius: 0 20px 20px 0;
@@ -124,6 +127,7 @@ export default {
   margin-right: 10px;
 }
 .selectedLine {
+  display: block;
   height: 24px;
   width: 5px;
   border-radius: 0 20px 20px 0;
@@ -178,8 +182,53 @@ export default {
   margin-left: 11%;
 }
 .leaf {
+  display: block;
   position: absolute;
   bottom: 0;
   left: 0;
+}
+.leaf-responsive {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+}
+@media screen and (max-width: 1025px) {
+  .sideBar {
+    width: auto;
+    padding: 1rem;
+  }
+  #cardUser {
+    height: auto;
+    flex-direction: column;
+    margin-top: 0;
+  }
+  #txtCardUser {
+    margin: .5rem 0;
+    text-align: center;
+  }
+  #tag {
+    align-items: center;
+    margin-left: 0;
+  }
+  .selectedPage {
+    flex-direction: column;
+    margin-left: 0;
+  }
+  .pages {
+    flex-direction: column;
+  }
+  .selectedLine {
+    display: none;
+  }
+  .line {
+    display: none;
+  }
+  .leaf {
+    display: none;
+  }
+  .leaf-responsive {
+    display: block;
+  }
 }
 </style>

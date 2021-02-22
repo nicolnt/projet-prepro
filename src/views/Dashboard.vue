@@ -33,10 +33,9 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: linear-gradient(135deg, #ffffff, 80%, #EDEDED);
+  background: linear-gradient(135deg, #ffffff, 80%, #EDEDED) no-repeat;
 }
 #content {
   padding: 3rem;
-  width: calc(100% - 285px);
 }
 </style>

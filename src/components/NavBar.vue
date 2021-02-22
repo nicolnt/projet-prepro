@@ -1,12 +1,16 @@
 <template>
   <div class="navBarConnect">
     <vs-navbar v-model="activeItem" color="#ffffff" class="nabarx" id="navBar">
-      <div slot="title">
+      <div v-if="user.loggedIn" class="titleApp" v-on:click="goDashboard" slot="title">
         <vs-navbar-title>
-          Nom application
+          Tapitap
         </vs-navbar-title>
       </div>
-      
+      <div v-else class="titleApp" v-on:click="goHome" slot="title">
+        <vs-navbar-title>
+          Tapitap
+        </vs-navbar-title>
+      </div>
      <template v-if="user.loggedIn">
       <vs-navbar-item index="0" v-if="user.loggedIn">
         <vs-button color="#000000" type="flat" @click.prevent="signOut">Déconnexion</vs-button>
@@ -49,9 +53,6 @@ export default {
     })
   },
   methods:{
-    goHome() {
-      this.$router.push({name:'Home'})
-    },
     signOut() {
       firebase
         .auth()
@@ -63,10 +64,20 @@ export default {
         });
     },
     goSignIn() {
+      if(this.$route.name != 'AuthSignIn')
         this.$router.push({name:'AuthSignIn'})
     },
     goSignUp() {
+      if(this.$route.name != 'AuthSignUp')
         this.$router.push({name:'AuthSignUp'})
+    },
+    goHome() {
+      if(this.$route.name != 'Home')
+        this.$router.push({name:'Home'})
+    },
+    goDashboard() {
+      if(this.$route.name != 'PatientsList')
+        this.$router.push({name:'PatientsList'})
     }
   }
 }
@@ -77,17 +88,24 @@ export default {
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.2);
 }
 #navBar {
-  height: 80px;
-  padding: 10px 50px;
+  padding: 18px 50px;
 }
 .vs-navbar {
   z-index: 1;
 }
+.titleApp {
+  cursor: pointer;
+}
 .vs-button {
   font-size: 16px;
 }
-.vs-button:hover {
-  background: rgba(144, 130, 255, 0.2)!important;
-}
 
+@media screen and (max-width: 800px) {
+  button >>> .vs-navbar--btn-responsive {
+    order: 1;
+  }
+  .vs-button {
+    margin-right: 0;
+  }
+}
 </style>

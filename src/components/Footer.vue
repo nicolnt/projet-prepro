@@ -28,10 +28,12 @@ export default {
   },
   methods: {
     goLegalNotice() {
-      this.$router.push({name:'LegalNotice'})
+      if(this.$route.name != 'LegalNotice')
+        this.$router.push({name:'LegalNotice'})
     },
     goCGU() {
-      this.$router.push({name:'CGU'})
+      if(this.$route.name != 'CGU')
+        this.$router.push({name:'CGU'})
     }
   }
 }

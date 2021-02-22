@@ -1,11 +1,10 @@
 <template>
   <div class="home">
     <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/>
-    <!-- <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff" /> -->
     <div class="introduction-application">
       <div class="presentation-application">
-        <h1> Lorem ipsum dolor sit amet </h1>
-        <p> Lorem ipsum dolor sit amet, consectetur, Lorem ipsum dolor sit amet, consectetur </p>
+        <h1> Tapitap, l’application destinée aux psychologues </h1>
+        <p> Gagnez du temps afin de faire passer l’habilitation au permis de conduire à vos patients. </p>
         <vs-button color="#FF8D8B" type="filled" v-on:click="goSignUp" id="btnSignUp">inscription</vs-button>
       </div>
       <div class="illustration-application">
@@ -17,22 +16,33 @@
 </template>
 
 <script>
-// import NavBarAuth from '@/components/NavBarAuth.vue'
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
+import { mapGetters } from "vuex";
 
 export default {
   name: 'Home',
   components: {
-    // NavBarAuth,
     NavBar,
     Footer
   },
   methods: {
     goSignUp() {
-      this.$router.push({name:'AuthSignUp'})
+      if(this.$route.name != 'AuthSignUp')
+        this.$router.push({name:'AuthSignUp'})
     }
-  }
+  },
+  mounted: function(){
+    console.log(this.user)
+    if(this.user.loggedIn==true){
+      this.$router.push({name:'Dashboard'})
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
+  },
 }
 </script>
 
@@ -72,10 +82,45 @@ p {
 img {
   max-width: 100%;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  box-shadow: 0 0 0 30px white inset !important;
+}
 #btnSignUp {
   display: flex;
   align-self: center;
   padding: .5rem 1rem;
   font-size: 16px;
+}
+@media screen and (max-width: 1024px) {
+  .introduction-application {
+    width: 85%;
+  }
+  h1 {
+    font-size: 28px;
+  }
+}
+@media screen and (max-width: 780px) {
+  .introduction-application {
+    flex-direction: column;
+  }
+  .presentation-application {
+    text-align: center;
+    margin-right: 0;
+  }
+  .illustration-application {
+    margin-top: 3rem;
+  }
+  h1 {
+    font-size: 28px;
+  }
+  img {
+    max-width: 70%;
+  }
+  #btnSignUp {
+    display: initial;
+  }
 }
 </style>

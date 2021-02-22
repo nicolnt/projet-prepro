@@ -1,8 +1,9 @@
 <template>
   <div class="legalNotice">
-    <NavBarAuth p_color="#FF8D8B" p_colorBG="#ffffff" />
+    <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/>
       <div>
-        <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
+        <a v-if="user.loggedIn" @click="goDashboard"><i class="material-icons">arrow_back</i></a>
+        <a v-else @click="goHome"><i class="material-icons">arrow_back</i></a>
         <Hero title="Mentions légales"/>
         <p> Lorem ipsum dolor sit amet, consectetur, Lorem ipsum dolor sit amet, consectetur </p>
       </div>
@@ -11,16 +12,33 @@
 </template>
 
 <script>
-import NavBarAuth from '@/components/NavBarAuth.vue'
+import NavBar from '@/components/NavBar.vue'
 import Hero from '@/components/Hero.vue'
 import Footer from '@/components/Footer.vue'
+import { mapGetters } from "vuex";
 
 export default {
   name: 'LegalNotice',
   components: {
-    NavBarAuth,
+    NavBar,
     Hero,
     Footer
+  },
+  methods : {
+    goHome(){
+      if(this.$route.name != 'Home')
+        this.$router.push({name:'Home'})
+    },
+    goDashboard() {
+      if(this.$route.name != 'PatientsList')
+        this.$router.push({name:'PatientsList'})
+    }
+  },
+  computed: {
+    ...mapGetters({
+      // map `this.user` to `this.$store.getters.user`
+      user: "user"
+    })
   }
 }
 </script>

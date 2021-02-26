@@ -93,10 +93,6 @@ export default {
   overflow-y: hidden;
 }
 .patientResults a {
-  position: absolute;
-  margin-top: -40px;
-  margin-left: -28px;
-  font-size: 30px;
   cursor: pointer;
 } 
 .patientResultsContent{

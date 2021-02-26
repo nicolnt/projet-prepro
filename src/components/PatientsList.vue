@@ -108,6 +108,8 @@ export default {
 <style>
 .patientsList {
   text-align: left;
+  width: 70%;
+  margin: 3rem auto 0 auto;
 }
 .form {
   margin-right: 3rem;

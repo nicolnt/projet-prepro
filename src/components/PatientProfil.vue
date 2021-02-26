@@ -97,10 +97,6 @@ export default {
   font-size: 15px;
 }
 .patientProfil a {
-  position: absolute;
-  top: -40px;
-  left: -28px;
-  font-size: 30px;
   cursor: pointer;
 }
 #patientDatas {
@@ -132,6 +128,7 @@ export default {
   border-radius: 16px;
   padding: 2rem;
   overflow-y: scroll;
+  margin-top: 2rem;
 }
 #tests-results {
   background-color: white;

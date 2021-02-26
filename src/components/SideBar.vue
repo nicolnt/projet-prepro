@@ -1,5 +1,6 @@
 <template>
   <div class="sideBar">
+    <h2> Tapitap </h2>
     <div size="small" id="cardUser">
       <!-- changer l'avatar en homme/femme en fonction de la connexion  -->
       <img class="avatar" alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
@@ -92,6 +93,9 @@ export default {
   position: relative;
   z-index: 2;
 }
+h2 {
+  margin: 2rem 0;
+}
 .pages {
   display: flex;
   justify-content: flex-start;
@@ -143,7 +147,6 @@ export default {
   align-items: center;
   align-content: center;
   background-color: #9082FF;
-  margin-top: 15px;
   border-radius: 10px;
   padding: 10px;
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="testList">
-    <Hero title="Liste des tests"/>
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
+    <Hero title="Liste des tests"/>
   </div>
 </template>
 
@@ -22,10 +22,6 @@ export default {
   text-align: left;
 }
 .testList a {
-  position: absolute;
-  top: -40px;
-  left: -28px;
-  font-size: 30px;
   cursor: pointer;
 }
 </style>

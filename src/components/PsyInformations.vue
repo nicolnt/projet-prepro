@@ -1,5 +1,6 @@
 <template>
   <div class="psyInformations">
+    <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     <Hero title="Informations du psychologue"/>
     <div class="wrapperPsyInformations">
       <div id="psyDatas">
@@ -10,7 +11,6 @@
         </div>
       </div>
       <UpdateDataModal ref="updateDatasModal" :person="user.data" :personType="'psy'"/>
-      <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     </div>
   </div>
 </template>
@@ -74,10 +74,6 @@ export default {
   width: 14%;
 }
 .psyInformations a {
-  position: absolute;
-  top: -40px;
-  left: -28px;
-  font-size: 30px;
   cursor: pointer;
 }
 @media screen and (max-width: 800px) {

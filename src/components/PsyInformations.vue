@@ -58,7 +58,7 @@ export default {
 }
 #btnModif {
   border-radius: 16px;
-  font-size: 15px;
+  font-size: 16px;
   margin-top: 1rem;
 }
 #psyDatas {

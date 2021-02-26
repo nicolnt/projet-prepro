@@ -83,7 +83,7 @@ export default {
 
 <style scoped>
 .sideBar {
-  width: 285px;
+  width: 335px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -139,7 +139,7 @@ h2 {
   margin-right: 10px;
 }
 #cardUser {
-  height: 80px;
+  height: 90px;
   width: 90%;
   display: flex;
   flex-direction: row;
@@ -158,6 +158,7 @@ h2 {
   flex-direction: column;
   text-align: left;
   color: #fff;
+  margin: 0 .5rem;
 }
 .icon-settings {
   display: flex;

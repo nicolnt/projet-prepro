@@ -120,7 +120,7 @@ export default {
   border-radius: 25px;
   border: 1px solid #EBEBEB;
   padding: 10px 10px 10px 15px;
-  font-size: 14px;
+  font-size: 16px;
   color: #B0B0B0;
   box-shadow: 0 0 19px -6px rgba(0, 0, 0, 0.20);
 }
@@ -137,7 +137,7 @@ export default {
   transition: all 0.5s ease;
 }
 .btn--search i {
-  font-size: 14px;
+  font-size: 16px;
 }
 .btn--inside {
   margin-left: -50px;
@@ -161,6 +161,7 @@ export default {
 
 .add-patient p {
   margin-right: 1rem;
+  font-size: 16px;
 }
 
 .add-patient:hover {

@@ -85,7 +85,7 @@ export default {
 .btnPatient {
   border-radius: 16px;
   margin: 10px 0;
-  font-size: 15px;
+  font-size: 16px;
   padding: 10px 40px;
 }
 .btnPatient.edit {
@@ -94,7 +94,7 @@ export default {
 .btn {
   border-radius: 16px;
   margin: 10px 0;
-  font-size: 15px;
+  font-size: 16px;
 }
 .patientProfil a {
   cursor: pointer;

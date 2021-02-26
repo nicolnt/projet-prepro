@@ -1,6 +1,6 @@
 <template>
   <div class="signUp">
-      <h2>Inscription</h2>
+      <!-- <h2>Inscription</h2> -->
       <form class="formSignUp" action="#" @submit.prevent="submit">
         <div class="wrap-input validate-input" data-validate = "Valid last name is required">
           <input 
@@ -71,7 +71,7 @@
           <button type="submit" class="button">S'inscrire</button>
         </div>
       </form>
-      <img class="cloud" src="../assets/cloud-illustration.svg"/>
+      <!-- <img class="cloud" src="../assets/cloud-illustration.svg"/> -->
   </div>
 </template>
 
@@ -144,26 +144,26 @@ h2 {
   margin-bottom: 2vh;
 }
 .signUp {
-  width: 400px;
+  /* width: 400px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
   padding: 50px;
-  border-radius: 20px;
+  /* border-radius: 20px;
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.73);
   background-color: #fff;
   text-align: left;
   position: relative;
-  max-width: 100%;
+  max-width: 100%; */
 }
-.cloud {
+/* .cloud {
   position: absolute;
   top: -21px;
   left: -48px;
-}
+} */
 .formSignUp {
   width: 100%;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
 }
 .wrap-input {
   position: relative;
@@ -178,7 +178,7 @@ input:-webkit-autofill:active  {
   box-shadow: 0 0 0 30px white inset !important;
 }
 .input {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   color: #292929;
   display: block;
@@ -219,7 +219,7 @@ input:-webkit-autofill:active  {
   }
 }
 .symbol-input {
-  font-size: 15px;
+  font-size: 16px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -249,7 +249,7 @@ input:-webkit-autofill:active  {
   justify-content: center;
 }
 .button {
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 25px;
   height: 45px;
   width: 70%;

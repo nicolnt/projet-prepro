@@ -1,29 +1,32 @@
 <template>
   <div class="home">
-    <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/>
+    <!-- <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/> -->
     <div class="introduction-application">
       <div class="presentation-application">
         <h1> Tapitap, l’application destinée aux psychologues </h1>
         <p> Gagnez du temps afin de faire passer l’habilitation au permis de conduire à vos patients. </p>
-        <vs-button color="#FF8D8B" type="filled" v-on:click="goSignUp" id="btnSignUp">inscription</vs-button>
+        <!-- <vs-button color="#FF8D8B" type="filled" v-on:click="goSignUp" id="btnSignUp">inscription</vs-button> -->
       </div>
-      <div class="illustration-application">
+      <!-- <div class="illustration-application">
         <img src="../assets/illustration-home.svg"/>
-      </div>
+      </div> -->
+      <Form/>
     </div>
     <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
   </div>
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue'
+// import NavBar from '@/components/NavBar.vue'
+import Form from '@/components/Form.vue'
 import Footer from '@/components/Footer.vue'
 import { mapGetters } from "vuex";
 
 export default {
   name: 'Home',
   components: {
-    NavBar,
+    // NavBar,
+    Form,
     Footer
   },
   methods: {
@@ -69,6 +72,7 @@ export default {
 .presentation-application {
   text-align: left;
   margin-right: 5rem;
+  flex: 1;
 }
 h1 {
   font-size: 48px;

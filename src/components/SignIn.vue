@@ -1,7 +1,7 @@
 <template>
   <div class="signIn">
-      <h2>Connexion</h2>
-      <div v-if="error" class="connectionError">{{error}}</div>
+      <!-- <h2>Connexion</h2> -->  
+    <div v-if="error" class="connectionError">{{error}}</div>
     <form class="formSignIn" action="#" @submit.prevent="submit">
       <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
         <input 
@@ -44,7 +44,7 @@
     </form>
     <ForgotPass ref="forgotPassModal"/>
       <p> Vous n'avez pas encore de compte ? <router-link to="/signUp"> Inscrivez-vous </router-link> </p>
-      <img class="plane" src="../assets/plane-illustration.svg"/>
+      <!-- <img class="plane" src="../assets/plane-illustration.svg"/> -->
   </div>
 </template>
 
@@ -104,34 +104,34 @@ h2 {
   margin-bottom: 2vh;
 }
 p {
-  font-size: 12px;
+  font-size: 16px;
   margin-top: 2rem;
 }
 a {
   color: #FF8D8B;
 }
 .signIn {
-  width: 400px;
+  /* width: 400px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
   padding: 50px;
-  border-radius: 20px;
+  /* border-radius: 20px;
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.73);
   background-color: #fff;
   text-align: left;
   position: relative;
   max-width: 100%;
-  font-size: 14px;
+  font-size: 16px; */
 }
-.plane {
+/* .plane {
   position: absolute;
   top: -21px;
   right: -48px;
-}
+} */
 .formSignIn {
   width: 100%;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
 }
 .wrap-input {
   position: relative;
@@ -146,7 +146,7 @@ input:-webkit-autofill:active  {
   box-shadow: 0 0 0 30px white inset !important;
 }
 .input {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   color: #292929;
   display: block;
@@ -186,7 +186,7 @@ input:-webkit-autofill:active  {
   }
 }
 .symbol-input {
-  font-size: 15px;
+  font-size: 16px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -217,7 +217,7 @@ input:-webkit-autofill:active  {
   justify-content: center;
 }
 .button {
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 25px;
   height: 45px;
   width: 70%;

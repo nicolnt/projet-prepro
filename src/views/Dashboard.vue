@@ -17,12 +17,30 @@
 import Footer from '@/components/Footer.vue'
 import SideBar from '@/components/SideBar.vue'
 
+import firebase from 'firebase/app'
+require('firebase/auth')
+
 export default {
   name: 'Dashboard',
   components : {
     // NavBar,
     Footer,
     SideBar
+  },
+  methods:{
+    signOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          // commit pour mutation
+          this.$store.dispatch("SIGN_OUT")
+          this.$router.replace({
+            name: "Home"
+          });
+          //this.$store.commit("SET_LOGGED_OUT")
+        });
+    },
   }
 }
 </script>

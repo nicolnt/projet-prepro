@@ -1,6 +1,6 @@
 <template>
   <div class="sideBar">
-    <h2> Tapitap </h2>
+    <h2 v-on:click="goDashboard"> Tapitap </h2>
     <div size="small" id="cardUser">
       <!-- changer l'avatar en homme/femme en fonction de la connexion  -->
       <img class="avatar" alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
@@ -76,6 +76,10 @@ export default {
     goPsyInformations() {
       if(this.$route.name != 'PsyInformations')
         this.$router.push({name:'PsyInformations'})
+    }, 
+    goDashboard() {
+      if(this.$route.name != 'PatientsList')
+        this.$router.push({name:'PatientsList'})
     }
   }
 }

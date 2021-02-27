@@ -90,6 +90,11 @@ const routes = [
       path: '/dashboard/testList',
       name: 'TestList',
       component: TestList
+    },
+    {
+      path: '/dashboard',
+      name: 'defaultChild',
+      component: PatientsList
     }]
   },
   {

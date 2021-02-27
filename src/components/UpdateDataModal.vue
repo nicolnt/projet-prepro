@@ -140,7 +140,7 @@ export default {
         address: this.person.address,
         cp: this.person.cp,
         city: this.person.city,
-        reason: this.person.reason,
+        reason: this.person.testReason,
         gender: this.person.gender,
       },
       error: null,
@@ -181,6 +181,8 @@ export default {
           console.error("Error adding document: ", error);
         });
       } else if(this.personType === 'patient') {
+        this.popupActivo = !this.popupActivo
+        this.$router.go(0)
         db.collection("patients").doc(self.patient.id).update({
             firstName: self.form.firstName,
             lastName: self.form.lastName,
@@ -189,7 +191,7 @@ export default {
             address: self.form.address,
             cp: self.form.cp,
             city: self.form.city,
-            reason: self.form.reason,
+            testReason: self.form.reason,
             gender: self.form.gender
         }).catch(function(error) {
           console.error("Error adding document: ", error);
@@ -212,10 +214,6 @@ export default {
       } else {
         return false
       }
-    },
-    confirm() {
-      this.popupActivo = !this.popupActivo
-      this.$router.go(0)
     }
   }
 }

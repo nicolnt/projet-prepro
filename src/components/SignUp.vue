@@ -36,7 +36,6 @@
         </div>
         <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
           <input 
-            id="email"
             class="input"
             type="email"
             name="email"
@@ -52,7 +51,6 @@
         </div>
         <div class="wrap-input validate-input" data-validate = "Valid password is required">
           <input 
-            id="password"
             class="input"
             type="password"
             name="password"

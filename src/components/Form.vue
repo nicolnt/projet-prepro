@@ -74,7 +74,7 @@ export default {
     }
     .container-form {
         width: 100%;
-        height: 100%;
+        height: 115%;
         position: absolute;
         background-color: #FFFFFF;
         border-radius: 20px;

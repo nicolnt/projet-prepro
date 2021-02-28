@@ -22,7 +22,6 @@
         <vs-button color="#9082FF" type="filled" v-on:click="goResults" class="btn">Voir les résultats</vs-button>
         <vs-button color="#9082FF" type="filled" v-on:click="goListTests" class="btn">Démarrer un test</vs-button>
       </div>
-
       <UpdateDataModal ref="updateDatasModal" :person="patient" :personType="'patient'"/>
     </div>
     
@@ -38,11 +37,6 @@ export default {
   components : {
     UpdateDataModal
   },
-  data () {
-    return {
-      //patient:{}
-    }
-  },
   computed: {
     ...mapState({
       patient: 'currentPatient'
@@ -55,7 +49,6 @@ export default {
   },
   methods: {
     getDate(dateISO){ 
-      console.log(dateISO)
       let creationDate = new Date(dateISO)
       let month = creationDate.getMonth()
       month < 10 ? month = '0'+(month+1) : month = (month+1)

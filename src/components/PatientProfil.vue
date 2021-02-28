@@ -11,7 +11,7 @@
           <p><span> Adresse : </span> {{patient.address}}, {{patient.cp}} {{patient.city}}</p>
           <p><span> Email : </span> {{patient.email}}</p>
           <p><span> Motif : </span> {{patient.testReason}}</p>
-          <p><span> Date de création : </span> {{patient.dateCreation.toDate() }}</p>
+          <p><span> Date de création : </span> {{ this.getDate(patient.dateCreation.toDate()) }}</p>
           <div id="actionsPatient">
             <vs-button color="#9082FF" type="filled" class="btnPatient edit" @click="toggleModal">Modifier les informations</vs-button>
             <vs-button color="#9082FF" type="filled" class="btnPatient">Supprimer ce patient</vs-button>
@@ -54,6 +54,14 @@ export default {
     }
   },
   methods: {
+    getDate(dateISO){ 
+      console.log(dateISO)
+      let creationDate = new Date(dateISO)
+      let month = creationDate.getMonth()
+      month < 10 ? month = '0'+(month+1) : month = (month+1)
+      const date = creationDate.getDate() +'/' + month + '/'+ creationDate.getFullYear()
+      return date
+    },
     toggleModal() {
       this.$refs.updateDatasModal.toggle()
     },

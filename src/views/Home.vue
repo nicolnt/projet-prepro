@@ -38,7 +38,7 @@ export default {
   mounted: function(){
     console.log(this.user)
     if(this.user.loggedIn==true){
-      this.$router.push({name:'Dashboard'})
+      this.$router.push({path:'/dashboard'})
     }
   },
   computed: {

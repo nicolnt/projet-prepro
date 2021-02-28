@@ -51,51 +51,51 @@ const routes = [
   },
   {
     path: '/dashboard',
-    name: 'Dashboard',
     component: Dashboard,
     meta: {
       requiresAuth: true
     },
-    children: [{
-      path: '/dashboard/psy',
-      name: 'PsyInformations',
-      component: PsyInformations
-    },
-    {
-      path: '/dashboard/patientsList',
-      name: 'PatientsList',
-      component: PatientsList
-    },
-    {
-      path: '/dashboard/stats',
-      name: 'Stats',
-      component: Stats
-    },
-    {
-      path: '/dashboard/params',
-      name: 'AppParams',
-      component: AppParams
-    },
-    {
-      path: '/dashboard/patientResults',
-      name: 'PatientResults',
-      component: PatientResults
-    },
-    {
-      path: '/dashboard/patientProfil',
-      name: 'PatientProfil',
-      component: PatientProfil
-    },
-    {
-      path: '/dashboard/testList',
-      name: 'TestList',
-      component: TestList
-    },
-    {
-      path: '/dashboard',
-      name: 'defaultChild',
-      component: PatientsList
-    }]
+    children: [
+      {
+        path: '',
+        component: PatientsList
+      },
+      {
+        path: '/dashboard/psy',
+        name: 'PsyInformations',
+        component: PsyInformations
+      },
+      {
+        path: '/dashboard/patientsList',
+        name: 'PatientsList',
+        component: PatientsList
+      },
+      {
+        path: '/dashboard/stats',
+        name: 'Stats',
+        component: Stats
+      },
+      {
+        path: '/dashboard/params',
+        name: 'AppParams',
+        component: AppParams
+      },
+      {
+        path: '/dashboard/patientResults',
+        name: 'PatientResults',
+        component: PatientResults
+      },
+      {
+        path: '/dashboard/patientProfil',
+        name: 'PatientProfil',
+        component: PatientProfil
+      },
+      {
+        path: '/dashboard/testList',
+        name: 'TestList',
+        component: TestList
+      }
+    ]
   },
   {
     path: '*',

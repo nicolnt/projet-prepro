@@ -5,7 +5,9 @@
       <SideBar ref="sideBar"/>
       <div id="content">
         <vs-button class="buttonDeconnexion" color="#000000" type="flat" @click.prevent="signOut">Déconnexion</vs-button>
-        <router-view></router-view>
+        <transition name="fade" mode="out-in">
+          <router-view/>
+        </transition>
       </div>
     </div>
     <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
@@ -63,5 +65,15 @@ export default {
   right: 2rem;
   top: 2rem;
   font-size: 16px;
+}
+.fade-enter-active, .fade-leave-active {
+  transition-property: opacity;
+  transition-duration: .2s;
+}
+.fade-leave-active {
+  transition-delay: .2s;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
 }
 </style>

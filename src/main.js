@@ -9,16 +9,23 @@ import 'vuesax/dist/vuesax.css' //Vuesax styles
 import 'material-icons/iconfont/material-icons.css'
 import store from "./services/stores/logStore";
 
+import { rtdbPlugin } from 'vuefire'
+Vue.use(rtdbPlugin)
+
 Vue.config.productionTip = false
 
 Vue.use(Vuesax);
 
-firebase.auth().onAuthStateChanged(user => {
-  store.dispatch("fetchUser", user);
-});
+store.dispatch("FETCH_USER");
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app')
+let app;
+
+firebase.auth().onAuthStateChanged(() => {
+  if(!app) {
+    app = new Vue({
+      router,
+      store,
+      render: h => h(App),
+    }).$mount('#app')
+  }
+})

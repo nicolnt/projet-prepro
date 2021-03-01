@@ -1,53 +1,140 @@
 <template>
   <div class="signUp">
       <h2>Inscription</h2>
-      <div class="social-media">
-        <img class="google" src="../assets/google-illustration.svg"/>
-        <img class="facebook" src="../assets/facebook-illustration.svg"/>
-        <img class="twitter" src="../assets/twitter-illustration.svg"/>
-      </div>
-      <hr>
-      <Input title="Nom" type="text" name="nom" v-bind:value.sync="m_valueLastName" :verifInput="checkInput"/>
-      <Input title="Prénom" type="text" name="prenom" v-bind:value.sync="m_valueFirstName" :verifInput="checkInput"/>
-      <Input title="Email" type="email" name="email" v-bind:value.sync="m_valueEmail" :verifInput="checkInput"/>
-      <Input title="Mot de passe" type="password" name="password" v-bind:value.sync="m_valuePassword" :verifInput="checkInput"/>
-      <vs-button color="#FF8D8B" type="filled" v-on:click="goSignUp" id="button">S'inscrire</vs-button>
+      <form class="formSignUp" action="#" @submit.prevent="submit">
+        <div class="wrap-input validate-input" data-validate = "Valid last name is required">
+          <input 
+            id="lastName"
+            class="input"
+            type="text"
+            name="lastName"
+            placeholder="Nom"
+            required
+            autofocus
+            v-model="form.lastName"
+          />
+          <span class="focus-input"></span>
+          <span class="symbol-input">
+            <i class="material-icons" aria-hidden="true">person</i>
+          </span>
+        </div>
+        <div class="wrap-input validate-input" data-validate = "Valid first name is required">
+          <input 
+            id="firstName"
+            class="input"
+            type="text"
+            name="firstName"
+            placeholder="Prénom"
+            required
+            autofocus
+            v-model="form.firstName"
+          />
+          <span class="focus-input"></span>
+          <span class="symbol-input">
+            <i class="material-icons" aria-hidden="true">person</i>
+          </span>
+        </div>
+        <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+          <input 
+            id="email"
+            class="input"
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            autofocus
+            v-model="form.email"
+          />
+          <span class="focus-input"></span>
+          <span class="symbol-input">
+            <i class="material-icons" aria-hidden="true">email</i>
+          </span>
+        </div>
+        <div class="wrap-input validate-input" data-validate = "Valid password is required">
+          <input 
+            id="password"
+            class="input"
+            type="password"
+            name="password"
+            placeholder="Mot de passe"
+            required
+            autofocus
+            v-model="form.password"
+          />
+          <span class="focus-input"></span>
+          <span class="symbol-input">
+            <i class="material-icons" aria-hidden="true">lock_outline</i>
+          </span>
+        </div>
+        <div v-if="error" class="connectionError">{{error}}</div>
+        <div class="btn-submit">
+          <button type="submit" class="button">S'inscrire</button>
+        </div>
+      </form>
       <img class="cloud" src="../assets/cloud-illustration.svg"/>
   </div>
 </template>
 
 <script>
-
-import Input from '@/components/Input.vue'
+import firebase from 'firebase/app'
+require('firebase/auth')
+import { db } from '../services/firebase'
 
 export default {
   name: 'SignUp',
   components:{
-    Input
   },
   data() {
     return {
-      m_valueLastName : "",
-      m_valueFirstName : "",
-      m_valueEmail : "",
-      m_valuePassword : ""
+      form: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
+      },
+      error: null
     }
   },
+ 
   methods:{
-    goSignUp() {
-      this.checkInput(this.m_valueEmail)
-      this.checkInput(this.m_valuePassword)
-      this.checkInput(this.m_valueLastName)
-      this.checkInput(this.m_valueFirstName)
-      this.$router.push({name:'PatientsList'})
-    },
-    checkInput(value) {
-      if(value != null && value != undefined && value != "") {
-        return true
-      } else {
-        return false
+    submit() {
+      if(this.form.password.length >= 6) {
+        firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.form.email, this.form.password)
+        .then((data) => {
+          data.user
+            .updateProfile({
+              displayName: this.form.firstName + ' ' + this.form.lastName
+            })
+            .then(() => { db.collection("users").add({
+              firstName: this.form.firstName,
+              lastName: this.form.lastName,
+              email: this.form.email,
+              codePin: 123,
+              dateCreation: new Date()
+            })
+            .then(function(docRef) {
+              console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error) {
+              console.error("Error adding document: ", error);
+            }).then(() => {
+            const user = firebase.auth().currentUser
+            user.sendEmailVerification().then(() => {
+              this.$router.push({ name: 'PatientsList' }).catch(() => {})
+            })
+          })});
+         
+        })
+        .catch(() => {
+          this.error = 'Une erreur est survenue. Veuillez réessayer et nous contacter en cas de soucis'
+        });
       }
-    }
+      else {
+         this.error = 'Le mot de passe doit contenir au moins 6 lettres ou chiffres.'
+      }
+    },
   }
 }
 </script>
@@ -69,46 +156,110 @@ h2 {
   position: relative;
   max-width: 100%;
 }
-.social-media {
-  display: flex;
-  flex-direction: row;
-  place-content: center;
-}
-.social-media img {
-  padding: .5rem;
-  cursor: pointer;
-}
-hr {
-  width: 50%;
-  border: none;
-  border-top: 1px solid #B0B0B0;
-  color: #B0B0B0;
-  overflow: visible;
-  text-align: center;
-  height: 5px;
-  font-size: 12px;
-  margin: 1rem 0 .5rem 0;
-}
-hr:after {
-  background: #fff;
-  content: 'ou';
-  padding: 0 4px;
-  position: relative;
-  top: -10px;
-}
 .cloud {
   position: absolute;
   top: -21px;
   left: -48px;
 }
-#button {
-  border-radius: 16px;
-  padding: .5rem 1.5rem;
-  margin-top: 1rem;
+.formSignUp {
+  width: 100%;
+  margin-top: 2rem;
 }
-@media screen and (max-width: 400px) {
-  .social-media {
-    flex-direction: column;
+.wrap-input {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  margin-bottom: 1.5rem;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+  box-shadow: 0 0 0 30px white inset !important;
+}
+.input {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #292929;
+  display: block;
+  width: 100%;
+  border: 1px solid #EBEBEB;
+  height: 45px;
+  border-radius: 25px;
+  padding: 0 30px 0 68px;
+}
+
+/* Animation de la box-shadow */
+.focus-input {
+  display: block;
+  position: absolute;
+  border-radius: 25px;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 0px 0px;
+  color: #FF8D8B;
+}
+.input:focus + .focus-input {
+  -webkit-animation: anim-shadow 0.5s ease-in-out forwards;
+  animation: anim-shadow 0.5s ease-in-out forwards;
+}
+@-webkit-keyframes anim-shadow {
+  to {
+    box-shadow: 0px 0px 70px 25px;
+    opacity: 0;
   }
+}
+@keyframes anim-shadow {
+  to {
+    box-shadow: 0px 0px 70px 25px;
+    opacity: 0;
+  }
+}
+.symbol-input {
+  font-size: 15px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  border-radius: 25px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding-left: 35px;
+  pointer-events: none;
+  color: #B0B0B0;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+.input:focus + .focus-input + .symbol-input {
+  color: #FF8D8B;
+  padding-left: 28px;
+}
+.btn-submit {
+  display: flex;
+  justify-content: center;
+}
+.button {
+  font-size: 14px;
+  border-radius: 25px;
+  height: 45px;
+  width: 70%;
+  border: none;
+  background-color: #FF8D8B;
+  color: #FFFFFF;
+  padding: .5rem 1.5rem;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: #9082FF;
 }
 </style>

@@ -1,17 +1,22 @@
 <template lang="html">
-    <vs-popup :active.sync="popupActivo" title="" class="test-modal">
+    <VsPopupCustom :active.sync="popupActivo" :closeOnClickOutside="false" title="" class="test-modal">
         <div class="test-modal-content">
             <p><strong>Test terminé !</strong> Vous allez maintenant revenir à l'accueil.</p>
         </div>
         <div class="test-modal-buttons">
             <vs-button id="btnEndTest" color="#9082FF" @click="endTest">Ok</vs-button>
         </div>
-    </vs-popup>
+    </VsPopupCustom>
 </template>
 
 <script>
+import VsPopupCustom from '@/components/VsPopupCustom.vue'
+
 export default {
   name: 'TestInfoseModal',
+  components: {
+    VsPopupCustom
+  },
   data() {
     return { 
         popupActivo: false
@@ -32,6 +37,7 @@ export default {
 .test-modal {
   text-align: center;
   font-family: Poppins;
+  user-select: none;
 }
 .test-modal >>> header {
   display: none;

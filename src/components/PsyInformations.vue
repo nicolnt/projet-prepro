@@ -1,26 +1,98 @@
 <template>
   <div class="psyInformations">
-    <h1>Informations du psychologue</h1>
-    <vs-button color="#9082FF" type="filled" id="btnModif">Modifier les informations</vs-button>
+    <Hero title="Informations du psychologue"/>
+    <div class="wrapperPsyInformations">
+      <div id="psyDatas">
+        <img src="../assets/avatar-woman-illustration.svg" alt="imgPatient" id="imgPatient">
+        <div class="contentPsyDatas">
+          <h2>{{user.data.displayName}}</h2>
+          <vs-button color="#9082FF" type="filled" id="btnModif" @click="toggleModal">Modifier les informations</vs-button>
+        </div>
+      </div>
+      <UpdateDataModal ref="updateDatasModal" :person="user.data" :personType="'psy'"/>
+      <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
+    </div>
   </div>
 </template>
 
 <script>
+import Hero from '@/components/Hero.vue'
+import UpdateDataModal from '@/components/UpdateDataModal.vue'
+import { mapGetters } from "vuex"
 
 export default {
-  name: 'PsyInformations'
+  name: 'PsyInformations',
+  components: {
+    Hero,
+    UpdateDataModal
+  },
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
+  },
+  methods: {
+    toggleModal() {
+      this.$refs.updateDatasModal.toggle()
+    }
+  }
 }
 </script>
 
 <style scoped>
 .psyInformations {
-  height: 100%;
-  width: 100%;
+  position: relative;
+  text-align: left;
+}
+.wrapperPsyInformations {
+  background-color: #F0F0F0;
+  box-shadow: 0 4px 16px 0 rgb(0 0 0 / 5%);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+#icon_back {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-self: flex-start;
+  margin-top: 12px;
 }
 #btnModif {
   border-radius: 16px;
+  font-size: 15px;
+  margin-top: 1rem;
+}
+#psyDatas {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+}
+.contentPsyDatas {
+  margin-left: 2rem;
+}
+#imgPatient {
+  margin-right: 10px;
+  width: 14%;
+}
+.psyInformations a {
+  position: absolute;
+  top: -40px;
+  left: -28px;
+  font-size: 30px;
+  cursor: pointer;
+}
+@media screen and (max-width: 800px) {
+  #psyDatas {
+    flex-direction: column;
+    margin: 0;
+    align-items: center;
+  }
+  #imgPatient {
+    width: 50%;
+    margin: auto;
+  }
+  .contentPsyDatas {
+    margin-left: 0;
+    margin-top: 2rem;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <NavBar/>
+    <NavBar p_color="" p_colorBG=""/>
     <div id="dashboardContent">
       <SideBar ref="sideBar"/>
       <div id="content">
@@ -33,12 +33,9 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: linear-gradient(135deg, #ffffff, 80%, #EDEDED);
+  background: linear-gradient(135deg, #ffffff, 80%, #EDEDED) no-repeat;
 }
 #content {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 3rem;
 }
 </style>

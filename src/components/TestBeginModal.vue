@@ -1,25 +1,29 @@
 <template lang="html">
-    <vs-popup :active.sync="popupActivo" :button-close-hidden="true" title="Instructions" class="test-modal">
+    <VsPopupCustom :active.sync="popupActivo" :button-close-hidden="true" :closeOnClickOutside="false" title="Motricité fine" class="test-modal">
         <div class="test-modal-content">
-            <figure>
-              <img src="../assets/tests_visuals/motricityTest_success.png" alt="Un doigt trace le chemin" />
-              <figcaption>Tracez les formes, sans sortir de leurs contours et en un seul trait.</figcaption>
-            </figure>
-            <figure>
-              <img src="../assets/tests_visuals/motricityTest_success.png" alt="Un doigt trace le chemin" />
-              <figcaption>Évitez tous les obstacles sur votre tracé</figcaption>
-            </figure>
+          <figure v-for="(instruction, index) in instructions" :key="index">
+              <img :src="require('@/assets/' + instruction.img + '')" :alt="instruction.altImg" />
+              <figcaption>{{ instruction.desc }}</figcaption>
+          </figure>
         </div>
         <div class="test-modal-buttons">       
             <vs-button id="btnTrainTest" @click="toggle(); $emit('train');" color="#9082FF">S'entraîner</vs-button>
             <vs-button id="btnStartTest" @click="toggle(); $emit('play');" color="#9082FF" icon="play_arrow">Commencer</vs-button>
         </div>
-    </vs-popup>
+    </VsPopupCustom>
 </template>
 
 <script>
+import VsPopupCustom from '@/components/VsPopupCustom.vue'
+
 export default {
-  name: 'TestInstructionsModal',
+  name: 'TestBeginModal',
+  components: {
+    VsPopupCustom
+  },
+  props: {
+    instructions: Array
+  },
   data() {
     return { 
         popupActivo: true
@@ -37,6 +41,7 @@ export default {
 .test-modal {
   text-align: center;
   font-family: Poppins;
+  user-select: none;
 }
 .test-modal >>> header {
   display: flex;
@@ -50,6 +55,7 @@ export default {
   margin-bottom: 20px;
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 .test-modal-content > figure {
   width: 45%;
@@ -63,10 +69,26 @@ export default {
 .test-modal-buttons {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 .test-modal-buttons > button {
   margin: 0 10px;
   border-radius: 15px;
   padding: 10px 20px;
+  height: 44px;
+}
+
+@media only screen and (max-width: 576px) {
+  .test-modal-buttons > button {
+    width: 100%;
+  }
+  .test-modal-buttons > button:nth-child(1) {
+    margin-bottom: 10px;
+  }
+  .test-modal-content > figure {
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 300px;
+  }
 }
 </style>

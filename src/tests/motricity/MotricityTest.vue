@@ -3,7 +3,7 @@
     <div class="test-bar">
       <span class="test-counter">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
       <vs-button
-        @click="ToggleHelpModal()"
+        @click="ToggleHelpModal"
         radius
         type="flat"
         icon="help"
@@ -15,7 +15,7 @@
       <canvas id="traceCanvas"></canvas>
     </div>
     <canvas ref="canvas" id="pickerTrack"></canvas>
-    <TestBeginModal :instructions="instructions" @train="train()" @play='play()' ref="TestBeginModal"/>
+    <TestBeginModal :instructions="instructions" @train="train" @play='play' ref="TestBeginModal"/>
     <TestHelpModal :instructions="instructions" ref="TestHelpModal"/>
   </div>
 </template>
@@ -84,6 +84,7 @@ export default {
         })
     },
     doAfterSuccess() {
+      console.log('success')
       if (this.game.state.doTraining === false) {
         // Level done (not trainings)
         this.sendLastestTestToDB(this.game.state.currentLevel)

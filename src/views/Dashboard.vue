@@ -4,7 +4,7 @@
     <div id="dashboardContent">
       <SideBar ref="sideBar"/>
       <div id="content">
-        <vs-button class="buttonDeconnexion" color="#000000" type="flat" @click.prevent="signOut">Déconnexion</vs-button>
+        <vs-button class="buttonDeconnexion" color="#9082FF" type="flat" @click.prevent="signOut">Déconnexion</vs-button>
         <transition name="fade" mode="out-in">
           <router-view/>
         </transition>

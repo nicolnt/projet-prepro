@@ -13,6 +13,7 @@
 import Hero from '@/components/Hero.vue'
 import VueApexCharts from 'vue-apexcharts'
 import { db } from '../services/firebase'
+import  { mapState } from 'vuex'
 
 export default {
   name: 'Stats',
@@ -22,7 +23,22 @@ export default {
   },
   data() {
     return {
-      patient: {},
+      patientOrderByMonth: [],
+      patientJanuary: [],
+      patientFebruary: [],
+      patientMarch: [],
+      patientApril: [],
+      patientMay: [],
+      patientJune: [],
+      patientJuly: [],
+      patientAugust: [],
+      patientSeptember: [],
+      patientOctober: [],
+      patientNovember: [],
+      patientDecember: [],
+      tentatives: [],
+      tentativesTri: [],
+      tentativesByPatientData: [],
       series: 
       [{
         name: '2021',
@@ -63,23 +79,80 @@ export default {
       },
     }
   },
-  mounted() {
-    db.collection('patients').doc(this.$store.state.currentPatient.id).get()
-    .then(docs => {
-      this.patient = docs.data()
+  computed: {
+    ...mapState({
+      patient: 'currentPatient'
     })
   },
   methods: {
     getDate(dateISO){ 
       let creationDate = new Date(dateISO)
       let month = creationDate.getMonth()
-      month < 10 ? month = '0'+(month+1) : month = (month+1)
-      const date = creationDate.getDate() +'/' + month + '/'+ creationDate.getFullYear()
-      return date
+      return month
     },
-    calcReussiteTest() {
-      this.getDate(this.patient.dateCreation.toDate())
+    tentativesByPatient(doc) {
+      if(this.tentativesByPatientData[doc] === doc.data().idPatient) {
+        this.tentativesByPatientData = doc
+      }
+    },
+    getScorePatient(doc) {
+      return this.tentatives[doc] = doc.data()
+      // this.tentativesTri[doc] = this.tentatives[doc].idPatient;
+      // this.tentativesTri = [...new Set(this.tentativesTri)]
+      // return console.log(this.tentativesTri)
+    },
+    getAverageScorePatients() {
+      return
     }
+  },
+  mounted() {
+    db.collection('tentatives')
+      .orderBy('idPatient')
+      .get()
+      .then(docs => {
+        docs.forEach(doc => {
+          // this.tentativesByPatient(this.tentatives[doc])
+          // console.log(this.tentatives[doc])
+          this.getScorePatient(doc)
+
+          // const data = doc.data() 
+          // data.score = (data.score * 100).toFixed(2)
+        })
+      })
+    db.collection("patients").get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          this.patientOrderByMonth[doc] = this.getDate(doc.data().dateCreation.toDate())
+          if(this.patientOrderByMonth[doc] === 0) {
+            this.patientJanuary[doc] = doc.id
+            // calculer ici la moyenne des scores des patients de janvier
+          } else if (this.patientOrderByMonth[doc] === 1) {
+            this.patientFebruary[doc] = doc.id
+          } else if (this.patientOrderByMonth[doc] === 2) {
+            this.patientMarch[doc] = doc.id
+          } else if (this.patientOrderByMonth[doc] === 3) {
+            this.patientApril[doc] = doc.id
+          } else if (this.patientOrderByMonth[doc] === 4) {
+            this.patientMay[doc] = doc.id
+          } else if (this.patientOrderByMonth[doc] === 5) {
+            this.patientJune[doc] = doc.id
+          } else if (this.patientOrderByMonth[doc] === 6) {
+            this.patientJuly[doc] = doc.id
+          } else if (this.patientOrderByMonth[doc] === 7) {
+            this.patientAugust[doc] = doc.id
+          } else if (this.patientOrderByMonth[doc] === 8) {
+            this.patientSeptember[doc] = doc.id
+          } else if (this.patientOrderByMonth[doc] === 9) {
+            this.patientOctober[doc] = doc.id
+          } else if (this.patientOrderByMonth[doc] === 10) {
+            this.patientNovember[doc] = doc.id
+          } else if (this.patientOrderByMonth[doc] === 11) {
+            this.patientDecember[doc] = doc.id
+          } else {
+            return
+          }
+        })
+      })
   }
 }
 </script>

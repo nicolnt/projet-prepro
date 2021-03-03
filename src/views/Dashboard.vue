@@ -65,6 +65,7 @@ export default {
   right: 2rem;
   top: 2rem;
   font-size: 16px;
+  z-index: 15;
 }
 .fade-enter-active, .fade-leave-active {
   transition-property: opacity;

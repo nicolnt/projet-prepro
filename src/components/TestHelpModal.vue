@@ -45,12 +45,15 @@ export default {
   color: #FFFFFF;
 }
 .test-modal >>> .vs-popup--content {
+  display: block;
   margin: 15px 0;
 }
 .test-modal >>> .vs-popup--close {
   position: absolute;
   right: 0;
   top: 0;
+  margin-right: 0;
+  margin-top: 0;
 }
 .test-modal-content {
   margin-bottom: 20px;

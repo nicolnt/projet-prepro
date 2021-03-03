@@ -128,13 +128,16 @@ export default {
   box-shadow: 0 4px 16px 0 rgb(0 0 0 / 5%);
   border-radius: 16px;
   padding: 2rem;
-  overflow-y: scroll;
+  /*overflow-y: scroll;*/
+  align-items: center;
   margin-top: 2rem;
+  margin-right: 3rem;
 }
 #tests-results {
   background-color: white;
   border-radius: 15px;
   width: 20%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;

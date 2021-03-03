@@ -50,6 +50,7 @@ export default {
   border-radius: 16px;
   padding: 2rem;
   margin-top: 2rem;
+  margin-right: 3rem;
 }
 #icon_back {
   display: flex;

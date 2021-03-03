@@ -17,6 +17,7 @@ import PatientProfil from "../components/PatientProfil.vue";
 import TestList from "../components/TestList.vue";
 import MotricityTest from "../tests/motricity/MotricityTest.vue";
 import firebase from "firebase/app";
+import attentionCapacityTest from "../tests/attentionCapacity/attentionCapacityTest.vue"
 
 Vue.use(VueRouter);
 
@@ -60,6 +61,10 @@ const routes = [
       {
         path: "motricity",
         component: MotricityTest
+      },
+      {
+        path: "attentionCapacity",
+        component: attentionCapacityTest
       }
     ]
   },
@@ -112,6 +117,11 @@ const routes = [
     path: "/motricityTest",
     name: "MotricityTest",
     component: MotricityTest
+  },
+  {
+    path: "/attentionCapacityTest",
+    name: "attentionCapacityTest",
+    component: attentionCapacityTest
   },
   {
     path: "*",

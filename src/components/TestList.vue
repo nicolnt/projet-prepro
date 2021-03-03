@@ -3,6 +3,7 @@
     <Hero title="Liste des tests"/>
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
       <vs-button color="#9082FF" type="filled" @click="startMotricity" class="btn">Test de motricité fine</vs-button>
+      <vs-button color="#9082FF" type="filled" @click="startAttentionCapacity" class="btn">Test de capacités attentionnelles</vs-button>
   </div>
 </template>
 
@@ -38,6 +39,27 @@ export default {
         this.$router.push({
           path: '/game/motricity',
         })
+      },
+      startAttentionCapacity() {
+        const batch = db.batch()
+        db.collection('tentatives').where('idPatient', '==', this.$store.state.currentPatient.id)
+          .get()
+          .then(docs => {
+            docs.forEach(doc => {
+              batch.delete(db.collection('tentatives').doc(doc.id))
+            })
+            batch.commit()
+              .then(() => {
+                console.log('Tests supprimés')
+              })
+              .catch(err => {
+                console.log('Impossible de supprimer les tests', err)
+              })
+          })
+
+        this.$router.push({
+          path: '/game/attentionCapacity',
+        })
       }
    }
 }
@@ -55,5 +77,8 @@ export default {
   left: -28px;
   font-size: 30px;
   cursor: pointer;
+}
+.testList button {
+  margin: 15px;
 }
 </style>

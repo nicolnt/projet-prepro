@@ -90,7 +90,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
+  overflow-y: scroll;
 }
 .patientResults a {
   cursor: pointer;
@@ -102,8 +102,6 @@ export default {
   margin: 0 auto;
   margin-top: 1%;
   border-radius: 16px;
-  height: 55vh;
-  overflow-y: scroll;
   padding-bottom: 2%;
 }
 .results, .globalComment{

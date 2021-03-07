@@ -13,8 +13,8 @@ export default {
 };
 </script>
 
-<style>
-    .hero {
-        color: #382C50;
-    }
+<style scoped>
+  .hero {
+    color: #382C50;
+  }
 </style>

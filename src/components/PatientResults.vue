@@ -84,7 +84,6 @@ export default {
 
 <style scoped>
 .patientResults {
-  
   text-align: left;
   height: 100%;
   width: 100%;

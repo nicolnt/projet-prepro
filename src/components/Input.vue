@@ -5,7 +5,6 @@
 </template>
 
 <script>
-//import logStore from 'logStore'
 
 export default {
   name: 'SignUp',
@@ -16,8 +15,6 @@ export default {
     value : {type: String},
     verifInput : {type:Function, default: () => true }
   },
-  /*watch: {
-  },*/
   mounted() {
     this.setTitle()
     this.setType()
@@ -75,12 +72,13 @@ export default {
     },
     onChangeInput(e) {
       if(this.m_verifInput(e)) {
-        //encadre input vert
-      } // sinon encadre rouge
+
+      }
     }
   }
 }
 </script>
+
 <style scoped>
 .input {
   margin: .3rem auto;

@@ -263,7 +263,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
 #modalPatient .vs-popup {
   position: relative;
   font-family: Poppins;

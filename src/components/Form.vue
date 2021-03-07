@@ -3,14 +3,14 @@
     <div class="formAuth">
         <div class="container-form">
             <div class="container-tabs">
-                <div class="tabs active" data-anim="1"> Connexion </div>
-                <div class="tabs" data-anim="2"> Inscription </div>
+              <div class="tabs active" data-anim="1"> Connexion </div>
+              <div class="tabs" data-anim="2"> Inscription </div>
             </div>
             <div class="content-tabs">
-                <SignIn class="sign activeContent" data-anim="1"/>
-                <img class="illu activeContent plane" src="../assets/plane-illustration.svg" data-anim="1"/>
-                <SignUp class="sign" data-anim="2"/>
-                 <img class="illu cloud" src="../assets/cloud-illustration.svg" data-anim="2"/>
+              <SignIn class="sign activeContent" data-anim="1"/>
+              <img class="illu activeContent plane" src="../assets/plane-illustration.svg" data-anim="1"/>
+              <SignUp class="sign" data-anim="2"/>
+              <img class="illu cloud" src="../assets/cloud-illustration.svg" data-anim="2"/>
             </div>
         </div>
     </div>

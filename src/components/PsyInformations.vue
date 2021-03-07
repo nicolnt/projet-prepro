@@ -1,3 +1,4 @@
+<!-- PAGE WITH PSY'S INFORMATIONS -->
 <template>
   <div class="psyInformations">
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
@@ -77,6 +78,7 @@ export default {
 .psyInformations a {
   cursor: pointer;
 }
+
 @media screen and (max-width: 800px) {
   #psyDatas {
     flex-direction: column;

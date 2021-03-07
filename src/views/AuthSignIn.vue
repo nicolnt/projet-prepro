@@ -1,3 +1,4 @@
+<!-- VIEW : SIGN IN FORM ON AUTH FORM -->
 <template>
   <div class="authSignIn">
     <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/>

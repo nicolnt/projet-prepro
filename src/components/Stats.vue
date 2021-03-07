@@ -1,3 +1,4 @@
+<!-- PAGE ALL PATIENTS' STATS -->
 <template>
   <div class="stats">
     <Hero title="Statistiques des patients"/>
@@ -10,7 +11,7 @@ import Hero from '@/components/Hero.vue'
 export default {
   name: 'Stats',
   components: {
-    Hero,
+    Hero
   }
 }
 </script>

@@ -1,3 +1,4 @@
+<!-- ADD PATIENT MODAL -->
 <template lang="html">
   <div id="modalPatient">
     <vs-popup title="Ajouter un patient" :active.sync="popupActivo">
@@ -160,7 +161,6 @@
 </template>
 
 <script>
-// import Input from '@/components/Input.vue'
 import { db } from '../services/firebase'
 import { mapGetters } from "vuex";
 import firebase from 'firebase/app'
@@ -199,12 +199,9 @@ export default {
       id:null
     }
   },
-  components: {
-    // Input
-  },
   computed: {
     ...mapGetters({
-// map `this.user` to `this.$store.getters.user`
+      // map `this.user` to `this.$store.getters.user`
       user: "user"
     })
   },
@@ -253,9 +250,6 @@ export default {
       }
     },
     confirm() {
-      /*this.checkInput(this.m_valueEmail)
-      this.checkInput(this.m_valueLastName)
-      this.checkInput(this.m_valueFirstName)*/
       this.popupActivo = !this.popupActivo
       this.$router.go(0)
     }
@@ -432,5 +426,6 @@ export default {
 }
 .vs-popup h3 {
   text-align: center;
+  font: 400 13.3333px Arial;
 }
 </style>

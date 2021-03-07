@@ -1,6 +1,6 @@
+<!-- SIGN UP FORM -->
 <template>
   <div class="signUp">
-      <!-- <h2>Inscription</h2> -->
       <form class="formSignUp" action="#" @submit.prevent="submit">
         <div class="wrap-input validate-input" data-validate = "Valid last name is required">
           <input 
@@ -69,7 +69,6 @@
           <button type="submit" class="button">S'inscrire</button>
         </div>
       </form>
-      <!-- <img class="cloud" src="../assets/cloud-illustration.svg"/> -->
   </div>
 </template>
 
@@ -122,7 +121,7 @@ export default {
             user.sendEmailVerification().then(() => {
               this.$router.push({ name: 'PatientsList' }).catch(() => {})
             })
-          })});
+          })})
          
         })
         .catch(() => {
@@ -142,26 +141,10 @@ h2 {
   margin-bottom: 2vh;
 }
 .signUp {
-  /* width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center; */
   padding: 50px;
-  /* border-radius: 20px;
-  box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.73);
-  background-color: #fff;
-  text-align: left;
-  position: relative;
-  max-width: 100%; */
 }
-/* .cloud {
-  position: absolute;
-  top: -21px;
-  left: -48px;
-} */
 .formSignUp {
   width: 100%;
-  /* margin-top: 2rem; */
 }
 .wrap-input {
   position: relative;

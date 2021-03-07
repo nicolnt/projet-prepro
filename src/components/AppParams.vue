@@ -1,3 +1,4 @@
+<!-- APP PARAMETERS ON DASHBOARD -->
 <template>
   <div class="appParams">
     <Hero title="Paramètres de l'application"/>
@@ -22,10 +23,5 @@ export default {
   display: flex;
   flex-direction: column;
   text-align: left;
-}
-#icon_back {
-  display: flex;
-  align-self: flex-start;
-  margin-top: 12px;
 }
 </style>

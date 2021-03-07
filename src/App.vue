@@ -9,7 +9,6 @@
 <script>
 // import { db } from './services/firebase'
 
-
 export default {
   
   name: 'App',

@@ -1,3 +1,4 @@
+<!-- PAGE PATIENTS LIST -->
 <template>
   <div class="patientsList">
     <Hero title="Liste des patients"/>
@@ -69,13 +70,11 @@ export default {
   },
   methods: {
     search(){
-      
     },
     goPatientProfil(patient) {
       if(this.$route.name != 'PatientProfil')
         this.$router.push({name:'PatientProfil',  params: { patient: patient } })
         this.$store.commit("SET_CURRENT_PATIENT", patient)
-        // store pour faire renseigner user courant
     },
     toggleModal() {
       this.$refs.addPatientModal.toggle()
@@ -88,7 +87,7 @@ export default {
           if(doc.data().email == firebase.auth().currentUser.email){
               self.id = doc.id
           }
-        });
+        })
       })
       db.collection("patients").orderBy("lastName").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -98,7 +97,7 @@ export default {
             self.patients.push(tmp)
             self.patientsBackup.push(tmp)
           }
-        });
+        })
       })
     }
   }

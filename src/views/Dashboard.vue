@@ -1,6 +1,6 @@
+<!-- VIEW : DASHBOARD WHICH WILL CONTAIN PATIENT PROFIL, PATIENT'S RESULTs, ETC. -->
 <template>
   <div class="dashboard">
-    <!-- <NavBar p_color="" p_colorBG=""/> -->
     <div id="dashboardContent">
       <SideBar ref="sideBar"/>
       <div id="content">
@@ -15,7 +15,6 @@
 </template>
 
 <script>
-// import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 import SideBar from '@/components/SideBar.vue'
 
@@ -25,7 +24,6 @@ require('firebase/auth')
 export default {
   name: 'Dashboard',
   components : {
-    // NavBar,
     Footer,
     SideBar
   },
@@ -35,13 +33,11 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          // commit pour mutation
           this.$store.dispatch("SIGN_OUT")
           this.$router.replace({
             name: "Home"
-          });
-          //this.$store.commit("SET_LOGGED_OUT")
-        });
+          })
+        })
     },
   }
 }

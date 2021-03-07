@@ -1,3 +1,4 @@
+<!-- NAVIGATION BAR -->
 <template>
   <div class="navBarConnect">
     <vs-navbar v-model="activeItem" color="#ffffff" class="nabarx" id="navBar">
@@ -48,7 +49,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-// map `this.user` to `this.$store.getters.user`
+      // map `this.user` to `this.$store.getters.user`
       user: "user"
     })
   },
@@ -58,13 +59,11 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          // commit pour mutation
           this.$store.dispatch("SIGN_OUT")
           this.$router.replace({
             name: "Home"
-          });
-          //this.$store.commit("SET_LOGGED_OUT")
-        });
+          })
+        })
     },
     goSignIn() {
       if(this.$route.name != 'AuthSignIn')

@@ -1,3 +1,4 @@
+<!-- VIEW : LEGAL NOTICE -->
 <template>
   <div class="legalNotice">
     <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/>

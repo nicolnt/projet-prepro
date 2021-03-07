@@ -35,10 +35,8 @@ export default new Vuex.Store({
         state.user.data.displayName = "";
       }
     },
-    actions: { // transformer action en asynchrone
-     /*async*/ FETCH_USER({ commit }) {
-        // to do : call server
-        // await ....
+    actions: {
+      FETCH_USER({ commit }) {
         firebase.auth().onAuthStateChanged(user => {
           commit("SET_USER", user);
         })     

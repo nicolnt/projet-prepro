@@ -1,3 +1,4 @@
+<!-- VIEW : SIGN UP FORM ON AUTH FORM -->
 <template>
   <div class="authSignUp">
     <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/>

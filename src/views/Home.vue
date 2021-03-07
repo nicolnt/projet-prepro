@@ -1,15 +1,11 @@
+<!-- VIEW : HOME PAGE -->
 <template>
   <div class="home">
-    <!-- <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/> -->
     <div class="introduction-application">
       <div class="presentation-application">
         <h1> Tapitap, l’application destinée aux psychologues </h1>
         <p> Gagnez du temps afin de faire passer l’habilitation au permis de conduire à vos patients. </p>
-        <!-- <vs-button color="#FF8D8B" type="filled" v-on:click="goSignUp" id="btnSignUp">inscription</vs-button> -->
       </div>
-      <!-- <div class="illustration-application">
-        <img src="../assets/illustration-home.svg"/>
-      </div> -->
       <Form/>
     </div>
     <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
@@ -17,7 +13,6 @@
 </template>
 
 <script>
-// import NavBar from '@/components/NavBar.vue'
 import Form from '@/components/Form.vue'
 import Footer from '@/components/Footer.vue'
 import { mapGetters } from "vuex";
@@ -25,7 +20,6 @@ import { mapGetters } from "vuex";
 export default {
   name: 'Home',
   components: {
-    // NavBar,
     Form,
     Footer
   },

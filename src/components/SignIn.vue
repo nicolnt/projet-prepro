@@ -1,6 +1,6 @@
+<!-- SIGN IN FORM -->
 <template>
   <div class="signIn">
-      <!-- <h2>Connexion</h2> -->  
     <div v-if="error" class="connectionError">{{error}}</div>
     <form class="formSignIn" action="#" @submit.prevent="submit">
       <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
@@ -41,8 +41,7 @@
       </div>
     </form>
     <ForgotPass ref="forgotPassModal"/>
-      <p> Vous n'avez pas encore de compte ? <router-link to="/signUp"> Inscrivez-vous </router-link> </p>
-      <!-- <img class="plane" src="../assets/plane-illustration.svg"/> -->
+    <p> Vous n'avez pas encore de compte ? <router-link to="/signUp"> Inscrivez-vous </router-link> </p>
   </div>
 </template>
 
@@ -83,15 +82,15 @@ export default {
               if(doc.data().email == user.email){
                 user.updateProfile({
                   displayName: doc.data().firstName + ' ' + doc.data().lastName
-                });
+                })
               }
-            });
-          });
+            })
+          })
           this.$router.push({ name: 'PatientsList' })
         })
         .catch(() => {
-          this.error = 'Identifiant ou mot de passe incorrect.'
-        });
+          this.error = 'Identifiant ou mot de passe incorrect'
+        })
     },
   }
 }
@@ -109,27 +108,10 @@ a {
   color: #FF8D8B;
 }
 .signIn {
-  /* width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center; */
   padding: 50px;
-  /* border-radius: 20px;
-  box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.73);
-  background-color: #fff;
-  text-align: left;
-  position: relative;
-  max-width: 100%;
-  font-size: 16px; */
 }
-/* .plane {
-  position: absolute;
-  top: -21px;
-  right: -48px;
-} */
 .formSignIn {
   width: 100%;
-  /* margin-top: 2rem; */
 }
 .wrap-input {
   position: relative;

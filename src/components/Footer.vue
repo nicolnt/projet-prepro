@@ -1,3 +1,4 @@
+<!-- FOOTER -->
 <template>
   <div class="footer">
     <div id="navBar">
@@ -8,7 +9,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'Footer',
   props : {

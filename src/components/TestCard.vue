@@ -1,3 +1,4 @@
+<!-- TEST CARD ON TEST LIST -->
 <template>
   <div class="testCard">
     <div class="header">
@@ -16,7 +17,7 @@
 export default {
   name: 'TestCard',
   props: {
-    testName: String,
+    testName: String
   }
 }
 </script>

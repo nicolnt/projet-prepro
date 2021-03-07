@@ -1,3 +1,4 @@
+<!-- SIDEBAR ON THE LEFT WITH PSY'S PROFIL AND NAVIGATION -->
 <template>
   <div class="sideBar">
     <h2 v-on:click="goDashboard"> Tapitap </h2>
@@ -201,6 +202,7 @@ h2 {
   bottom: 0;
   left: 20px;
 }
+
 @media screen and (max-width: 1025px) {
   .sideBar {
     width: auto;

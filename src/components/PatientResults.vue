@@ -1,3 +1,4 @@
+<!-- PAGE PATIENT'S TESTS RESULTS -->
 <template>
   <div class="patientResults">
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
@@ -70,7 +71,6 @@
 </template>
 
 <script>
-//import Hero from '@/components/Hero.vue'
 
 export default {
   name: 'PatientResults',

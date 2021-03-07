@@ -1,3 +1,4 @@
+<!-- PAGE PATIENT PROFIL WITH SOME INFORMATIONS -->
 <template>
   <div class="patientProfil" v-if="patient != null">
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
@@ -7,7 +8,6 @@
           <img class="avatar" v-if="patient.gender!= null && patient.gender == 0" alt="imgPatient" id="imgPatient" src="../assets/avatar-woman-illustration.svg"/>
         <div id="patientTxtDatas">
           <h1>{{patient.firstName}} {{patient.lastName}}</h1>
-          <!--<p><span> Date de naissance : </span> {{patient.birthday}}</p>-->
           <p><span> Date de naissance : </span> {{ this.changeDateFormat(patient.birthday) }}</p>
           <p><span> Adresse : </span> {{patient.address}}, {{patient.cp}} {{patient.city}}</p>
           <p><span> Email : </span> {{patient.email}}</p>
@@ -25,7 +25,6 @@
       </div>
       <UpdateDataModal ref="updateDatasModal" :person="patient" :personType="'patient'"/>
     </div>
-    
   </div>
 </template>
 
@@ -133,7 +132,6 @@ export default {
   box-shadow: 0 4px 16px 0 rgb(0 0 0 / 5%);
   border-radius: 16px;
   padding: 2rem;
-  /*overflow-y: scroll;*/
   align-items: center;
   margin-top: 2rem;
   margin-right: 3rem;

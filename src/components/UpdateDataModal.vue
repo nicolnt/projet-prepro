@@ -1,6 +1,8 @@
+<!-- MODAL WITH FORM TO UPDATE PSY'S OR PATIENT'S INFORMATIONS -->
 <template lang="html">
   <div id="modalPatient">
     <vs-popup title="Modifier les informations" :active.sync="popupActivo">
+      <!-- Update patient's informations -->
       <div v-if="personType === 'patient'" id="modalContentClient">
         <form action="#" @submit.prevent="submit">
           <div class="wrapperInfosForm">
@@ -68,6 +70,7 @@
         <img class="plane-purple" src="../assets/plane-purple-illustration.svg"/>
       </div>
 
+      <!-- Update psy's informations -->
       <div v-if="personType === 'psy'" id="modalContentPsy">
         <form action="#" @submit.prevent="submit">
           <div class="wrapperInfosForm">
@@ -149,7 +152,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-    // map `this.user` to `this.$store.getters.user`
+      // map `this.user` to `this.$store.getters.user`
       user: "user"
     }),
     ...mapState({
@@ -387,5 +390,6 @@ export default {
 }
 .vs-popup h3 {
   text-align: center;
+  font: 400 13.3333px Arial;
 }
 </style>

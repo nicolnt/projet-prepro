@@ -1,3 +1,4 @@
+<!-- INPUT COMPONENT FOR FORMS -->
 <template>
   <div class="input center content-inputs">
     <vs-input v-model="value" v-bind:placeholder="m_title" type="this.m_type" name="this.m_name" oninput="this.onChangeInput" required/>

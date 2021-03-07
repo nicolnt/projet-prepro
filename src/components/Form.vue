@@ -1,3 +1,4 @@
+<!-- AUTHENTICATION FORM WITH SIGN IN AND SIGN UP -->
 <template>
     <div class="formAuth">
         <div class="container-form">
@@ -66,68 +67,57 @@ export default {
 </script>
 
 <style scoped>
-    .formAuth {
-        width: 100%;
-        height: 100%;
-        flex: 1;
-        position: relative;
-    }
-    .container-form {
-        width: 100%;
-        height: 115%;
-        position: absolute;
-        background-color: #FFFFFF;
-        border-radius: 20px;
-    }
-    .container-tabs {
-        width: 100%;
-        /* height: 30%; */
-        display: flex;
-        border-bottom: 1px solid #FF8D8B;
-    }
-    .tabs {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: .75rem 0;
-        cursor: pointer;
-    }
-    .sign {
-        width: 100%;
-        /* height: 70%; */
-        position: absolute;
-        display: none;
-    }
-    .active {
-        background-color: #FF8D8B;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        color: #FFFFFF;
-    }
-    .illu {
-        display: none;
-    }
-    .plane {
-        position: absolute;
-        top: -21px;
-        right: -48px;
-    }
-    .cloud {
-        position: absolute;
-        top: -21px;
-        left: -48px;
-    }
-    .activeContent {
-        /* animation: fade 0.5s forwards; */
-        display: block;
-    }
-    /* @keyframes fade {
-        form {
-            display: none;
-        }
-        to {
-            display: block;
-        }
-    } */
+  .formAuth {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    position: relative;
+  }
+  .container-form {
+    width: 100%;
+    height: 115%;
+    position: absolute;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+  }
+  .container-tabs {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid #FF8D8B;
+  }
+  .tabs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .75rem 0;
+    cursor: pointer;
+  }
+  .sign {
+    width: 100%;
+    position: absolute;
+    display: none;
+  }
+  .active {
+    background-color: #FF8D8B;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    color: #FFFFFF;
+  }
+  .illu {
+    display: none;
+  }
+  .plane {
+    position: absolute;
+    top: -21px;
+    right: -48px;
+  }
+  .cloud {
+    position: absolute;
+    top: -21px;
+    left: -48px;
+  }
+  .activeContent {
+    display: block;
+  }
 </style>

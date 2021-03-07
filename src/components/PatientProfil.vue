@@ -7,7 +7,8 @@
           <img class="avatar" v-if="patient.gender!= null && patient.gender == 0" alt="imgPatient" id="imgPatient" src="../assets/avatar-woman-illustration.svg"/>
         <div id="patientTxtDatas">
           <h1>{{patient.firstName}} {{patient.lastName}}</h1>
-          <p><span> Date de naissance : </span> {{patient.birthday}}</p>
+          <!--<p><span> Date de naissance : </span> {{patient.birthday}}</p>-->
+          <p><span> Date de naissance : </span> {{ this.changeDateFormat(patient.birthday) }}</p>
           <p><span> Adresse : </span> {{patient.address}}, {{patient.cp}} {{patient.city}}</p>
           <p><span> Email : </span> {{patient.email}}</p>
           <p><span> Motif : </span> {{patient.testReason}}</p>
@@ -48,12 +49,16 @@ export default {
     }
   },
   methods: {
-    getDate(dateISO){ 
+    getDate(dateISO) { 
       let creationDate = new Date(dateISO)
       let month = creationDate.getMonth()
       month < 10 ? month = '0'+(month+1) : month = (month+1)
       const date = creationDate.getDate() +'/' + month + '/'+ creationDate.getFullYear()
       return date
+    },
+    changeDateFormat(date) {
+      let newDate = date.split("-").reverse().join("/")
+      return newDate
     },
     toggleModal() {
       this.$refs.updateDatasModal.toggle()

@@ -43,6 +43,7 @@ export default {
   display: none;
 }
 .test-modal >>> .vs-popup--content {
+  display: block;
   margin: 15px 0;
 }
 .test-modal-content {

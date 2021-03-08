@@ -50,6 +50,7 @@ export default {
   color: #FFFFFF;
 }
 .test-modal >>> .vs-popup--content {
+  display: block;
   margin: 15px 0;
 }
 .test-modal-content {

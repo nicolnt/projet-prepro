@@ -53,6 +53,23 @@ export default {
       user: "user"
     })
   },
+  created() {
+    if(this.$route.name === 'PatientsList') {
+      this.isActiveStats = false
+      this.isActiveParams = false
+      this.isActivePatients = true
+    }
+    if(this.$route.name === 'Stats') {
+      this.isActiveParams = false
+      this.isActivePatients = false
+      this.isActiveStats = true
+    }
+    if(this.$route.name === 'AppParams') {
+      this.isActiveStats = false
+      this.isActivePatients = false
+      this.isActiveParams = true
+    }
+  },
   methods: { 
     activePage(isActive){
       if(isActive === 'isActivePatients' && this.$route.name != 'PatientsList') {

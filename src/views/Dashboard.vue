@@ -52,6 +52,12 @@ export default {
   justify-content: space-between;
   background: linear-gradient(135deg, #ffffff, 80%, #EDEDED) no-repeat;
 }
+#dashboardContent {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
 #content {
   padding: 2rem 0 0 3rem;
   width: 100%;

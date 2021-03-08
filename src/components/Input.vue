@@ -71,11 +71,10 @@ export default {
     setVerifInput(){
       this.m_verifInput = this.verifInput
     },
-    onChangeInput(e) {
-      if(this.m_verifInput(e)) {
-
-      }
-    }
+    // onChangeInput(e) {
+    //   if(this.m_verifInput(e)) {
+    //   }
+    // }
   }
 }
 </script>

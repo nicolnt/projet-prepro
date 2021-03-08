@@ -26,11 +26,11 @@ class Track {
 
   static setStrokeColorAccordingToType(type) {
     if (type === 'path')
-      Track.traceCanvasContext.strokeStyle = 'blue'
+      Track.traceCanvasContext.strokeStyle = '#b6ff6c'
     else if (type === 'beforeStart')
-      Track.traceCanvasContext.strokeStyle = 'purple'
+      Track.traceCanvasContext.strokeStyle = '#9082FF'
     else
-      Track.traceCanvasContext.strokeStyle = 'red'
+      Track.traceCanvasContext.strokeStyle = '#ff6c6c'
   }
 
   static exportTraceImage() {

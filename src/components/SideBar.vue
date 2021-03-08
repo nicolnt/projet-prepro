@@ -4,7 +4,7 @@
     <h2 v-on:click="goDashboard"> Tapitap </h2>
     <div size="small" id="cardUser">
       <!-- changer l'avatar en homme/femme en fonction de la connexion  -->
-      <img class="avatar" alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
+      <img class="avatar" alt="Avatar woman" src="../assets/avatarPsy.svg"/>
       <div id="txtCardUser">
         <h3>{{user.data.displayName}}</h3>
         <p>Psychologue</p>

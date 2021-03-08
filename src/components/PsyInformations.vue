@@ -5,7 +5,7 @@
     <Hero title="Informations du psychologue"/>
     <div class="wrapperPsyInformations">
       <div id="psyDatas">
-        <img src="../assets/avatar-woman-illustration.svg" alt="imgPatient" id="imgPatient">
+        <img src="../assets/avatarPsy.svg" alt="imgPatient" id="imgPatient">
         <div class="contentPsyDatas">
           <h2>{{user.data.displayName}}</h2>
           <vs-button color="#9082FF" type="filled" id="btnModif" @click="toggleModal">Modifier les informations</vs-button>

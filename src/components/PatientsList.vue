@@ -169,6 +169,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: row;
+  overflow: hidden;
 }
 #actions {
   display: flex;

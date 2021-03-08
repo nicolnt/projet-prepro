@@ -37,5 +37,11 @@ export default {
 }
 #content {
   padding: 3rem;
+  width: calc(100% - 285px);
+}
+@media screen and (max-width: 1025px) {
+  #content {
+    width: calc(100% - 180px);
+  }
 }
 </style>

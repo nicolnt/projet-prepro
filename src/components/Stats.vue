@@ -1,11 +1,29 @@
 <template>
   <div class="stats">
     <Hero title="Statistiques des patients"/>
-    <h3> Taux de réussites des tests (2020 - aujourd'hui) </h3>
-    <div id="chart">
-      <apexchart type="area" width="800" height="500" :options="chartOptions" :series="series"></apexchart>
+    <h2> Cette fonctionnalité est débloquée lorsque vous avez au minimum 10 patients renseignés dans l’application. Elle permet d’avoir une vue d’ensemble des informations liées aux patients ou aux tests. </h2>
+    <div id="graphics">
+      <div class="graphicNbPatient graphic">
+        <h3> Nombre de personnes inscrits tous les mois </h3>
+        <div class="chart">
+          <apexchart type="area" width="100%" height="500" :options="chartOptions" :series="series"></apexchart>
+        </div>
+      </div>
+      <div class="wrapperGraphic">
+        <div class="graphicAveragePatientAge graphic">
+          <h3> Age moyen des patients </h3>
+          <div class="wrapperResult">
+            <p> {{this.averagePatientAge}} ans </p>
+          </div>
+        </div>
+        <div class="graphicPartWomenMen graphic">
+          <h3> Pourcentage d'hommes ou de femmes </h3>
+          <div class="wrapperResult">
+            <apexchart type="pie" width="100%" height="500" :options="chartOptions2" :series="series2"></apexchart>
+          </div>
+        </div>
+      </div>
     </div>
-    <div @click="calcReussiteTest()"> </div>
   </div>
 </template>
 
@@ -13,7 +31,6 @@
 import Hero from '@/components/Hero.vue'
 import VueApexCharts from 'vue-apexcharts'
 import { db } from '../services/firebase'
-import  { mapState } from 'vuex'
 
 export default {
   name: 'Stats',
@@ -23,34 +40,39 @@ export default {
   },
   data() {
     return {
-      patientOrderByMonth: [],
-      patientJanuary: [],
-      patientFebruary: [],
-      patientMarch: [],
-      patientApril: [],
-      patientMay: [],
-      patientJune: [],
-      patientJuly: [],
-      patientAugust: [],
-      patientSeptember: [],
-      patientOctober: [],
-      patientNovember: [],
-      patientDecember: [],
-      tentatives: [],
-      tentativesTri: [],
-      tentativesByPatientData: [],
-      series: 
+      /* Data for graphic */
+      patientOrderByMonth: 0,
+      patientJanuary: 0,
+      patientFebruary: 0,
+      patientMarch: 0,
+      patientApril: 0,
+      patientMay: 0,
+      patientJune: 0,
+      patientJuly: 0,
+      patientAugust: 0,
+      patientSeptember: 0,
+      patientOctober: 0,
+      patientNovember: 0,
+      patientDecember: 0,
+      patientAge: 0,
+      averagePatientAge: 0,
+      nbPatientAge: 0,
+      nbPatient: 0,
+      nbWomen: 0,
+      nbMen: 0,
+      
+      /* Graphic 1 */
+      series:
       [{
         name: '2021',
-        data: [31, 40, 28, 51, 42, 19, 10, 60, 86, 45, 10, 20]
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       }, 
       {
         name: '2022',
-        data: [11, 32, 45, 32, 34, 52, 41, 51, 42, 19, 10, 42]
+        data: [20, 32, 45, 32, 34, 52, 41, 51, 42, 19, 10, 42]
       }],
       chartOptions: {
         chart: {
-          height: 350,
           type: 'area'
         },
         dataLabels: {
@@ -60,99 +82,113 @@ export default {
           curve: 'smooth'
         },
         colors: ["#9082FF", "#FF8D8B"],
-        yaxis: {
-          // type: 'datetime',
-          categories: ['0', '10', '20']
-        },
         xaxis: {
-          // type: 'datetime',
           categories: ['Janvier','Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre' , 'Novembre', 'Décembre']
         },
-        // tooltip: {
-        //   x: {
-        //     format: 'dd/MM/yy HH:mm'
-        //   },
-        // },    
+      },
+      
+      /* Graphic 3 */
+      series2: [10, 20],
+      chartOptions2: {
+        chart: {
+          type: 'pie'
+        },
+        labels: ['Femmes', 'Hommes'],
+        colors: ["#9082FF", "#FF8D8B"],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
       },
       legend: {
         fontSize: '16px',
       },
     }
   },
-  computed: {
-    ...mapState({
-      patient: 'currentPatient'
-    })
-  },
   methods: {
-    getDate(dateISO){ 
+    getDateMonth(dateISO){ 
       let creationDate = new Date(dateISO)
       let month = creationDate.getMonth()
       return month
     },
-    tentativesByPatient(doc) {
-      if(this.tentativesByPatientData[doc] === doc.data().idPatient) {
-        this.tentativesByPatientData = doc
-      }
+    getDateYear(dateISO){ 
+      let creationDate = new Date(dateISO)
+      let year = creationDate.getFullYear()
+      let todayYear = new Date().getFullYear()
+      let patientYear = todayYear - year
+      return patientYear
     },
-    getScorePatient(doc) {
-      return this.tentatives[doc] = doc.data()
-      // this.tentativesTri[doc] = this.tentatives[doc].idPatient;
-      // this.tentativesTri = [...new Set(this.tentativesTri)]
-      // return console.log(this.tentativesTri)
+    updateChart(nbPatientJanvier, nbPatientFebrurary, nbPatientMarch, nbPatientApril, nbPatientMay, nbPatientJune, nbPatientJuly, nbPatientAugust, nbPatientSeptember, nbPatientOctober, nbPatientNovember, nbPatientDecember) {
+      this.series = [{
+        data: [nbPatientJanvier, nbPatientFebrurary, nbPatientMarch, nbPatientApril, nbPatientMay, nbPatientJune, nbPatientJuly, nbPatientAugust, nbPatientSeptember, nbPatientOctober, nbPatientNovember, nbPatientDecember]
+      }]
     },
-    getAverageScorePatients() {
-      return
-    }
+    updateChartPercent(nbWomenPercent, nbMenPercent) {
+      this.series2 = [nbWomenPercent, nbMenPercent]
+    },
   },
   mounted() {
-    db.collection('tentatives')
-      .orderBy('idPatient')
-      .get()
-      .then(docs => {
-        docs.forEach(doc => {
-          // this.tentativesByPatient(this.tentatives[doc])
-          // console.log(this.tentatives[doc])
-          this.getScorePatient(doc)
-
-          // const data = doc.data() 
-          // data.score = (data.score * 100).toFixed(2)
-        })
-      })
-    db.collection("patients").get()
-      .then((querySnapshot) => {
+    db.collection('patients').get()
+      .then((querySnapshot) => { 
         querySnapshot.forEach((doc) => {
-          this.patientOrderByMonth[doc] = this.getDate(doc.data().dateCreation.toDate())
-          if(this.patientOrderByMonth[doc] === 0) {
-            this.patientJanuary[doc] = doc.id
-            // calculer ici la moyenne des scores des patients de janvier
-          } else if (this.patientOrderByMonth[doc] === 1) {
-            this.patientFebruary[doc] = doc.id
-          } else if (this.patientOrderByMonth[doc] === 2) {
-            this.patientMarch[doc] = doc.id
-          } else if (this.patientOrderByMonth[doc] === 3) {
-            this.patientApril[doc] = doc.id
-          } else if (this.patientOrderByMonth[doc] === 4) {
-            this.patientMay[doc] = doc.id
-          } else if (this.patientOrderByMonth[doc] === 5) {
-            this.patientJune[doc] = doc.id
-          } else if (this.patientOrderByMonth[doc] === 6) {
-            this.patientJuly[doc] = doc.id
-          } else if (this.patientOrderByMonth[doc] === 7) {
-            this.patientAugust[doc] = doc.id
-          } else if (this.patientOrderByMonth[doc] === 8) {
-            this.patientSeptember[doc] = doc.id
-          } else if (this.patientOrderByMonth[doc] === 9) {
-            this.patientOctober[doc] = doc.id
-          } else if (this.patientOrderByMonth[doc] === 10) {
-            this.patientNovember[doc] = doc.id
-          } else if (this.patientOrderByMonth[doc] === 11) {
-            this.patientDecember[doc] = doc.id
+          this.nbPatient += 1
+          /* Graphic 1 : Number of patients registered per month */
+          this.patientOrderByMonth = this.getDateMonth(doc.data().dateCreation.toDate())
+          if(this.patientOrderByMonth === 0) {
+            this.patientJanuary += 1
+          } else if (this.patientOrderByMonth === 1) {
+            this.patientFebruary += 1
+          } else if (this.patientOrderByMonth === 2) {
+            this.patientMarch += 1
+          } else if (this.patientOrderByMonth === 3) {
+            this.patientApril += 1
+          } else if (this.patientOrderByMonth === 4) {
+            this.patientMay += 1
+          } else if (this.patientOrderByMonth === 5) {
+            this.patientJune += 1
+          } else if (this.patientOrderByMonth === 6) {
+            this.patientJuly += 1
+          } else if (this.patientOrderByMonth === 7) {
+            this.patientAugust += 1
+          } else if (this.patientOrderByMonth === 8) {
+            this.patientSeptember += 1
+          } else if (this.patientOrderByMonth === 9) {
+            this.patientOctober += 1
+          } else if (this.patientOrderByMonth === 10) {
+            this.patientNovember += 1
+          } else if (this.patientOrderByMonth === 11) {
+            this.patientDecember += 1
+          } else {
+            return
+          }
+          /* Graphic 2 : Total patient age */
+          if(this.getDateYear(doc.data().birthday) > 17) {
+            this.patientAge += Number(this.getDateYear(doc.data().birthday))
+            this.nbPatientAge += 1
+          }
+          /* Graphic 3 : Number of men or women */
+          if(doc.data().gender === "0") {
+            this.nbWomen += 1
+          } else if (doc.data().gender === "1") {
+            this.nbMen += 1
           } else {
             return
           }
         })
-      })
+      /* Graphic 1 */
+      this.updateChart(this.patientJanuary, this.patientFebruary, this.patientMarch, this.patientApril, this.patientMay, this.patientJune, this.patientJuly, this.patientAugust, this.patientSeptember, this.patientOctober, this.patientNovember, this.patientDecember)
+      /* Graphic 2 : Averahe patient age */
+      this.averagePatientAge = Math.round(this.patientAge/this.nbPatientAge)
+      /* Graphic 3 */
+      this.updateChartPercent(this.nbWomen, this.nbMen)
+      });
   }
 }
 </script>
@@ -163,15 +199,74 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   text-align: left;
+}
+h2 {
+  font-size: 18px;
+  margin-top: 1rem;
 }
 #icon_back {
   display: flex;
   align-self: flex-start;
   margin-top: 12px;
 }
-#chart {
+h3 {
+  font-weight: 500;
+}
+#graphics {
+  display: flex;
+  flex-direction: row;
   margin-top: 2rem;
+  overflow-y: scroll;
+}
+.graphic {
+  padding: 2rem;
+  background-color: #f0f0f0;
+  border-radius: 25px;
+  height: 100%;
+}
+.graphicNbPatient {
+  width: 60%;
+  margin-right: 2rem;
+}
+.wrapperGraphic {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+.graphicPartWomenMen {
+  margin-top: 2rem;
+}
+.wrapperResult {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.wrapperResult p {
+  font-size: 42px;
+  font-weight: 600;
+  text-align: center;
+}
+@media screen and (max-width: 1025px) {
+  #graphics {
+    flex-direction: column;
+  }
+  .graphicNbPatient {
+    width: 100%;
+    margin-right: 0;
+  }
+  .wrapperGraphic {
+    flex-direction: row;
+    width: 100%;
+    margin-top: 2rem;
+  }
+  .graphicAveragePatientAge {
+    margin-right: 2rem;
+  }
+  .graphicPartWomenMen {
+    margin-top: 0;
+  }
 }
 </style>

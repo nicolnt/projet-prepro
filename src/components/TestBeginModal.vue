@@ -1,12 +1,12 @@
 <template lang="html">
-    <VsPopupCustom :active.sync="popupActivo" :button-close-hidden="true" :closeOnClickOutside="false" title="Motricité fine" class="test-modal">
+    <VsPopupCustom :active.sync="popupActivo" :button-close-hidden="true" :closeOnClickOutside="false" :title="title" class="test-modal">
         <div class="test-modal-content">
           <figure v-for="(instruction, index) in instructions" :key="index">
               <img :src="require('@/assets/' + instruction.img + '')" :alt="instruction.altImg" />
               <figcaption>{{ instruction.desc }}</figcaption>
           </figure>
         </div>
-        <div class="test-modal-buttons">       
+        <div class="test-modal-buttons">
             <vs-button id="btnTrainTest" @click="toggle(); $emit('train');" color="#9082FF">S'entraîner</vs-button>
             <vs-button id="btnStartTest" @click="toggle(); $emit('play');" color="#9082FF" icon="play_arrow">Commencer</vs-button>
         </div>
@@ -22,7 +22,8 @@ export default {
     VsPopupCustom
   },
   props: {
-    instructions: Array
+    instructions: Array, 
+    title: String
   },
   data() {
     return { 
@@ -59,6 +60,9 @@ export default {
 }
 .test-modal-content > figure {
   width: 45%;
+  display: flex;
+  flex-direction: column;
+  /*justify-content: space-around;*/
 }
 .test-modal-content > figure > img {
   width: 100%;
@@ -72,7 +76,7 @@ export default {
   flex-wrap: wrap;
 }
 .test-modal-buttons > button {
-  margin: 0 10px;
+  margin: 10px;
   border-radius: 15px;
   padding: 10px 20px;
   height: 44px;

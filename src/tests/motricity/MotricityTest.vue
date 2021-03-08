@@ -15,8 +15,8 @@
       <canvas id="traceCanvas"></canvas>
     </div>
     <canvas ref="canvas" id="pickerTrack"></canvas>
-    <TestBeginModal :instructions="instructions" @train="train" @play='play' ref="TestBeginModal"/>
-    <TestHelpModal :instructions="instructions" ref="TestHelpModal"/>
+    <TestBeginModal title="Motricité fine" :instructions="instructions" @train="train" @play='play' ref="TestBeginModal"/>
+    <TestHelpModal title="Motricité fine : instructions" :instructions="instructions" ref="TestHelpModal"/>
   </div>
 </template>
 

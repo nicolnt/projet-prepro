@@ -1,3 +1,6 @@
+// Ne pas tout supprimer sinon ça supprime la pop up mdrr essayer de remplacer et de vérifier 
+// que la pop up de début est toujours là
+
 class Track {
 	static trackReady = false
 	static trackImageBackground = new Image()

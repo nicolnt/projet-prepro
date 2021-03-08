@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import Game from '../../tests/motricity'
+import Game from '../../tests/attentionCapacity'
 
 import { db } from '../../services/firebase'
 require('firebase/auth')
 
 export default {
-  name: 'MotricityTest',
+  name: 'attentionCapacityTest',
   data() {
     return {
       game: new Game(require('../../tests/motricity.json'), this.myFunc),

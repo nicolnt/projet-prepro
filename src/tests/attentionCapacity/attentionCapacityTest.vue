@@ -1,5 +1,5 @@
 <template>
-  <div id="motricity-container">
+  <div id="capacity-container">
     <div class="test-bar">
       <span class="test-counter">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
       <vs-button
@@ -15,21 +15,21 @@
       <canvas id="traceCanvas"></canvas>
     </div>
     <canvas ref="canvas" id="pickerTrack"></canvas>
-    <TestBeginModal :instructions="instructions" @train="train" @play='play' ref="TestBeginModal"/>
-    <TestHelpModal :instructions="instructions" ref="TestHelpModal"/>
+    <TestBeginModal title="Capacités attentionnelles" :instructions="instructions" @train="train" @play='play' ref="TestBeginModal"/>
+    <TestHelpModal title="Capacités attentionnelles : instructions" :instructions="instructions" ref="TestHelpModal"/>
   </div>
 </template>
 
 <script>
-import Game from "./motricityGame"
+import Game from "./attentionCapacityGame"
 import TestBeginModal from '@/components/TestBeginModal.vue'
 import TestHelpModal from '@/components/TestHelpModal.vue'
 
-import { db } from '../../services/firebase'
+//import { db } from '../../services/firebase'
 require('firebase/auth')
 
 export default {
-  name: "MotricityTest",
+  name: "AttentionCapacityTest",
   components: {
     TestBeginModal,
     TestHelpModal
@@ -39,12 +39,12 @@ export default {
       game: new Game(require("./paths/motricityPaths.json"), this.doAfterSuccess),
       instructions: [
         {
-          img: 'tests_visuals/attentionCapacityTest_eye.png',
+          img: 'tests_visuals/attentionCapacityTest_eye.jpg',
           altImg: 'Un oeil symbolise l\'utilisateur qui observe l\'écran.',
           desc: "Observez attentivement la scène qui s’affiche sur l’écran.",
         },
         {
-          img: 'tests_visuals/attentionCapacityTest_choice.png',
+          img: 'tests_visuals/attentionCapacityTest_choice.jpg',
           altImg: 'L\'utilisateur choisit les bonnes propositions.',
           desc: "Choisissez parmi les propositions celles que vous pensez avoir vues sur l’image.",
         }
@@ -64,11 +64,12 @@ export default {
     play() {
       this.game.beginTest();
     },
-    sendLastestTestToDB(level) {
+    // adapter à notre test
+    /* sendLastestTestToDB(level) {
       let game = this.game.gameData.testPaths[level]
       db.collection("tentatives").add({
         idPatient: this.$store.state.currentPatient.id,
-        idTest: 'motricity',
+        idTest: 'attentionCapacity',
         idParcours: level,
         patientTime: 100,
         testCapture: game.level.traceImage,
@@ -82,7 +83,7 @@ export default {
         .catch(function(error) {
           console.error("Error adding document: ", error);
         })
-    },
+    }, 
     doAfterSuccess() {
       console.log('success')
       if (this.game.state.doTraining === false) {
@@ -100,13 +101,13 @@ export default {
         this.ToggleBeginModal()
       }
       this.game.switchToNextLevel();
-    }
+    } */
   }
 };
 </script>
 
 <style scoped>
-#motricity-container {
+#capacity-container {
   background: white;
   height: 100%;
   border-radius: 30px;

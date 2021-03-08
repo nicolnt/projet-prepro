@@ -15,7 +15,7 @@ import TestQuitModal from '@/components/TestQuitModal.vue'
 import TestInfosModal from '@/components/TestInfosModal.vue'
 
 export default {
-  name: 'MotricityTest',
+  name: 'Test',
   components: {
     NavBarTest,
     TestQuitModal,

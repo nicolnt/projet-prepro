@@ -37,7 +37,7 @@ export default {
           })
 
         this.$router.push({
-          path: '/game/motricity',
+          path: '/game/motricity'
         })
       },
       startAttentionCapacity() {
@@ -58,7 +58,7 @@ export default {
           })
 
         this.$router.push({
-          path: '/game/attentionCapacity',
+          path: '/game/attentionCapacity'
         })
       }
    }

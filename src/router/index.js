@@ -60,7 +60,7 @@ const routes = [
     children: [
       {
         path: "motricity",
-        component: MotricityTest
+        component: MotricityTest,
       },
       {
         path: "attentionCapacity",

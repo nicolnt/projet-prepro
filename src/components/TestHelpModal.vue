@@ -1,5 +1,5 @@
 <template lang="html">
-    <VsPopupCustom :active.sync="popupActivo" :button-close-hidden="false" title="Motricité fine : instructions" class="test-modal">
+    <VsPopupCustom :active.sync="popupActivo" :button-close-hidden="false" :title="title" class="test-modal">
         <div class="test-modal-content">
           <figure v-for="(instruction, index) in instructions" :key="index">
               <img :src="require('@/assets/' + instruction.img + '')" :alt="instruction.altImg" />
@@ -18,7 +18,8 @@ export default {
     VsPopupCustom
   },
   props: {
-    instructions: Array
+    instructions: Array, 
+    title: String
   },
   data() {
     return { 

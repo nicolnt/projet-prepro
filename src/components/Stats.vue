@@ -1,25 +1,39 @@
 <template>
   <div class="stats">
     <Hero title="Statistiques des patients"/>
-    <h2> Cette fonctionnalité est débloquée lorsque vous avez au minimum 10 patients renseignés dans l’application. Elle permet d’avoir une vue d’ensemble des informations liées aux patients ou aux tests. </h2>
-    <div id="graphics">
-      <div class="graphicNbPatient graphic">
-        <h3> Nombre de personnes inscrits tous les mois </h3>
-        <div class="chart">
-          <apexchart type="area" width="100%" height="500" :options="chartOptions" :series="series"></apexchart>
-        </div>
-      </div>
-      <div class="wrapperGraphic">
-        <div class="graphicAveragePatientAge graphic">
-          <h3> Age moyen des patients </h3>
-          <div class="wrapperResult">
-            <p> {{this.averagePatientAge}} ans </p>
+    <h2> Cette fonctionnalité est débloquée lorsque vous avez au <span> minimum 10 patients </span> renseignés dans l’application. Elle permet d’avoir une vue d’ensemble des informations liées aux patients ou aux tests. </h2>
+    <div v-if="this.isActive" id="graphics">
+      <div class="graphicsPatient">
+        <div class="graphicNbPatient graphic">
+          <h3> Nombre de personnes inscrits tous les mois </h3>
+          <div class="chart">
+            <apexchart type="area" width="100%" height="500" :options="chartOptions" :series="series"></apexchart>
           </div>
         </div>
-        <div class="graphicPartWomenMen graphic">
-          <h3> Pourcentage d'hommes ou de femmes </h3>
+        <div class="wrapperGraphic">
+          <div class="graphicAveragePatientAge graphic">
+            <h3> Age moyen des patients </h3>
+            <div class="wrapperResult">
+              <p> {{this.averagePatientAge}} ans </p>
+            </div>
+          </div>
+          <div class="graphicPartWomenMen graphic">
+            <h3> Pourcentage d'hommes ou de femmes </h3>
+            <div class="wrapperResult">
+              <apexchart type="pie" width="100%" height="500" :options="chartOptions2" :series="series2"></apexchart>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="graphicsTest">
+        <div class="testSucceedFailed graphic">
+            <h3> Nombre de tests réussis ou échoués </h3>
+            <apexchart type="bar" width="100%" height="500" :options="chartOptions3" :series="series3"></apexchart>
+        </div>
+        <div class="graphicAveragePatientScore graphic">
+          <h3> Score moyen des patients </h3>
           <div class="wrapperResult">
-            <apexchart type="pie" width="100%" height="500" :options="chartOptions2" :series="series2"></apexchart>
+            <p> {{this.averagePatientScore}} % </p>
           </div>
         </div>
       </div>
@@ -40,6 +54,7 @@ export default {
   },
   data() {
     return {
+      isActive: false,
       /* Data for graphic */
       patientOrderByMonth: 0,
       patientJanuary: 0,
@@ -60,6 +75,10 @@ export default {
       nbPatient: 0,
       nbWomen: 0,
       nbMen: 0,
+      nbTestSucceed: 0,
+      nbTestFailed: 0,
+      patientScore: 0,
+      averagePatientScore: 0,
       
       /* Graphic 1 */
       series:
@@ -88,7 +107,7 @@ export default {
       },
       
       /* Graphic 3 */
-      series2: [10, 20],
+      series2: [0, 0],
       chartOptions2: {
         chart: {
           type: 'pie'
@@ -107,6 +126,20 @@ export default {
           }
         }]
       },
+
+      /* Graphic 4 */
+      series3: [{
+        data: [0, 0]
+      }],
+      chartOptions3: {
+        chart: {
+          type: 'bar'
+        },
+        labels: ['Réussis', 'Échoués'],
+        colors: ["#9082FF", "#FF8D8B"],
+      },
+
+      /* For all the graphics */
       legend: {
         fontSize: '16px',
       },
@@ -133,12 +166,21 @@ export default {
     updateChartPercent(nbWomenPercent, nbMenPercent) {
       this.series2 = [nbWomenPercent, nbMenPercent]
     },
+    updateChartTest(nbTestSucceed, nbTestFailed) {
+      this.series3 = [{
+        data:[nbTestSucceed, nbTestFailed]
+      }]
+    },
   },
   mounted() {
     db.collection('patients').get()
       .then((querySnapshot) => { 
         querySnapshot.forEach((doc) => {
+          /* Activation of the graphics when number of patient > 9 */
           this.nbPatient += 1
+          if(this.nbPatient > 9) {
+            this.isActive = true
+          }
           /* Graphic 1 : Number of patients registered per month */
           this.patientOrderByMonth = this.getDateMonth(doc.data().dateCreation.toDate())
           if(this.patientOrderByMonth === 0) {
@@ -189,6 +231,27 @@ export default {
       /* Graphic 3 */
       this.updateChartPercent(this.nbWomen, this.nbMen)
       });
+    db.collection('tentatives').get()
+      .then((querySnapshot) => { 
+        querySnapshot.forEach((doc) => {
+          /* Graphic 4 */
+          const data = doc.data() 
+          if(data.succeed === true) {
+            this.nbTestSucceed += 1
+          } else if(doc.data().succeed === false) {
+            this.nbTestFailed += 1
+          } else {
+            return
+          }
+          /* Graphic 5 */
+          data.score = (data.score * 100).toFixed(2)
+          this.patientScore += Number(data.score)
+        })
+        /* Graphic 4 */
+        this.updateChartTest(this.nbTestSucceed, this.nbTestFailed)
+        /* Graphic 5 */
+        this.averagePatientScore = Math.round(this.patientScore/this.nbPatient)
+      });
   }
 }
 </script>
@@ -205,6 +268,9 @@ h2 {
   font-size: 18px;
   margin-top: 1rem;
 }
+h2 span {
+  font-weight: 600;
+}
 #icon_back {
   display: flex;
   align-self: flex-start;
@@ -214,10 +280,17 @@ h3 {
   font-weight: 500;
 }
 #graphics {
-  display: flex;
-  flex-direction: row;
   margin-top: 2rem;
   overflow-y: scroll;
+}
+.graphicsPatient {
+  display: flex;
+  flex-direction: row;
+}
+.graphicsTest {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
 }
 .graphic {
   padding: 2rem;
@@ -248,6 +321,13 @@ h3 {
   font-size: 42px;
   font-weight: 600;
   text-align: center;
+}
+.testSucceedFailed {
+  width: 100%;
+  margin-right: 2rem;
+}
+.graphicAveragePatientScore {
+  width: 100%;
 }
 @media screen and (max-width: 1025px) {
   #graphics {

@@ -1,7 +1,6 @@
 <!-- SIGN IN FORM -->
 <template>
   <div class="signIn">
-    <div v-if="error" class="connectionError">{{error}}</div>
     <form class="formSignIn" action="#" @submit.prevent="submit">
       <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
         <input 
@@ -34,14 +33,14 @@
         </span>
       </div>
       <div class="btn-submit">
-        <button type="submit" class="button">Se connecter</button>
+        <div v-if="error" class="connectionError">{{error}}</div>
+        <button type="submit" class="button">Se connecter</button> 
       </div>
       <div>
         <div class="forgotPass" @click="toggleModal">Mot de passe oublié ?</div>
       </div>
     </form>
     <ForgotPass ref="forgotPassModal"/>
-    <p> Vous n'avez pas encore de compte ? <router-link to="/signUp"> Inscrivez-vous </router-link> </p>
   </div>
 </template>
 
@@ -108,7 +107,7 @@ a {
   color: #FF8D8B;
 }
 .signIn {
-  padding: 50px;
+  padding: 2rem;
 }
 .formSignIn {
   width: 100%;
@@ -128,7 +127,7 @@ input:-webkit-autofill:active  {
 .input {
   font-size: 16px;
   line-height: 1.5;
-  color: #292929;
+  color: #222222;
   display: block;
   width: 100%;
   border: 1px solid #EBEBEB;
@@ -187,14 +186,18 @@ input:-webkit-autofill:active  {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 }
-
 .input:focus + .focus-input + .symbol-input {
   color: #FF8D8B;
   padding-left: 28px;
 }
 .btn-submit {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+.connectionError {
+  margin-bottom: 1rem;
 }
 .button {
   font-size: 16px;
@@ -206,15 +209,20 @@ input:-webkit-autofill:active  {
   color: #FFFFFF;
   padding: .5rem 1.5rem;
   cursor: pointer;
-  transition: all .5s ease-in-out;
+  transition: all .2s ease-in-out;
+  font-weight: 500;
 }
 .button:hover {
-  background-color: #9082FF;
+  background-color: #ec8381;
 }
 .forgotPass {
-  margin-top: 10px;
+  margin-top: 1rem;
   color: #FF8D8B;
   text-align: center;
   cursor: pointer;
+}
+.forgotPass:hover {
+  transition: all .2s ease-in-out;
+  color: #ec8381;
 }
 </style>

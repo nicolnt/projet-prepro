@@ -3,7 +3,8 @@
   <div class="home">
     <div class="introduction-application">
       <div class="presentation-application">
-        <h1> Tapitap, l’application destinée aux psychologues </h1>
+        <h1> Tapitap </h1>
+        <h2> L’application destinée aux psychologues </h2>
         <p> Gagnez du temps afin de faire passer l’habilitation au permis de conduire à vos patients. </p>
       </div>
       <Form/>
@@ -49,29 +50,33 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   background-image: url("../assets/background.svg");
   background-repeat: no-repeat;
   background-position:right bottom;
-  font-weight: 400;
 }
 .introduction-application {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 70%;
-  margin: auto;
+  width: 80%;
+  position: relative;
 }
 .presentation-application {
   text-align: left;
-  margin-right: 5rem;
   flex: 1;
 }
 h1 {
   font-size: 48px;
   font-weight: 600;
   color: #382C50;
+  position: absolute;
+  top: -6rem;
+}
+h2 {
+  font-size: 32px;
+  font-weight: 500;
+  color: #382C50;
+  margin-top: 2rem;
 }
 p {
   font-size: 18px;
@@ -94,13 +99,10 @@ input:-webkit-autofill:active  {
 }
 @media screen and (max-width: 1024px) {
   .introduction-application {
-    width: 85%;
-  }
-  h1 {
-    font-size: 28px;
+    flex-direction: column;
   }
 }
-@media screen and (max-width: 780px) {
+@media screen and (max-width: 800px) {
   .introduction-application {
     flex-direction: column;
   }

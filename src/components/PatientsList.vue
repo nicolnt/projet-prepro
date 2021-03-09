@@ -2,25 +2,27 @@
 <template>
   <div class="patientsList">
     <Hero title="Liste des patients"/>
-    <div id="actions">
-      <form class="form">
-        <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient"/>
-        <button type="button" class="btn--search btn--inside"><i class="material-icons">search</i></button>
-      </form>
-      <button class="add-patient" @click="toggleModal">
-        <p> Ajouter un patient </p>
-        <div class="material-icons">add_circle</div>
-      </button>
-      <AddPatientModal ref="addPatientModal"/>
-    </div>
-    <div id="list">
-      <ul>
-        <li v-on:click="goPatientProfil(patient)" v-for="patient in patients" :key="patient.id">
-          <img class="avatar" v-if="patient.gender == 1" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
-          <img class="avatar" v-if="patient.gender == 0"  alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
-          {{patient.lastName}} {{patient.firstName}}
-        </li>
-      </ul>
+    <div id="patientsList">
+      <div id="actions">
+        <form class="form">
+          <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient"/>
+          <button type="button" class="btn--search btn--inside"><i class="material-icons">search</i></button>
+        </form>
+        <button class="add-patient" @click="toggleModal">
+          <p> Ajouter un patient </p>
+          <div class="material-icons">add_circle</div>
+        </button>
+        <AddPatientModal ref="addPatientModal"/>
+      </div>
+      <div id="list">
+        <ul>
+          <li v-on:click="goPatientProfil(patient)" v-for="patient in patients" :key="patient.id">
+            <img class="avatar" v-if="patient.gender == 1" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
+            <img class="avatar" v-if="patient.gender == 0"  alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
+            {{patient.lastName}} {{patient.firstName}}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -107,8 +109,10 @@ export default {
 <style scoped>
 .patientsList {
   text-align: left;
-  width: 70%;
-  margin: 3rem auto 0 auto;
+  width: 100%;
+}
+#patientsList {
+  margin-top: 5rem;
 }
 .form {
   margin-right: 3rem;

@@ -50,7 +50,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: linear-gradient(135deg, #ffffff, 80%, #EDEDED) no-repeat;
+  background-color: rgb(248, 248, 248);
 }
 #dashboardContent {
   height: 100%;
@@ -59,9 +59,10 @@ export default {
   flex-direction: row;
 }
 #content {
-  padding: 3rem;
+  padding: 2rem 3rem;
   width: calc(100% - 285px);
   overflow-y: scroll;
+  z-index: 1;
 }
 @media screen and (max-width: 1025px) {
   #content {

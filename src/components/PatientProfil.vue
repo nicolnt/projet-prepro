@@ -128,8 +128,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #F0F0F0;
-  box-shadow: 0 4px 16px 0 rgb(0 0 0 / 5%);
+  background-color: white;
+  box-shadow: 0px 0px 30px -20px rgba(0,0,0,0.25);
   border-radius: 16px;
   padding: 2rem;
   align-items: center;

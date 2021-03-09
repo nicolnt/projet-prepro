@@ -105,7 +105,7 @@ export default {
 
 <style scoped>
 .sideBar {
-  width: 335px;
+  width: 285px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -115,7 +115,8 @@ export default {
   position: relative;
   z-index: 2;
 }
-h2 {
+.sideBar h2 {
+  cursor: pointer;
   margin: 2rem 0;
 }
 .pages {

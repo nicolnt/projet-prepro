@@ -38,9 +38,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #000000;
+  color: #222222;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 body {
   height: 100vh;

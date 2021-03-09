@@ -1,7 +1,7 @@
 <!-- FOOTER -->
 <template>
   <div class="footer">
-    <div id="navBar">
+    <div id="footer">
       <vs-button type="flat" v-bind:text-color="txtColor" v-on:click="goLegalNotice">Mentions légales</vs-button>
       <vs-button type="flat" v-bind:text-color="txtColor" v-on:click="goCGU">CGU</vs-button>
     </div>
@@ -35,10 +35,17 @@ export default {
 </script>
 
 <style scoped>
-#navBar {
-  padding: 10px 0;
-  justify-content: center;
-  background-color: #FFFFFF;
+.footer {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: white;
+  text-align: center;
+  z-index: 1;
+}
+#footer {
+  padding: 1rem 0;
 }
 .vs-button {
   font-size: 16px;

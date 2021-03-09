@@ -1,74 +1,74 @@
 <!-- SIGN UP FORM -->
 <template>
   <div class="signUp">
-      <form class="formSignUp" action="#" @submit.prevent="submit">
-        <div class="wrap-input validate-input" data-validate = "Valid last name is required">
-          <input 
-            id="lastName"
-            class="input"
-            type="text"
-            name="lastName"
-            placeholder="Nom"
-            required
-            autofocus
-            v-model="form.lastName"
-          />
-          <span class="focus-input"></span>
-          <span class="symbol-input">
-            <i class="material-icons" aria-hidden="true">person</i>
-          </span>
-        </div>
-        <div class="wrap-input validate-input" data-validate = "Valid first name is required">
-          <input 
-            id="firstName"
-            class="input"
-            type="text"
-            name="firstName"
-            placeholder="Prénom"
-            required
-            autofocus
-            v-model="form.firstName"
-          />
-          <span class="focus-input"></span>
-          <span class="symbol-input">
-            <i class="material-icons" aria-hidden="true">person</i>
-          </span>
-        </div>
-        <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-          <input 
-            class="input"
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            autofocus
-            v-model="form.email"
-          />
-          <span class="focus-input"></span>
-          <span class="symbol-input">
-            <i class="material-icons" aria-hidden="true">email</i>
-          </span>
-        </div>
-        <div class="wrap-input validate-input" data-validate = "Valid password is required">
-          <input 
-            class="input"
-            type="password"
-            name="password"
-            placeholder="Mot de passe"
-            required
-            autofocus
-            v-model="form.password"
-          />
-          <span class="focus-input"></span>
-          <span class="symbol-input">
-            <i class="material-icons" aria-hidden="true">lock_outline</i>
-          </span>
-        </div>
+    <form class="formSignUp" action="#" @submit.prevent="submit">
+      <div class="wrap-input validate-input" data-validate = "Valid last name is required">
+        <input 
+          id="lastName"
+          class="input"
+          type="text"
+          name="lastName"
+          placeholder="Nom"
+          required
+          autofocus
+          v-model="form.lastName"
+        />
+        <span class="focus-input"></span>
+        <span class="symbol-input">
+          <i class="material-icons" aria-hidden="true">person</i>
+        </span>
+      </div>
+      <div class="wrap-input validate-input" data-validate = "Valid first name is required">
+        <input 
+          id="firstName"
+          class="input"
+          type="text"
+          name="firstName"
+          placeholder="Prénom"
+          required
+          autofocus
+          v-model="form.firstName"
+        />
+        <span class="focus-input"></span>
+        <span class="symbol-input">
+          <i class="material-icons" aria-hidden="true">person</i>
+        </span>
+      </div>
+      <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+        <input 
+          class="input"
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          autofocus
+          v-model="form.email"
+        />
+        <span class="focus-input"></span>
+        <span class="symbol-input">
+          <i class="material-icons" aria-hidden="true">email</i>
+        </span>
+      </div>
+      <div class="wrap-input validate-input" data-validate = "Valid password is required">
+        <input 
+          class="input"
+          type="password"
+          name="password"
+          placeholder="Mot de passe"
+          required
+          autofocus
+          v-model="form.password"
+        />
+        <span class="focus-input"></span>
+        <span class="symbol-input">
+          <i class="material-icons" aria-hidden="true">lock_outline</i>
+        </span>
+      </div>
+      <div class="btn-submit">
         <div v-if="error" class="connectionError">{{error}}</div>
-        <div class="btn-submit">
-          <button type="submit" class="button">S'inscrire</button>
-        </div>
-      </form>
+        <button type="submit" class="button">S'inscrire</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -161,7 +161,7 @@ input:-webkit-autofill:active  {
 .input {
   font-size: 16px;
   line-height: 1.5;
-  color: #292929;
+  color: #222222;
   display: block;
   width: 100%;
   border: 1px solid #EBEBEB;
@@ -227,7 +227,12 @@ input:-webkit-autofill:active  {
 }
 .btn-submit {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+.connectionError {
+  margin-bottom: 1rem;
 }
 .button {
   font-size: 16px;
@@ -239,8 +244,10 @@ input:-webkit-autofill:active  {
   color: #FFFFFF;
   padding: .5rem 1.5rem;
   cursor: pointer;
+  font-weight: 500;
+  transition: all .2s ease-in-out;
 }
 .button:hover {
-  background-color: #9082FF;
+  background-color: #ec8381;
 }
 </style>

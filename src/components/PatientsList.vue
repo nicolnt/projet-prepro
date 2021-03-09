@@ -166,6 +166,13 @@ export default {
 .add-patient:hover {
   background-color: #7669d3;
 }
+#dashboardContent {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
 #actions {
   display: flex;
   flex-direction: row;

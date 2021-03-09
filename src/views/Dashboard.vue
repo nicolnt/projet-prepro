@@ -59,8 +59,14 @@ export default {
   flex-direction: row;
 }
 #content {
-  padding: 2rem 0 0 3rem;
-  width: 100%;
+  padding: 3rem;
+  width: calc(100% - 285px);
+  overflow-y: scroll;
+}
+@media screen and (max-width: 1025px) {
+  #content {
+    width: calc(100% - 180px);
+  }
 }
 .buttonDeconnexion {
   position: absolute;

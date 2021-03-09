@@ -222,7 +222,7 @@ h2 {
 
 @media screen and (max-width: 1025px) {
   .sideBar {
-    width: auto;
+    width: 180px;
     padding: 1rem;
   }
   #cardUser {

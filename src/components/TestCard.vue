@@ -5,6 +5,7 @@
       <h3>{{ testName }}</h3>
     </div>
     <div class="testCardContent">
+      <img :src="require('../assets/' + img)"/>
       <vs-button color="#9082FF" type="filled" id="startTestButton">
         Commencer le test
       </vs-button>
@@ -17,7 +18,8 @@
 export default {
   name: 'TestCard',
   props: {
-    testName: String
+    testName: String,
+    img: String
   }
 }
 </script>
@@ -27,33 +29,24 @@ export default {
   background-color: white;
   box-shadow: 0 4px 16px 0 rgba(0,0,0,.05);
   border-radius: 16px;
-  width: 25%;
-  height: fit-content;
-  margin: 0 auto;
   text-align: center;
-  margin-top:2%;
 }
 .header {
   background-color:#9082FF;
   border-radius: 16px 16px 0 0;
   color: white;
-  padding: 1.5% 0;
 }
 .header h3 {
-  margin-left: 2%;
+  padding: .75rem 0;
 }
-.testCardContent {
-  display: flex;
-  align-content: center;
-  align-content: center;
-  justify-content: center;
-  height: 100%;
-  margin-top: 2%;
-  padding-bottom: 2%;
+.testCardContent img{
+  width: 50%;
+  margin: 1rem;
 }
 #startTestButton {
-  margin-left: 2%;
+  margin-bottom: 1rem;
   width: 60%;
   border-radius: 16px;
+  font-size: 16px;
 }
 </style>

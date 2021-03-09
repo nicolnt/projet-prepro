@@ -171,19 +171,6 @@ export default {
   data() {
     return { 
       popupActivo: false,
-      m_valueLastName: "",
-      m_valueFirstName: "",
-      m_valueEmail: "",
-      m_valueBirthday: "",
-      m_valueAddress: "",
-      m_valueCp: "",
-      m_valueCity: "",
-      m_valueReason : "",
-      selectGenre: "Genre",
-      options:[
-        {text: 'Homme', value: 1},
-        {text: 'Femme', value: 2}
-      ],
       form: {
         firstName: "",
         lastName: "",
@@ -324,7 +311,7 @@ export default {
 #reason {
   border-radius: 0px;
   height: 80px;
-  font-family: Arial;
+  font-family: Poppins;
   padding: 10px 30px;
 }
 .reason.focus-input {
@@ -416,16 +403,12 @@ export default {
 .button:hover {
   background-color: #9082FF;
 }
-#genreListTitle {
-  font: 400 13.3333px Arial;
-}
 .plane-purple {
   position: absolute;
   top: -19px;
   left: -44px;
 }
-.vs-popup h3 {
+.vs-popup >>> .vs-popup--title h3 {
   text-align: center;
-  font: 400 13.3333px Arial;
 }
 </style>

@@ -4,9 +4,9 @@
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     <Hero title="Liste des tests"/>
     <div class="testListContent">
-      <TestCard testName="Motricité fine"/>
-      <TestCard testName="Capacités attentionnelles"/>
-      <TestCard testName="Comportement en situation complexe"/>
+      <TestCard testName="Motricité fine" img="motricite-illustration.svg"/>
+      <TestCard testName="Capacités attentionnelles" img="capacite-attentionnelle-illustration.svg"/>
+      <TestCard testName="Comportement en situation complexe" img="situation-complexe-illustration.svg"/>
     </div>
   </div>
 </template>
@@ -34,8 +34,19 @@ export default {
   cursor: pointer;
 }
 .testListContent {
-  display: flex;
-  flex-flow: row wrap;
-  margin-right: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 4rem;
+  margin-top: 2rem;
+}
+@media screen and (max-width: 1024px) {
+  .testListContent {
+    grid-gap: 2rem;
+  }
+}
+@media screen and (max-width: 800px) {
+  .testListContent {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>

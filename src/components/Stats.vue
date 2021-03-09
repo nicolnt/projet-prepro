@@ -14,6 +14,7 @@
             <div class="wrapperResult">
               <p> {{this.averagePatientAge}} ans </p>
             </div>
+            <img class="illustration" src="../assets/man-fauteuil-illustration.svg">
           </div>
           <div class="graphicPartWomenMen graphic">
             <h3> Pourcentage d'hommes ou de femmes inscrits </h3>
@@ -25,17 +26,26 @@
       </div>
       <div class="graphicsTest">
         <div class="wrapperGraphic">
-          <div class="graphicAveragePatientScore graphic">
-            <h3> Score moyen des patients </h3>
-            <div class="wrapperResult">
-              <p> {{this.averagePatientScore}} % </p>
+          <div class="waveEffect">
+            <div class="graphicAveragePatientScore graphic">
+              <h3> Score moyen des patients </h3>
+              <div class="wrapperResult">
+                <p> {{this.averagePatientScore}} % </p>
+              </div>
             </div>
+            <svg class="wave" :style="{ bottom: - (90 - (50/100 * 90))+'px'}" viewBox="0 0 264 173" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g opacity="0.82">
+              <path d="M0 73.0446V28.727C52.8 5.09099 105.6 5.09099 158.4 28.727V73.0446H0Z" :fill="secondaryColor(this.averagePatientScore)"/>
+              <path d="M0 175V19.8634C52.8 29.7118 101.2 29.7118 145.2 19.8634C189.2 10.0151 228.8 9.03027 264 16.9089V175H0Z" :fill="primaryColor(this.averagePatientScore)"/>
+              </g>
+            </svg>
           </div>
           <div class="graphicNbTest graphic">
             <h3> Nombre total de tests passés </h3>
             <div class="wrapperResult">
               <p> {{this.nbTest}} </p>
             </div>
+            <img class="illustration" src="../assets/background.svg">
           </div>
         </div>
         <div class="testSucceedFailed graphic">
@@ -166,6 +176,30 @@ export default {
       let patientYear = todayYear - year
       return patientYear
     },
+    secondaryColor(score) {
+      if (score >= 90)
+        return '#75BE89'
+      else if (score >= 60)
+        return '#9EB056'
+      else if (score >= 40)
+        return '#E0832D'
+      else if (score >= 15)
+        return '#E0832D'
+      else
+        return '#A33425'
+    },
+    primaryColor(score) {
+      if (score >= 90)
+        return '#74DB63'
+      else if (score >= 60)
+        return '#B0CC41'
+      else if (score >= 40)
+        return '#D4BB5F'
+      else if (score >= 15)
+        return '#F0B747'
+      else
+        return '#E44B4B'
+    },
     updateChartNbInscrit(nbPatientJanvier, nbPatientFebrurary, nbPatientMarch, nbPatientApril, nbPatientMay, nbPatientJune, nbPatientJuly, nbPatientAugust, nbPatientSeptember, nbPatientOctober, nbPatientNovember, nbPatientDecember) {
       this.series = [{
         data: [nbPatientJanvier, nbPatientFebrurary, nbPatientMarch, nbPatientApril, nbPatientMay, nbPatientJune, nbPatientJuly, nbPatientAugust, nbPatientSeptember, nbPatientOctober, nbPatientNovember, nbPatientDecember]
@@ -288,12 +322,33 @@ h2 span {
 h3 {
   font-weight: 500;
   height: 20%;
+  color: #382C50;
 }
 #graphics {
   margin-top: 2rem;
 }
 .chart {
   padding-top: 2rem;
+}
+.waveEffect {
+  position: relative;
+  height: 100%;
+  background-color: #f0f0f0;
+  border-radius: 25px;
+  overflow: hidden;
+  width: 100%;
+}
+.waveEffect .graphic {
+  background-color: transparent;
+}
+.wave {
+  position: absolute;
+  width: 100%;
+  left: 50%;
+  bottom: -20px;
+  border-radius: 25px;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 .wrapperResult {
   display: flex;
@@ -314,9 +369,28 @@ h3 {
 }
 .graphic {
   padding: 2rem;
+  height: 100%;
+  position: relative;
+  z-index: 2;
   background-color: #f0f0f0;
   border-radius: 25px;
-  height: 100%;
+  overflow: hidden;
+}
+.graphicAveragePatientAge .illustration {
+  position: absolute;
+  width: 40%;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: -1;
+}
+.graphicNbTest .illustration {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
 }
 .graphicsPatient {
   display: flex;
@@ -334,6 +408,9 @@ h3 {
   display: flex;
   flex-direction: row;
 }
+.testSucceedFailed {
+  width: 60%;
+}
 .graphicsTest .wrapperGraphic {
   margin-right: 2rem;
 }
@@ -344,6 +421,7 @@ h3 {
   width: 100%;
 }
 .graphicsTest .graphicNbTest {
+  width: 100%;
   margin-top: 2rem;
 }
 @media screen and (max-width: 1025px) {
@@ -376,8 +454,9 @@ h3 {
   }
   .graphicsTest .wrapperGraphic {
     margin-top: 0;
+    margin-right: 0;
   }
-  .graphicsTest .graphicAveragePatientScore {
+  .waveEffect {
     margin-right: 2rem;
   }
   .graphicsTest .graphicNbTest {

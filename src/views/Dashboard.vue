@@ -38,6 +38,7 @@ export default {
 #content {
   padding: 3rem;
   width: calc(100% - 285px);
+  overflow-y: scroll;
 }
 @media screen and (max-width: 1025px) {
   #content {

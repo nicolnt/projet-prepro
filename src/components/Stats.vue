@@ -6,19 +6,17 @@
       <div class="graphicsPatient">
         <div class="graphicNbPatient graphic">
           <h3> Nombre de personnes inscrits tous les mois </h3>
-          <div class="chart">
-            <apexchart type="area" width="100%" height="500" :options="chartOptions" :series="series"></apexchart>
-          </div>
+          <apexchart class="chart" type="area" width="100%" height="500" :options="chartOptions" :series="series"></apexchart>
         </div>
         <div class="wrapperGraphic">
           <div class="graphicAveragePatientAge graphic">
-            <h3> Age moyen des patients </h3>
+            <h3> Âge moyen des patients </h3>
             <div class="wrapperResult">
               <p> {{this.averagePatientAge}} ans </p>
             </div>
           </div>
           <div class="graphicPartWomenMen graphic">
-            <h3> Pourcentage d'hommes ou de femmes </h3>
+            <h3> Pourcentage d'hommes ou de femmes inscrits </h3>
             <div class="wrapperResult">
               <apexchart type="pie" width="100%" height="500" :options="chartOptions2" :series="series2"></apexchart>
             </div>
@@ -26,15 +24,23 @@
         </div>
       </div>
       <div class="graphicsTest">
-        <div class="testSucceedFailed graphic">
-            <h3> Nombre de tests réussis ou échoués </h3>
-            <apexchart type="bar" width="100%" height="500" :options="chartOptions3" :series="series3"></apexchart>
-        </div>
-        <div class="graphicAveragePatientScore graphic">
-          <h3> Score moyen des patients </h3>
-          <div class="wrapperResult">
-            <p> {{this.averagePatientScore}} % </p>
+        <div class="wrapperGraphic">
+          <div class="graphicAveragePatientScore graphic">
+            <h3> Score moyen des patients </h3>
+            <div class="wrapperResult">
+              <p> {{this.averagePatientScore}} % </p>
+            </div>
           </div>
+          <div class="graphicNbTest graphic">
+            <h3> Nombre total de tests passés </h3>
+            <div class="wrapperResult">
+              <p> {{this.nbTest}} </p>
+            </div>
+          </div>
+        </div>
+        <div class="testSucceedFailed graphic">
+          <h3> Nombre de tests réussis ou échoués </h3>
+          <apexchart class="chart" type="bar" width="100%" height="500" :options="chartOptions3" :series="series3"></apexchart>
         </div>
       </div>
     </div>
@@ -55,7 +61,8 @@ export default {
   data() {
     return {
       isActive: false,
-      /* Data for graphic */
+      nbPatient: 0,
+      /* Graphic 1 */
       patientOrderByMonth: 0,
       patientJanuary: 0,
       patientFebruary: 0,
@@ -69,17 +76,21 @@ export default {
       patientOctober: 0,
       patientNovember: 0,
       patientDecember: 0,
+      /* Graphic 2 */
       patientAge: 0,
       averagePatientAge: 0,
       nbPatientAge: 0,
-      nbPatient: 0,
+      /* Graphic 3 */
       nbWomen: 0,
       nbMen: 0,
+      /* Graphic 4 */
       nbTestSucceed: 0,
       nbTestFailed: 0,
+      /* Graphic 5 */
       patientScore: 0,
       averagePatientScore: 0,
-      
+      /* Graphic 6 */
+      nbTest: 0,
       /* Graphic 1 */
       series:
       [{
@@ -105,7 +116,6 @@ export default {
           categories: ['Janvier','Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre' , 'Novembre', 'Décembre']
         },
       },
-      
       /* Graphic 3 */
       series2: [0, 0],
       chartOptions2: {
@@ -126,7 +136,6 @@ export default {
           }
         }]
       },
-
       /* Graphic 4 */
       series3: [{
         data: [0, 0]
@@ -138,7 +147,6 @@ export default {
         labels: ['Réussis', 'Échoués'],
         colors: ["#9082FF", "#FF8D8B"],
       },
-
       /* For all the graphics */
       legend: {
         fontSize: '16px',
@@ -158,15 +166,15 @@ export default {
       let patientYear = todayYear - year
       return patientYear
     },
-    updateChart(nbPatientJanvier, nbPatientFebrurary, nbPatientMarch, nbPatientApril, nbPatientMay, nbPatientJune, nbPatientJuly, nbPatientAugust, nbPatientSeptember, nbPatientOctober, nbPatientNovember, nbPatientDecember) {
+    updateChartNbInscrit(nbPatientJanvier, nbPatientFebrurary, nbPatientMarch, nbPatientApril, nbPatientMay, nbPatientJune, nbPatientJuly, nbPatientAugust, nbPatientSeptember, nbPatientOctober, nbPatientNovember, nbPatientDecember) {
       this.series = [{
         data: [nbPatientJanvier, nbPatientFebrurary, nbPatientMarch, nbPatientApril, nbPatientMay, nbPatientJune, nbPatientJuly, nbPatientAugust, nbPatientSeptember, nbPatientOctober, nbPatientNovember, nbPatientDecember]
       }]
     },
-    updateChartPercent(nbWomenPercent, nbMenPercent) {
+    updateChartNbWomenMen(nbWomenPercent, nbMenPercent) {
       this.series2 = [nbWomenPercent, nbMenPercent]
     },
-    updateChartTest(nbTestSucceed, nbTestFailed) {
+    updateChartNbTestSucceedFailed(nbTestSucceed, nbTestFailed) {
       this.series3 = [{
         data:[nbTestSucceed, nbTestFailed]
       }]
@@ -210,7 +218,7 @@ export default {
           } else {
             return
           }
-          /* Graphic 2 : Total patient age */
+          /* Graphic 2 : Average patient age */
           if(this.getDateYear(doc.data().birthday) > 17) {
             this.patientAge += Number(this.getDateYear(doc.data().birthday))
             this.nbPatientAge += 1
@@ -225,16 +233,17 @@ export default {
           }
         })
       /* Graphic 1 */
-      this.updateChart(this.patientJanuary, this.patientFebruary, this.patientMarch, this.patientApril, this.patientMay, this.patientJune, this.patientJuly, this.patientAugust, this.patientSeptember, this.patientOctober, this.patientNovember, this.patientDecember)
-      /* Graphic 2 : Averahe patient age */
+      this.updateChartNbInscrit(this.patientJanuary, this.patientFebruary, this.patientMarch, this.patientApril, this.patientMay, this.patientJune, this.patientJuly, this.patientAugust, this.patientSeptember, this.patientOctober, this.patientNovember, this.patientDecember)
+      /* Graphic 2 */
       this.averagePatientAge = Math.round(this.patientAge/this.nbPatientAge)
       /* Graphic 3 */
-      this.updateChartPercent(this.nbWomen, this.nbMen)
+      this.updateChartNbWomenMen(this.nbWomen, this.nbMen)
       });
     db.collection('tentatives').get()
       .then((querySnapshot) => { 
         querySnapshot.forEach((doc) => {
-          /* Graphic 4 */
+          /* Graphic 4 : Number of tests succeed or failed */
+          this.nbTest += 1
           const data = doc.data() 
           if(data.succeed === true) {
             this.nbTestSucceed += 1
@@ -243,12 +252,12 @@ export default {
           } else {
             return
           }
-          /* Graphic 5 */
+          /* Graphic 5 : Average score of the test */
           data.score = (data.score * 100).toFixed(2)
           this.patientScore += Number(data.score)
         })
         /* Graphic 4 */
-        this.updateChartTest(this.nbTestSucceed, this.nbTestFailed)
+        this.updateChartNbTestSucceedFailed(this.nbTestSucceed, this.nbTestFailed)
         /* Graphic 5 */
         this.averagePatientScore = Math.round(this.patientScore/this.nbPatient)
       });
@@ -278,19 +287,30 @@ h2 span {
 }
 h3 {
   font-weight: 500;
+  height: 20%;
 }
 #graphics {
   margin-top: 2rem;
-  overflow-y: scroll;
 }
-.graphicsPatient {
-  display: flex;
-  flex-direction: row;
+.chart {
+  padding-top: 2rem;
 }
-.graphicsTest {
-  margin-top: 2rem;
+.wrapperResult {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80%;
+}
+.wrapperResult p {
+  font-size: 42px;
+  font-weight: 600;
+  text-align: center;
+}
+.wrapperGraphic {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
 }
 .graphic {
   padding: 2rem;
@@ -298,42 +318,42 @@ h3 {
   border-radius: 25px;
   height: 100%;
 }
-.graphicNbPatient {
+.graphicsPatient {
+  display: flex;
+  flex-direction: row;
+}
+.graphicsPatient .graphicNbPatient {
   width: 60%;
   margin-right: 2rem;
 }
-.wrapperGraphic {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-}
-.graphicPartWomenMen {
+.graphicsPatient .graphicPartWomenMen {
   margin-top: 2rem;
 }
-.wrapperResult {
+.graphicsTest {
+  margin-top: 2rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+  flex-direction: row;
 }
-.wrapperResult p {
-  font-size: 42px;
-  font-weight: 600;
-  text-align: center;
-}
-.testSucceedFailed {
-  width: 100%;
+.graphicsTest .wrapperGraphic {
   margin-right: 2rem;
 }
-.graphicAveragePatientScore {
+.graphicsTest .testSucceedFailed {
   width: 100%;
 }
+.graphicsTest .graphicAveragePatientScore {
+  width: 100%;
+}
+.graphicsTest .graphicNbTest {
+  margin-top: 2rem;
+}
 @media screen and (max-width: 1025px) {
-  #graphics {
+  .graphic {
+    height: auto;
+  }
+  .graphicsPatient {
     flex-direction: column;
   }
-  .graphicNbPatient {
+  .graphicsPatient .graphicNbPatient {
     width: 100%;
     margin-right: 0;
   }
@@ -342,11 +362,43 @@ h3 {
     width: 100%;
     margin-top: 2rem;
   }
-  .graphicAveragePatientAge {
+  .wrapperResult p {
+    padding: 2rem;
+  }
+  .graphicsPatient .graphicAveragePatientAge {
     margin-right: 2rem;
   }
-  .graphicPartWomenMen {
+  .graphicsPatient .graphicPartWomenMen {
     margin-top: 0;
+  }
+  .graphicsTest {
+    flex-direction: column;
+  }
+  .graphicsTest .wrapperGraphic {
+    margin-top: 0;
+  }
+  .graphicsTest .graphicAveragePatientScore {
+    margin-right: 2rem;
+  }
+  .graphicsTest .graphicNbTest {
+    margin-top: 0;
+  }
+  .graphicsTest .testSucceedFailed {
+    margin-top: 2rem;
+  }
+}
+@media screen and (max-width: 800px) {
+  .wrapperGraphic {
+    flex-direction: column;
+  }
+  .graphicsPatient .graphicAveragePatientAge {
+    margin-right: 0;
+  }
+  .graphicsPatient .graphicPartWomenMen {
+    margin-top: 2rem;
+  }
+  .graphicsTest .graphicNbTest {
+    margin-top: 2rem;
   }
 }
 </style>

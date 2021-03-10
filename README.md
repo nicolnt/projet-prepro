@@ -1,20 +1,46 @@
-# projet_prepro
+# Tapitap
+![accueil-tapitap](doc/accueil.png?raw=true "Accueil Tapitap")
 
-## Project setup
+## Table of Contents
+  - [Presentation](#presentation)
+  - [Building configuration](#building-configuration)
+    - [Clone repository](#clone-repository)
+    - [Launch local project](#launch-local-project)
+    - [Build project](#build-project)
+  - [Dependencies](#dependencies)
 
-### Using Node Version Manager
-[NVM](https://github.com/nvm-sh/nvm) is a script to manage multiple installed versions of node.js, to make sure you run the project with the right version of node.js run `nvm use` at the root of the project.
+## Presentation
+Tapitap is an application for psychologists. It allows them to make their patients take tests for driver's license.
 
+## Building configuration
+You need [Node.js] (http://nodejs.org) to launch this project.
+
+### Clone repository
+In a local folder for the project
+```
+git clone https://github.com/imac-web/projet-prepro.git
+```
+
+### Launch local project
+In the Node Command Prompt, in the project folder
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Build project
+In the Node Command Prompt, in the project folder
 ```
+npm install
 npm run build
 ```
+The build folder is dist, in the project folder.
+
+## Dependencies
+- [Vue-sax](https://vuesax.com/). For styles
+- [Material-icons](https://material.io/resources/icons/). For icons
+- [Vue-apexCharts](https://apexcharts.com/docs/vue-charts/). For charts in stats page
+- [Vue-router](https://router.vuejs.org/). For router
+- [VueX](https://vuex.vuejs.org/). For store
+- [Firebase](https://firebase.google.com/). For backend
+- [Vue-fire](https://vuefire.vuejs.org/). To link firebase and vuejs app

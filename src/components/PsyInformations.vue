@@ -8,6 +8,7 @@
         <img src="../assets/avatarPsy.svg" alt="imgPatient" id="imgPatient">
         <div class="contentPsyDatas">
           <h2>{{user.data.displayName}}</h2>
+          <p>Email : {{user.data.email}}</p>
           <vs-button color="#9082FF" type="filled" id="btnModif" @click="toggleModal">Modifier les informations</vs-button>
         </div>
       </div>

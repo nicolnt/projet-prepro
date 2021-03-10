@@ -1,5 +1,5 @@
 # Tapitap
-![accueil-tapitap](doc/accueil.png?raw=true "Accueil Tapitap")
+![accueil-tapitap](doc/accueil.PNG?raw=true "Accueil Tapitap")
 
 ## Table of Contents
   - [Presentation](#presentation)

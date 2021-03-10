@@ -4,7 +4,7 @@
     <div class="patientResultsHeader">
       <h1>Résultats de {{ patient.firstName }} {{ patient.lastName }}- évaluation [VALIDATION]</h1>
       <div class="patientResultsHeaderSubtitle">
-        <h3>Test effectué le {{ this.getDate(patient.dateCreation.toDate()) }}</h3>
+        <h3>Test effectué le {{ (patient.dateCreation) ? this.getDate(patient.dateCreation.toDate()) : '' }}</h3>
         <vs-button color="#9082FF" type="filled" v-on:click="download" id="btnDownload" icon="get_app">
           Télécharger les résultats
         </vs-button>
@@ -18,9 +18,11 @@
         <div class="motricityResultsHistory">
           <!-- J'ai fait quelques petites recherches quand on devra brancher ça sur la bdd on pourra faire avec v-for et des props-->
           <div v-for="tentative in motricity" :key="tentative.id" class="circuit">
+            <TestTrackViewModal :ref="tentative.idParcours" :capture="tentative.testCapture" :idTest="tentative.idParcours"/>
             <h4>Circuit {{ tentative.idParcours + 1 }}</h4>
             <div class = "circuitInfo">
-              <div class="track-container">
+              <div @click="toggleModal(tentative.idParcours)" class="track-container">
+                <i class="material-icons" size="large" color="lightgray">zoom_in</i>
                 <svg class="wave" :style="{ bottom: - (90 - (tentative.score/100 * 90))+'px'}" width="264" height="173" viewBox="0 0 264 173" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g opacity="0.82">
                   <path d="M0 73.0446V28.727C52.8 5.09099 105.6 5.09099 158.4 28.727V73.0446H0Z" :fill="secondaryColor(tentative.score)"/>
@@ -30,7 +32,8 @@
                 <img class="track" :src="trackImage(tentative.idParcours)">
                 <img class="capture" :src="tentative.testCapture">
                 <div class="score-number">
-                  <span class="percent-score">{{ tentative.score }}</span>
+                  <span class="percent-score-int">{{ Math.trunc(tentative.score) }}</span>
+                  <span class="percent-score-float">{{ ((tentative.score % 1).toFixed(2).toString()).slice(1) }}</span>
                   <span class="percent-sign">%</span>
                 </div>
               </div>
@@ -101,8 +104,11 @@
 //import Hero from '@/components/Hero.vue'
 import { db } from '../services/firebase'
 
+import TestTrackViewModal from './TestTrackViewModal'
+
 export default {
   name: 'PatientResults',
+  components: { TestTrackViewModal },
   data() {
     return {
       motricity: [],
@@ -110,6 +116,9 @@ export default {
     }
   },
   methods: {
+    toggleModal(id){
+      this.$refs[id][0].toggle()
+    },
     download(){
       console.log("coucou")
     },
@@ -329,8 +338,11 @@ export default {
   font-size: 2rem;
   color: white;
 }
-.track-container .score-number span.percent-score {
-  font-size: 3rem;
+.track-container .score-number span.percent-score-int {
+  font-size: 3.5rem;
+}
+.track-container .score-number span.percent-score-float {
+  font-size: 1.5rem;
 }
 .track-container .score-number span {
   text-shadow: 0px 1px 5px rgba(0,0,0,0.3);

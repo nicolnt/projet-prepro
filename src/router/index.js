@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import AuthSignUp from '../views/AuthSignUp.vue'
-import AuthSignIn from '../views/AuthSignIn.vue'
 import CGU from '../views/CGU.vue'
 import LegalNotice from '../views/LegalNotice.vue'
 import Dashboard from '../views/Dashboard.vue'
@@ -22,22 +20,6 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
-  },
-  {
-    path: '/signUp',
-    name: 'AuthSignUp',
-    component: AuthSignUp,
-    meta: {
-      requiresGuest: true
-    },
-  },
-  {
-    path: '/signIn',
-    name: 'AuthSignIn',
-    component: AuthSignIn,
-    meta: {
-      requiresGuest: true
-    },
   },
   {
     path: '/cgu',

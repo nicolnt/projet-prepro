@@ -3,9 +3,15 @@ import Vuex from 'vuex'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
+import createPersistedState from 'vuex-persistedstate'
+// import * as Cookies from 'js-cookie'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    plugins: [createPersistedState({
+      paths: ['currentPatient']
+    })],
     state: {
       user: {
         loggedIn: false,
@@ -18,6 +24,9 @@ export default new Vuex.Store({
     getters: {
       user(state){
         return state.user
+      },
+      currentPatient(state){
+        return state.currentPatient
       },
     },
     mutations: { // setters
@@ -41,10 +50,15 @@ export default new Vuex.Store({
           commit("SET_USER", user);
         })     
       },
-      SIGN_OUT({commit}) {
+      SIGN_OUT({ commit }) {
         firebase.auth().signOut().then( () => {
           commit("SET_LOGGED_OUT");
         })
+      },
+      FETCH_PATIENT({ commit }) {
+        (currentPatient) => {
+          commit("SET_CURRENT_PATIENT", currentPatient)
+        }
       }
     }
   })

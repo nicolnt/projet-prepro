@@ -72,7 +72,7 @@
 
       <!-- Update psy's informations -->
       <div v-if="personType === 'psy'" id="modalContentPsy">
-        <form action="#" @submit.prevent="submit">
+        <form action="#" @submit="submit">
           <div class="wrapperInfosForm">
             <div class="wrap-input validate-input" data-validate = "Valid last name is required">
               <input class="input" id="lastName" type="text" name="lastName" required autofocus v-model="form.lastName"/>
@@ -108,7 +108,7 @@
 
 <script>
 import { db } from '../services/firebase'
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
 import firebase from 'firebase/app'
 require('firebase/auth')
 
@@ -153,11 +153,12 @@ export default {
   computed: {
     ...mapGetters({
       // map `this.user` to `this.$store.getters.user`
-      user: "user"
+      user: "user",
+      patient: "currentPatient"
     }),
-    ...mapState({
-      patient: 'currentPatient'
-    })
+    // ...mapState({
+    //   patient: 'currentPatient'
+    // })
   },
   methods: {
     submit() {
@@ -185,7 +186,6 @@ export default {
         });
       } else if(this.personType === 'patient') {
         this.popupActivo = !this.popupActivo
-        this.$router.go(0)
         db.collection("patients").doc(self.patient.id).update({
             firstName: self.form.firstName,
             lastName: self.form.lastName,
@@ -200,6 +200,9 @@ export default {
           console.error("Error adding document: ", error);
         });
       }
+      // this.$store.dispatch("FETCH_PATIENT");
+      // console.log(this.patient)
+      // this.$store.dispatch("FETCH_PATIENT", this.patient);
     },
     toggle() {
       this.popupActivo = !this.open;

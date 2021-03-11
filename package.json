@@ -12,13 +12,15 @@
     "core-js": "^3.7.0",
     "firebase": "^8.2.1",
     "firebaseui": "^4.7.1",
+    "js-cookie": "^2.2.1",
     "material-icons": "^0.3.1",
     "vue": "^2.6.12",
     "vue-apexcharts": "^1.6.0",
     "vue-router": "^3.4.9",
     "vuefire": "^2.2.5",
     "vuesax": "^3.12.2",
-    "vuex": "^3.6.0"
+    "vuex": "^3.6.0",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.9",

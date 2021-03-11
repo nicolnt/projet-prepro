@@ -53,7 +53,7 @@ export default {
   watch: {
     message: function (val) {
       if(val.length > 0){
-        this.patients= this.patientsBackup.filter(patient => (patient.firstName.toLowerCase().trim().includes(val.toLowerCase().trim()) ||
+        this.patients = this.patientsBackup.filter(patient => (patient.firstName.toLowerCase().trim().includes(val.toLowerCase().trim()) ||
         patient.lastName.toLowerCase().trim().includes(val.toLowerCase().trim())))
       }
       else{
@@ -69,14 +69,15 @@ export default {
   },
   mounted: function(){
     this.getPatientList()
+    
   },
   methods: {
-    search(){
-    },
     goPatientProfil(patient) {
-      if(this.$route.name != 'PatientProfil')
-        this.$router.push({name:'PatientProfil',  params: { patient: patient } })
+      if(this.$route.name != 'PatientProfil') {
+        this.$router.push({name:'PatientProfil'})
         this.$store.commit("SET_CURRENT_PATIENT", patient)
+        // this.$store.dispatch("FETCH_PATIENT", patient);
+      }
     },
     toggleModal() {
       this.$refs.addPatientModal.toggle()

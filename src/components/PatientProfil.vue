@@ -12,7 +12,7 @@
           <p><span> Adresse : </span> {{patient.address}}, {{patient.cp}} {{patient.city}}</p>
           <p><span> Email : </span> {{patient.email}}</p>
           <p><span> Motif : </span> {{patient.testReason}}</p>
-          <p><span> Date de création : </span> {{ this.getDate(patient.dateCreation.toDate()) }}</p>
+          <!-- <p><span> Date de création : </span> {{ this.getDate(patient.dateCreation.toDate()) }}</p> -->
           <div id="actionsPatient">
             <vs-button color="#9082FF" type="filled" class="btnPatient edit" @click="toggleModal">Modifier les informations</vs-button>
             <vs-button color="#9082FF" type="filled" class="btnPatient">Supprimer ce patient</vs-button>
@@ -30,7 +30,7 @@
 
 <script>
 import UpdateDataModal from '@/components/UpdateDataModal.vue'
-import  {mapState} from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'PatientProfil',
@@ -38,7 +38,7 @@ export default {
     UpdateDataModal
   },
   computed: {
-    ...mapState({
+    ...mapGetters({
       patient: 'currentPatient'
     })
   },

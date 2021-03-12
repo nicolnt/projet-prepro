@@ -9,7 +9,7 @@ class Game {
     this.callback = callAfterSuccess
     this.currentAnswers = []
     this.currentLevelData = null
-    this.allScores = []
+    this.score = 0
   }
   beginTraining() {
     this.state.doTraining = true
@@ -47,19 +47,18 @@ class Game {
     }
   }
   checkAnswers(answers){
-    console.log(answers)
     let actualScore = 0
     answers.forEach( data => {
-      console.log(data)
       if(this.currentLevelData.answer.includes(data)){
         actualScore++
       } else {
-        console.log('yep')
         actualScore--
       }
     })
-    this.allScores[this.currentLevelData.name]= (actualScore) *100
-    console.log(this.allScores)
+    if(actualScore < 0){
+      actualScore = 0
+    }
+    this.score = (actualScore/this.currentLevelData.answer.length) *100
     this.callback()
   }
   startCurrentLevel(){
@@ -70,12 +69,14 @@ class Game {
     }
     DOM.querySelector('#showImg').addEventListener('click',() => {
       DOM.querySelector('#showImg').classList.add('hidden')
+      DOM.querySelector('img').classList.remove('blurred')
       setTimeout(this.showQuizz, 2000)
     },false)
   }
   showQuizz(){
     const DOM = document.querySelector("#attention-capacity-test-content")
     DOM.querySelector("#choices").classList.remove('hidden')
+    document.querySelector("#attention-capacity-test-content").querySelector('img').classList.add('blurred')
   }
   onSubmit (answers){
     const DOM = document.querySelector("#attention-capacity-test-content")

@@ -1,7 +1,7 @@
 <template>
   <div id="capacity-container">
     <div class="test-bar">
-      <span class="test-counter">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
+      <span class="test-counter hidden">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
       <vs-button
         @click="ToggleHelpModal"
         radius
@@ -11,14 +11,14 @@
       ></vs-button>
     </div>
     <div id="attention-capacity-test-content" class="hidden">
-      <img src="" alt="">
+      <img src="" alt="" class="blurred">
       <vs-button radius icon="play_arrow" color="#9082FF" id="showImg" size="large" type="filled"></vs-button>
       <div id="choices" class="hidden">
         <h3>Qu'avez vous vu sur l'image ?</h3>
-        <div v-for="answer in answers" :key="answer">
-          <vs-checkbox size="large" v-model="form" class="choice" :vs-value="answer">{{answer}}</vs-checkbox>
+        <div id="checkboxesContener">
+          <vs-checkbox size="large" v-model="form" class="choice" v-for="answer in answers" :key="answer" :vs-value="answer">{{answer}}</vs-checkbox>
         </div>
-        <vs-button color="#9082FF" id="submit" type="filled" icon="done" v-on:click="submit(form)"> Valider</vs-button>
+        <vs-button color="#9082FF" id="submitAnswers" type="filled" icon="done" v-on:click="submit(form)"> Valider</vs-button>
       </div>
     </div>
     <TestBeginModal title="Capacités attentionnelles" :instructions="instructions" @train="train" @play='play' ref="TestBeginModal"/>
@@ -67,14 +67,16 @@ export default {
       this.$refs.TestHelpModal.toggle()
     },
     train() {
+      document.querySelector('.test-counter').classList.remove('hidden')
       this.game.beginTraining()
     },
     play() {
+      document.querySelector('.test-counter').classList.remove('hidden')
       this.game.beginTest()
     },
     submit(form) {
-      //console.log(this.game.level)
       this.game.onSubmit(form)
+      this.form = []
     },
     // adapter à notre test
     /* sendLastestTestToDB(level) {
@@ -138,10 +140,11 @@ export default {
   line-height: 18px;
 }
 #attention-capacity-test-content img{
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 50vh;
-  transform: translateY(-50%);
+  position: absolute;
+  height: 80vh;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
 }
 .hidden {
   display: none;
@@ -157,9 +160,20 @@ export default {
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
   background-color: white;
-  padding: 5%;
+  border-radius : 10px;
+  padding: 2% 2%;
 }
-#choices > .choice {
-  padding: 10px;
+.blurred{
+  filter: blur(0.8rem);
+}
+#submitAnswers{
+  left: 50%;
+  transform: translateX(-50%);
+}
+#checkboxesContener{
+  margin: 6% 0;
+}
+h3{
+  font-weight: 600;
 }
 </style>

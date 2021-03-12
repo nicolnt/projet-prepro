@@ -31,6 +31,86 @@
 			"name": "test4",
 			"img": "test4.jpeg", 
     		"answer": ["Automobile(s)","Piéton(s)","2 roues","Panneaux de signalisation","Feux"]
+		},
+		{
+			"name": "test5",
+			"img": "test5.jpeg", 
+    		"answer": ["Automobile(s)","Panneaux de signalisation"]
+		},
+		{
+			"name": "test6",
+			"img": "test6.jpeg", 
+    		"answer": ["Automobile(s)","Piéton(s)"]
+		},
+		{
+			"name": "test7",
+			"img": "test7.jpeg", 
+    		"answer": ["Automobile(s)","Piéton(s)","2 roues","Panneaux de signalisation","Feux","Vélo(s)"]
+		},
+		{
+			"name": "test8",
+			"img": "test8.jpeg", 
+    		"answer": ["Automobile(s)"]
+		},
+		{
+			"name": "test9",
+			"img": "test9.jpeg", 
+    		"answer": ["Automobile(s)"]
+		},
+		{
+			"name": "test10",
+			"img": "test10.jpeg", 
+    		"answer": ["Piéton(s)","2 roues"]
+		},
+		{
+			"name": "test11",
+			"img": "test11.jpeg", 
+    		"answer": ["Piéton(s)","Automobile(s)","Feux"]
+		},
+		{
+			"name": "test12",
+			"img": "test12.jpeg", 
+    		"answer": ["Automobile(s)","Panneaux de signalisation"]
+		},
+		{
+			"name": "test13",
+			"img": "test13.jpeg", 
+    		"answer": ["Automobile(s)","Panneaux de signalisation","Vélo(s)","2 roues","Piéton(s)"]
+		},
+		{
+			"name": "test14",
+			"img": "test14.jpeg", 
+    		"answer": ["Automobile(s)","Panneaux de signalisation"]
+		},
+		{
+			"name": "test15",
+			"img": "test15.jpeg", 
+    		"answer": ["Piéton(s)"]
+		},
+		{
+			"name": "test16",
+			"img": "test16.jpeg", 
+    		"answer": ["2 roues","Feux"]
+		},
+		{
+			"name": "test17",
+			"img": "test17.jpeg", 
+    		"answer": ["Piéton(s)","Feux"]
+		},
+		{
+			"name": "test18",
+			"img": "test18.jpeg", 
+    		"answer": ["Panneaux de signalisation","2 roues"]
+		},
+		{
+			"name": "test19",
+			"img": "test19.jpeg", 
+    		"answer": ["Automobile(s)","2 roues","Piéton(s)"]
+		},
+		{
+			"name": "test20",
+			"img": "test20.jpeg", 
+    		"answer": ["Automobile(s)","Vélo(s)"]
 		}
 	]
 }

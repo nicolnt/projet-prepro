@@ -1,7 +1,7 @@
 <!-- MODAL WITH FORM TO UPDATE PSY'S OR PATIENT'S INFORMATIONS -->
 <template lang="html">
-  <div id="modalPatient">
-    <vs-popup title="Modifier les informations" :active.sync="popupActivo">
+  <div>
+    <vs-popup class="modalPatient" title="Modifier les informations" :active.sync="popupActivo">
       <!-- Update patient's informations -->
       <div v-if="personType === 'patient'" id="modalContentClient">
         <form action="#" @submit.prevent="submit">
@@ -226,7 +226,8 @@ export default {
 </script>
 
 <style scoped>
-#modalPatient .vs-popup {
+
+.modalPatient >>> .vs-popup {
   position: relative;
   font-family: Poppins;
   background-color: #eaedf0;

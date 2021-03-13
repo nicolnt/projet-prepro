@@ -4,7 +4,6 @@
     <div id="dashboardContent">
       <SideBar ref="sideBar"/>
       <div id="content">
-        <vs-button class="buttonDeconnexion" color="#9082FF" type="flat" @click.prevent="signOut">Déconnexion</vs-button>
         <transition name="fade" mode="out-in">
           <router-view/>
         </transition>
@@ -18,27 +17,11 @@
 import Footer from '@/components/Footer.vue'
 import SideBar from '@/components/SideBar.vue'
 
-import firebase from 'firebase/app'
-require('firebase/auth')
-
 export default {
   name: 'Dashboard',
   components : {
     Footer,
     SideBar
-  },
-  methods:{
-    signOut() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$store.dispatch("SIGN_OUT")
-          this.$router.replace({
-            name: "Home"
-          })
-        })
-    },
   }
 }
 </script>
@@ -68,13 +51,6 @@ export default {
   #content {
     width: calc(100% - 180px);
   }
-}
-.buttonDeconnexion {
-  position: absolute;
-  right: 2rem;
-  top: 2rem;
-  font-size: 16px;
-  z-index: 15;
 }
 .fade-enter-active, .fade-leave-active {
   transition-property: opacity;

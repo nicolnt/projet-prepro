@@ -20,8 +20,8 @@
         </div>
       </div>
       <div id="tests-results">
-        <vs-button color="#9082FF" type="filled" v-on:click="goResults" class="btn">Voir les résultats</vs-button>
         <vs-button color="#9082FF" type="filled" v-on:click="goListTests" class="btn">Démarrer un test</vs-button>
+        <vs-button color="#9082FF" type="filled" v-on:click="goResults" class="btn">Voir les résultats</vs-button>
       </div>
       <UpdateDataModal ref="updateDatasModal" :person="patient" :personType="'patient'"/>
     </div>

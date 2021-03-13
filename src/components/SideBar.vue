@@ -9,9 +9,6 @@
         <h3>{{user.data.displayName}}</h3>
         <p>Psychologue</p>
       </div>
-      <div class="icon-settings">
-        <vs-icon class="icon-settings-animation" icon="settings" v-on:click="goPsyInformations"></vs-icon>
-      </div>
     </div>
     <div id="tag">
       <div v-bind:class="{selectedPage : isActivePatients, pages: !isActivePatients}" v-on:click="activePage('isActivePatients')">
@@ -166,12 +163,12 @@ export default {
   width: 90%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: left;
   align-items: center;
   align-content: center;
   background-color: #9082FF;
   border-radius: 10px;
-  padding: 10px;
+  padding: 1rem;
 }
 .avatar {
   width: 50px;
@@ -181,21 +178,7 @@ export default {
   flex-direction: column;
   text-align: left;
   color: #fff;
-  margin: 0 .5rem;
-}
-.icon-settings {
-  display: flex;
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 3px;
-  color: #9082FF;
-  cursor: pointer;
-}
-.icon-settings-animation {
-  transition: all 2s ease;
-}
-.icon-settings-animation:hover {
-  transform: rotate(360deg) scale(1.2);
+  margin: 0 1rem;
 }
 .material-icons {
   margin-left: 0;

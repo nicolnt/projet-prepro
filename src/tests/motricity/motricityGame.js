@@ -26,11 +26,11 @@ class Track {
 
   static setStrokeColorAccordingToType(type) {
     if (type === 'path')
-      Track.traceCanvasContext.strokeStyle = '#b6ff6c'
+      Track.traceCanvasContext.strokeStyle = '#53ff53'
     else if (type === 'beforeStart')
       Track.traceCanvasContext.strokeStyle = '#9082FF'
     else
-      Track.traceCanvasContext.strokeStyle = '#ff6c6c'
+      Track.traceCanvasContext.strokeStyle = '#ff5353'
   }
 
   static exportTraceImage() {
@@ -363,11 +363,17 @@ class Game {
     this.startLevel()
   }
 
+  switchToEnd() {
+    this.state.doTraining = false
+    this.state.currentLevel = -1
+    new Level(this.gameData.defaultPath[0])
+  }
+
   startLevel() {
     let currentLevelData
     if (this.gameData.trainingPaths.length && this.state.doTraining === true) {
       currentLevelData = this.gameData.trainingPaths[this.state.currentLevel]
-    } else {
+    } else if (this.gameData.testPaths.length) {
       currentLevelData = this.gameData.testPaths[this.state.currentLevel]
     }
     currentLevelData.level = new Level(currentLevelData)

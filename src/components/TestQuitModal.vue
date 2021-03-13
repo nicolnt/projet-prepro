@@ -43,9 +43,6 @@ export default {
   font-family: Poppins;
   user-select: none;
 }
-.test-modal >>> header {
-  /* display: none; */
-}
 .test-modal >>> .vs-popup--content {
   display: block;
   margin: 15px 0;

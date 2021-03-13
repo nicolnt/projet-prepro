@@ -1,7 +1,7 @@
 <template>
   <div class="test">
     <div class="test-quit">
-      <vs-button color="#000000" type="flat" @click="ToggleQuitModal">Quitter le test</vs-button>
+      <vs-button color="#9082FF" type="filled" @click="ToggleQuitModal">Quitter le test</vs-button>
     </div>
     <div class="test-content">
         <router-view ref="test" @ToggleInfosModal="ToggleInfosModal"></router-view>
@@ -55,6 +55,10 @@ export default {
   top: 30px;
   left: 30px;
   z-index: 5;
+}
+.test-quit > button {
+  border-radius: 15px;
+  padding: 10px 20px;
 }
 .test-content {
   background-color: #FFFFFF;

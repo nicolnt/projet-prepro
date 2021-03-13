@@ -1,7 +1,7 @@
 <template>
   <div id="motricity-container">
     <div class="test-bar">
-      <span class="test-counter">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
+      <span class="test-counter" v-if="game.currentLevelNumber() != 0">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
       <vs-button
         @click="ToggleHelpModal"
         radius
@@ -84,22 +84,22 @@ export default {
         })
     },
     doAfterSuccess() {
-      console.log('success')
       if (this.game.state.doTraining === false) {
         // Level done (not trainings)
         this.sendLastestTestToDB(this.game.state.currentLevel)
       }
       if (this.game.state.doTraining === false && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End test
-        this.game.state.currentLevel = -1
+        this.game.switchToEnd();
         this.$emit("ToggleInfosModal");
       } else if (this.game.state.doTraining === true && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End training
-        this.game.state.doTraining = false
-        this.game.state.currentLevel = -1
+        this.game.switchToEnd();
         this.ToggleBeginModal()
+      } else {
+        // Not the end : next level
+        this.game.switchToNextLevel();
       }
-      this.game.switchToNextLevel();
     }
   }
 };

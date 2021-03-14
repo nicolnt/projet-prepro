@@ -131,13 +131,13 @@ export default {
 .btn--search {
   width: 50px;
   display: inline-block;
-	background-color: #9082FF;
+  background-color: #9082FF;
   color: #fff;
   border-radius: 25px;
-	border: 0;
-	outline: 0;
-	padding: 10px;
-	cursor: pointer;
+  border: 0;
+  outline: 0;
+  padding: 10px;
+  cursor: pointer;
   transition: all 0.5s ease;
 }
 .btn--search i {

@@ -15,16 +15,43 @@
 import Hero from '@/components/Hero.vue'
 import TestCard from '@/components/TestCard.vue'
 
+import { db } from '../services/firebase'
+require('firebase/auth')
+
 export default {
   name: 'TestList',
   components: {
     Hero,
     TestCard
   },
+   methods: {
+      startMotricity() {
+        const batch = db.batch()
+        db.collection('tentatives').where('idPatient', '==', this.$store.state.currentPatient.id)
+          .get()
+          .then(docs => {
+            docs.forEach(doc => {
+              batch.delete(db.collection('tentatives').doc(doc.id))
+            })
+            batch.commit()
+              .then(() => {
+                console.log('Tests supprimés')
+              })
+              .catch(err => {
+                console.log('Impossible de supprimer les tests', err)
+              })
+          })
+
+        this.$router.push({
+          path: '/game/motricity',
+        })
+      }
+   }
 }
 </script>
 
 <style scoped>
+
 .testList {
   position: relative;
   text-align: left;

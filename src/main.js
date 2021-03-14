@@ -22,6 +22,7 @@ Vue.use(VueApexCharts);
 store.dispatch("FETCH_USER");
 
 let app;
+
 firebase.auth().onAuthStateChanged(() => {
   if(!app) {
     app = new Vue({

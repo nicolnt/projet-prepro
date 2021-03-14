@@ -70,7 +70,7 @@ export default {
 
 <style scoped>
 .formAuth {
-  flex: 1;
+  width: 55%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,9 +146,16 @@ export default {
   align-items: center;
   opacity: 1;
 }
-@media screen and (max-width: 1100px) {
+
+@media screen and (max-width: 1024px) {
   .container-form {
-    width: 90%;
+    width: 100%;
   }
 }
+/* @media screen and (max-width: 800px) {
+  .formAuth {
+    align-items: normal;
+    width: 100%;
+  }
+} */
 </style>

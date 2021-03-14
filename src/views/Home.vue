@@ -46,8 +46,8 @@ export default {
 
 <style scoped>
 .home {
-  height: 100%;
   width: 100%;
+  height: calc(100% - 70px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -63,7 +63,8 @@ export default {
 }
 .presentation-application {
   text-align: left;
-  flex: 1;
+  margin-right: 2rem;
+  width: 45%;
 }
 h1 {
   font-size: 48px;
@@ -97,18 +98,15 @@ input:-webkit-autofill:active  {
   padding: .5rem 1rem;
   font-size: 16px;
 }
-@media screen and (max-width: 1024px) {
+/* @media screen and (max-width: 800px) {
   .introduction-application {
-    flex-direction: column;
-  }
-}
-@media screen and (max-width: 800px) {
-  .introduction-application {
+    align-items: center;
     flex-direction: column;
   }
   .presentation-application {
     text-align: center;
     margin-right: 0;
+    width: 100%;
   }
   .illustration-application {
     margin-top: 3rem;
@@ -122,5 +120,5 @@ input:-webkit-autofill:active  {
   #btnSignUp {
     display: initial;
   }
-}
+} */
 </style>

@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <router-view name="default" />
+    <transition name="fade" mode="out-in">
+      <router-view name="default" />
+    </transition>
   </div>
 </template>
 
 <script>
 // import { db } from './services/firebase'
-
 
 export default {
   
@@ -37,9 +38,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #000000;
+  color: #222222;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 body {
   /*height: 92vh;*/
@@ -54,5 +56,15 @@ body {
 h1, h2, h3, p {
   margin: 0;
   font-weight: 400;
+}
+.fade-enter-active, .fade-leave-active {
+  transition-property: opacity;
+  transition-duration: .3s;
+}
+.fade-leave-active {
+  transition-delay: .3s;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
 }
 </style>

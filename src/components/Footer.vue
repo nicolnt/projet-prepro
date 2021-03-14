@@ -1,18 +1,14 @@
+<!-- FOOTER -->
 <template>
-  <div class="navBarAuth">
-    <vs-navbar v-model="activeItem" v-bind:color="colorBG" class="nabarx" id="navBar">
-      <vs-navbar-item index="0">
-        <vs-button type="flat" v-bind:text-color="txtColor" v-on:click="goLegalNotice">Mentions légales</vs-button>
-      </vs-navbar-item>
-      <vs-navbar-item index="1">
-        <vs-button type="flat" v-bind:text-color="txtColor" v-on:click="goCGU">CGU</vs-button>
-      </vs-navbar-item>
-    </vs-navbar>
+  <div class="footer">
+    <div id="footer">
+      <vs-button type="flat" v-bind:text-color="txtColor" v-on:click="goLegalNotice">Mentions légales</vs-button>
+      <vs-button type="flat" v-bind:text-color="txtColor" v-on:click="goCGU">CGU</vs-button>
+    </div>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'Footer',
   props : {
@@ -23,7 +19,6 @@ export default {
     return {
       txtColor: this.p_txtColor,
       colorBG: this.p_colorBG,
-      activeItem: 0
     }
   },
   methods: {
@@ -40,18 +35,22 @@ export default {
 </script>
 
 <style scoped>
-#navBar {
-  padding: 10px 0;
-  justify-content: center;
-}
-.vs-navbar {
+.footer {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: white;
+  text-align: center;
   z-index: 1;
+}
+#footer {
+  padding: 1rem 0;
 }
 .vs-button {
   font-size: 16px;
 }
 .vs-button-primary.vs-button-flat:hover {
-  background: rgba(144, 130, 255, 0.2)!important;
+  background: rgba(255, 141, 139, 0.2)!important;
 }
-
 </style>

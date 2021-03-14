@@ -1,77 +1,74 @@
+<!-- SIGN UP FORM -->
 <template>
   <div class="signUp">
-      <h2>Inscription</h2>
-      <form class="formSignUp" action="#" @submit.prevent="submit">
-        <div class="wrap-input validate-input" data-validate = "Valid last name is required">
-          <input 
-            id="lastName"
-            class="input"
-            type="text"
-            name="lastName"
-            placeholder="Nom"
-            required
-            autofocus
-            v-model="form.lastName"
-          />
-          <span class="focus-input"></span>
-          <span class="symbol-input">
-            <i class="material-icons" aria-hidden="true">person</i>
-          </span>
-        </div>
-        <div class="wrap-input validate-input" data-validate = "Valid first name is required">
-          <input 
-            id="firstName"
-            class="input"
-            type="text"
-            name="firstName"
-            placeholder="Prénom"
-            required
-            autofocus
-            v-model="form.firstName"
-          />
-          <span class="focus-input"></span>
-          <span class="symbol-input">
-            <i class="material-icons" aria-hidden="true">person</i>
-          </span>
-        </div>
-        <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-          <input 
-            id="email"
-            class="input"
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            autofocus
-            v-model="form.email"
-          />
-          <span class="focus-input"></span>
-          <span class="symbol-input">
-            <i class="material-icons" aria-hidden="true">email</i>
-          </span>
-        </div>
-        <div class="wrap-input validate-input" data-validate = "Valid password is required">
-          <input 
-            id="password"
-            class="input"
-            type="password"
-            name="password"
-            placeholder="Mot de passe"
-            required
-            autofocus
-            v-model="form.password"
-          />
-          <span class="focus-input"></span>
-          <span class="symbol-input">
-            <i class="material-icons" aria-hidden="true">lock_outline</i>
-          </span>
-        </div>
+    <form class="formSignUp" action="#" @submit.prevent="submit">
+      <div class="wrap-input validate-input" data-validate = "Valid last name is required">
+        <input 
+          id="lastName"
+          class="input"
+          type="text"
+          name="lastName"
+          placeholder="Nom"
+          required
+          autofocus
+          v-model="form.lastName"
+        />
+        <span class="focus-input"></span>
+        <span class="symbol-input">
+          <i class="material-icons" aria-hidden="true">person</i>
+        </span>
+      </div>
+      <div class="wrap-input validate-input" data-validate = "Valid first name is required">
+        <input 
+          id="firstName"
+          class="input"
+          type="text"
+          name="firstName"
+          placeholder="Prénom"
+          required
+          autofocus
+          v-model="form.firstName"
+        />
+        <span class="focus-input"></span>
+        <span class="symbol-input">
+          <i class="material-icons" aria-hidden="true">person</i>
+        </span>
+      </div>
+      <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+        <input 
+          class="input"
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          autofocus
+          v-model="form.email"
+        />
+        <span class="focus-input"></span>
+        <span class="symbol-input">
+          <i class="material-icons" aria-hidden="true">email</i>
+        </span>
+      </div>
+      <div class="wrap-input validate-input" data-validate = "Valid password is required">
+        <input 
+          class="input"
+          type="password"
+          name="password"
+          placeholder="Mot de passe"
+          required
+          autofocus
+          v-model="form.password"
+        />
+        <span class="focus-input"></span>
+        <span class="symbol-input">
+          <i class="material-icons" aria-hidden="true">lock_outline</i>
+        </span>
+      </div>
+      <div class="btn-submit">
         <div v-if="error" class="connectionError">{{error}}</div>
-        <div class="btn-submit">
-          <button type="submit" class="button">S'inscrire</button>
-        </div>
-      </form>
-      <img class="cloud" src="../assets/cloud-illustration.svg"/>
+        <button type="submit" class="button">S'inscrire</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -124,7 +121,7 @@ export default {
             user.sendEmailVerification().then(() => {
               this.$router.push({ name: 'PatientsList' }).catch(() => {})
             })
-          })});
+          })})
          
         })
         .catch(() => {
@@ -144,26 +141,10 @@ h2 {
   margin-bottom: 2vh;
 }
 .signUp {
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 50px;
-  border-radius: 20px;
-  box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.73);
-  background-color: #fff;
-  text-align: left;
-  position: relative;
-  max-width: 100%;
-}
-.cloud {
-  position: absolute;
-  top: -21px;
-  left: -48px;
 }
 .formSignUp {
   width: 100%;
-  margin-top: 2rem;
 }
 .wrap-input {
   position: relative;
@@ -178,9 +159,9 @@ input:-webkit-autofill:active  {
   box-shadow: 0 0 0 30px white inset !important;
 }
 .input {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
-  color: #292929;
+  color: #222222;
   display: block;
   width: 100%;
   border: 1px solid #EBEBEB;
@@ -219,7 +200,7 @@ input:-webkit-autofill:active  {
   }
 }
 .symbol-input {
-  font-size: 15px;
+  font-size: 16px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -246,10 +227,15 @@ input:-webkit-autofill:active  {
 }
 .btn-submit {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+.connectionError {
+  margin-bottom: 1rem;
 }
 .button {
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 25px;
   height: 45px;
   width: 70%;
@@ -258,8 +244,10 @@ input:-webkit-autofill:active  {
   color: #FFFFFF;
   padding: .5rem 1.5rem;
   cursor: pointer;
+  font-weight: 500;
+  transition: all .2s ease-in-out;
 }
 .button:hover {
-  background-color: #9082FF;
+  background-color: #ec8381;
 }
 </style>

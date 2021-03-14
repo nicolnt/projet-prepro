@@ -1,11 +1,9 @@
+<!-- SIGN IN FORM -->
 <template>
   <div class="signIn">
-      <h2>Connexion</h2>
-      <div v-if="error" class="connectionError">{{error}}</div>
     <form class="formSignIn" action="#" @submit.prevent="submit">
       <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
         <input 
-          id="email"
           class="input"
           type="email"
           name="email"
@@ -21,7 +19,6 @@
       </div>
       <div class="wrap-input validate-input" data-validate = "Password is required">
         <input 
-          id="password"
           class="input"
           type="password"
           name="password"
@@ -36,15 +33,14 @@
         </span>
       </div>
       <div class="btn-submit">
-        <button type="submit" class="button">Se connecter</button>
+        <div v-if="error" class="connectionError">{{error}}</div>
+        <button type="submit" class="button">Se connecter</button> 
       </div>
       <div>
         <div class="forgotPass" @click="toggleModal">Mot de passe oublié ?</div>
       </div>
     </form>
     <ForgotPass ref="forgotPassModal"/>
-      <p> Vous n'avez pas encore de compte ? <router-link to="/signUp"> Inscrivez-vous </router-link> </p>
-      <img class="plane" src="../assets/plane-illustration.svg"/>
   </div>
 </template>
 
@@ -85,15 +81,15 @@ export default {
               if(doc.data().email == user.email){
                 user.updateProfile({
                   displayName: doc.data().firstName + ' ' + doc.data().lastName
-                });
+                })
               }
-            });
-          });
+            })
+          })
           this.$router.push({ name: 'PatientsList' })
         })
         .catch(() => {
-          this.error = 'Identifiant ou mot de passe incorrect.'
-        });
+          this.error = 'Identifiant ou mot de passe incorrect'
+        })
     },
   }
 }
@@ -104,34 +100,17 @@ h2 {
   margin-bottom: 2vh;
 }
 p {
-  font-size: 12px;
+  font-size: 16px;
   margin-top: 2rem;
 }
 a {
   color: #FF8D8B;
 }
 .signIn {
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 50px;
-  border-radius: 20px;
-  box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.73);
-  background-color: #fff;
-  text-align: left;
-  position: relative;
-  max-width: 100%;
-  font-size: 14px;
-}
-.plane {
-  position: absolute;
-  top: -21px;
-  right: -48px;
+  padding: 2rem;
 }
 .formSignIn {
   width: 100%;
-  margin-top: 2rem;
 }
 .wrap-input {
   position: relative;
@@ -146,9 +125,9 @@ input:-webkit-autofill:active  {
   box-shadow: 0 0 0 30px white inset !important;
 }
 .input {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
-  color: #292929;
+  color: #222222;
   display: block;
   width: 100%;
   border: 1px solid #EBEBEB;
@@ -186,7 +165,7 @@ input:-webkit-autofill:active  {
   }
 }
 .symbol-input {
-  font-size: 15px;
+  font-size: 16px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -207,17 +186,21 @@ input:-webkit-autofill:active  {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 }
-
 .input:focus + .focus-input + .symbol-input {
   color: #FF8D8B;
   padding-left: 28px;
 }
 .btn-submit {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+.connectionError {
+  margin-bottom: 1rem;
 }
 .button {
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 25px;
   height: 45px;
   width: 70%;
@@ -226,15 +209,20 @@ input:-webkit-autofill:active  {
   color: #FFFFFF;
   padding: .5rem 1.5rem;
   cursor: pointer;
-  transition: all .5s ease-in-out;
+  transition: all .2s ease-in-out;
+  font-weight: 500;
 }
 .button:hover {
-  background-color: #9082FF;
+  background-color: #ec8381;
 }
 .forgotPass {
-  margin-top: 10px;
+  margin-top: 1rem;
   color: #FF8D8B;
   text-align: center;
   cursor: pointer;
+}
+.forgotPass:hover {
+  transition: all .2s ease-in-out;
+  color: #ec8381;
 }
 </style>

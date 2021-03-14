@@ -1,16 +1,18 @@
+<!-- PAGE WITH PSY'S INFORMATIONS -->
 <template>
   <div class="psyInformations">
+    <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     <Hero title="Informations du psychologue"/>
     <div class="wrapperPsyInformations">
       <div id="psyDatas">
-        <img src="../assets/avatar-woman-illustration.svg" alt="imgPatient" id="imgPatient">
+        <img src="../assets/avatarPsy.svg" alt="imgPatient" id="imgPatient">
         <div class="contentPsyDatas">
           <h2>{{user.data.displayName}}</h2>
+          <p>Email : {{user.data.email}}</p>
           <vs-button color="#9082FF" type="filled" id="btnModif" @click="toggleModal">Modifier les informations</vs-button>
         </div>
       </div>
       <UpdateDataModal ref="updateDatasModal" :person="user.data" :personType="'psy'"/>
-      <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     </div>
   </div>
 </template>
@@ -45,11 +47,12 @@ export default {
   text-align: left;
 }
 .wrapperPsyInformations {
-  background-color: #F0F0F0;
-  box-shadow: 0 4px 16px 0 rgb(0 0 0 / 5%);
+  background-color: white;
+  box-shadow: 0px 0px 30px -20px rgba(0,0,0,0.25);
   border-radius: 16px;
   padding: 2rem;
   margin-top: 2rem;
+  margin-right: 3rem;
 }
 #icon_back {
   display: flex;
@@ -58,7 +61,7 @@ export default {
 }
 #btnModif {
   border-radius: 16px;
-  font-size: 15px;
+  font-size: 16px;
   margin-top: 1rem;
 }
 #psyDatas {
@@ -74,12 +77,9 @@ export default {
   width: 14%;
 }
 .psyInformations a {
-  position: absolute;
-  top: -40px;
-  left: -28px;
-  font-size: 30px;
   cursor: pointer;
 }
+
 @media screen and (max-width: 800px) {
   #psyDatas {
     flex-direction: column;

@@ -1,6 +1,8 @@
+<!-- MODAL WITH FORM TO UPDATE PSY'S OR PATIENT'S INFORMATIONS -->
 <template lang="html">
-  <div id="modalPatient">
-    <vs-popup title="Modifier les informations" :active.sync="popupActivo">
+  <div>
+    <vs-popup class="modalPatient" title="Modifier les informations" :active.sync="popupActivo">
+      <!-- Update patient's informations -->
       <div v-if="personType === 'patient'" id="modalContentClient">
         <form action="#" @submit.prevent="submit">
           <div class="wrapperInfosForm">
@@ -68,8 +70,9 @@
         <img class="plane-purple" src="../assets/plane-purple-illustration.svg"/>
       </div>
 
+      <!-- Update psy's informations -->
       <div v-if="personType === 'psy'" id="modalContentPsy">
-        <form action="#" @submit.prevent="submit">
+        <form action="#" @submit="submit">
           <div class="wrapperInfosForm">
             <div class="wrap-input validate-input" data-validate = "Valid last name is required">
               <input class="input" id="lastName" type="text" name="lastName" required autofocus v-model="form.lastName"/>
@@ -105,7 +108,7 @@
 
 <script>
 import { db } from '../services/firebase'
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
 import firebase from 'firebase/app'
 require('firebase/auth')
 
@@ -140,7 +143,7 @@ export default {
         address: this.person.address,
         cp: this.person.cp,
         city: this.person.city,
-        reason: this.person.reason,
+        reason: this.person.testReason,
         gender: this.person.gender,
       },
       error: null,
@@ -149,12 +152,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-    // map `this.user` to `this.$store.getters.user`
-      user: "user"
+      // map `this.user` to `this.$store.getters.user`
+      user: "user",
+      patient: "currentPatient"
     }),
-    ...mapState({
-      patient: 'currentPatient'
-    })
+    // ...mapState({
+    //   patient: 'currentPatient'
+    // })
   },
   methods: {
     submit() {
@@ -181,6 +185,7 @@ export default {
           console.error("Error adding document: ", error);
         });
       } else if(this.personType === 'patient') {
+        this.popupActivo = !this.popupActivo
         db.collection("patients").doc(self.patient.id).update({
             firstName: self.form.firstName,
             lastName: self.form.lastName,
@@ -189,12 +194,15 @@ export default {
             address: self.form.address,
             cp: self.form.cp,
             city: self.form.city,
-            reason: self.form.reason,
+            testReason: self.form.reason,
             gender: self.form.gender
         }).catch(function(error) {
           console.error("Error adding document: ", error);
         });
       }
+      // this.$store.dispatch("FETCH_PATIENT");
+      // console.log(this.patient)
+      // this.$store.dispatch("FETCH_PATIENT", this.patient);
     },
     toggle() {
       this.popupActivo = !this.open;
@@ -212,17 +220,14 @@ export default {
       } else {
         return false
       }
-    },
-    confirm() {
-      this.popupActivo = !this.popupActivo
-      this.$router.go(0)
     }
   }
 }
 </script>
 
-<style lang="css">
-#modalPatient .vs-popup {
+<style scoped>
+
+.modalPatient >>> .vs-popup {
   position: relative;
   font-family: Poppins;
   background-color: #eaedf0;
@@ -389,5 +394,6 @@ export default {
 }
 .vs-popup h3 {
   text-align: center;
+  font: 400 13.3333px Arial;
 }
 </style>

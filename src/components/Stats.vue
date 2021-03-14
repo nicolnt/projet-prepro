@@ -55,24 +55,7 @@
                 <p>{{ this.averagePatientScore }} %</p>
               </div>
             </div>
-            <svg
-              class="wave"
-              :style="{ bottom: -(90 - (50 / 100) * 90) + 'px' }"
-              viewBox="0 0 264 173"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g opacity="0.82">
-                <path
-                  d="M0 73.0446V28.727C52.8 5.09099 105.6 5.09099 158.4 28.727V73.0446H0Z"
-                  :fill="secondaryColor(this.averagePatientScore)"
-                />
-                <path
-                  d="M0 175V19.8634C52.8 29.7118 101.2 29.7118 145.2 19.8634C189.2 10.0151 228.8 9.03027 264 16.9089V175H0Z"
-                  :fill="primaryColor(this.averagePatientScore)"
-                />
-              </g>
-            </svg>
+            <Wave :score="averagePatientScore" />
           </div>
           <div class="graphicNbTest graphic">
             <h3>Nombre total de tests passés</h3>
@@ -95,7 +78,7 @@
         </div>
       </div>
       <div class="scorePerTest">
-        <WaveScore v-for="score in [40.2, 12.2, 96.58]" :key="score" :score="score" :showScore="true">
+        <WaveScore v-for="score in [40.2, 12.2, 96.58]" :key="score" :score="score" showScore="true">
           <img class="test-logo" :src="require('../assets/' + 'motricite-illustration.svg')">
         </WaveScore>
       </div>
@@ -106,6 +89,7 @@
 <script>
 import Hero from "@/components/Hero.vue";
 import WaveScore from "@/components/WaveScore.vue";
+import Wave from "@/components/Wave.vue";
 import VueApexCharts from "vue-apexcharts";
 import { db } from "../services/firebase";
 
@@ -113,7 +97,7 @@ export default {
   name: "Stats",
   components: {
     Hero,
-    apexchart: VueApexCharts, WaveScore
+    apexchart: VueApexCharts, WaveScore, Wave
   },
   data() {
     return {

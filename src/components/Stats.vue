@@ -95,7 +95,9 @@
         </div>
       </div>
       <div class="scorePerTest">
-			<WaveScore v-for="score in [40.2, 12.2, 96.58]" :key="score" :score="score" :showScore="true" />
+        <WaveScore v-for="score in [40.2, 12.2, 96.58]" :key="score" :score="score" :showScore="true">
+          <img class="test-logo" :src="require('../assets/' + 'motricite-illustration.svg')">
+        </WaveScore>
       </div>
     </div>
   </div>
@@ -543,6 +545,14 @@ h3 {
   width: 100%;
   margin-top: 2rem;
 }
+.wave-container .test-logo {
+  position: absolute;
+  width: 50%;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @media screen and (max-width: 1025px) {
   .graphic {
     height: auto;

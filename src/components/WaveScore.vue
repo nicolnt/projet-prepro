@@ -1,11 +1,12 @@
 <template>
-	<div ref="container" class="wave-container">
+	<div ref="container" @click="$emit('click')" class="wave-container">
 		<svg v-if="ready" class="wave" :width="containerWidth" :style="{bottom}" viewBox="0 0 224 198" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
 			<g opacity="0.82">
 				<path d="M0 52.5866V15.0247C44.7512 -5.00824 89.5024 -5.00824 134.254 15.0247V52.5866H0Z" :fill="secondaryColor(score)"/>
 				<path d="M0 197.093V7.51217C44.7512 15.8592 85.7732 15.8592 123.066 7.51217C160.359 -0.834904 193.922 -1.66961 223.756 5.00805V197.093H0Z" :fill="primaryColor(score)"/>
 			</g>
 		</svg>
+    <slot/>
 		<div v-if="showScore" class="score-number">
 			<span class="percent-score-int">{{ Math.trunc(score) }}</span>
 			<span class="percent-score-float">{{ (((score) % 1).toFixed(2).toString()).slice(1) }}</span>
@@ -67,7 +68,6 @@ export default {
   border-radius: 25px;
   bottom: 0;
   transform: translateX(-50%);
-  z-index: 1;
 }
 
 .wave-container .score-number {
@@ -77,7 +77,6 @@ export default {
   font-weight: bold;
   font-size: 2rem;
   color: white;
-  z-index: 3;
 }
 .wave-container .score-number span.percent-score-int {
   font-size: 3.5rem;
@@ -86,6 +85,6 @@ export default {
   font-size: 1.5rem;
 }
 .wave-container .score-number span {
-  text-shadow: 0px 1px 5px rgba(0,0,0,0.3);
+  text-shadow: 0px 1px 5px rgba(0,0,0,0.5);
 }
 </style>

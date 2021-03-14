@@ -95,19 +95,7 @@
         </div>
       </div>
       <div class="scorePerTest">
-         <!--<div class="track-container" v-for="testType in 4" :key="testType">-->
-            <!--<svg class="wave" :style="{ bottom: - (90 - ((15.56 * testType)/100 * 90))+'px'}" width="264" height="173" viewBox="0 0 264 173" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-               <!--<g opacity="0.82">-->
-               <!--<path d="M0 73.0446V28.727C52.8 5.09099 105.6 5.09099 158.4 28.727V73.0446H0Z" :fill="secondaryColor(15.56 * testType)"/>-->
-               <!--<path d="M0 175V19.8634C52.8 29.7118 101.2 29.7118 145.2 19.8634C189.2 10.0151 228.8 9.03027 264 16.9089V175H0Z" :fill="primaryColor(15.56 * testType)"/>-->
-               <!--</g>-->
-            <!--</svg>-->
-            <!--<div class="score-number">-->
-               <!--<span class="percent-score-int">{{ Math.trunc(15.56 * testType) }}</span>-->
-               <!--<span class="percent-score-float">{{ (((15.56 * testType) % 1).toFixed(2).toString()).slice(1) }}</span>-->
-               <!--<span class="percent-sign">%</span>-->
-            <!--</div>-->
-         <!--</div>-->
+			<WaveScore v-for="score in [40.2, 12.2, 96.58]" :key="score" :score="score" :showScore="true" />
       </div>
     </div>
   </div>
@@ -324,9 +312,9 @@ export default {
             this.isActive = true;
           }
           /* Graphic 1 : Number of patients registered per month */
-          this.patientOrderByMonth = this.getDateMonth(
-            doc.data().dateCreation.toDate()
-          );
+          //this.patientOrderByMonth = this.getDateMonth(
+            //doc.data().dateCreation.toDate()
+          //);
           if (this.patientOrderByMonth === 0) {
             this.patientJanuary += 1;
           } else if (this.patientOrderByMonth === 1) {
@@ -453,7 +441,8 @@ h3 {
 .chart {
   padding-top: 2rem;
 }
-.track-container {
+
+.wave-container {
   position: relative;
   width: 250px;
   margin-right: 2rem;
@@ -462,23 +451,7 @@ h3 {
   height: 180px;
   box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.3);
 }
-.track-container .score-number {
-  position: absolute;
-  bottom: 0;
-  right: 10px;
-  font-weight: bold;
-  font-size: 2rem;
-  color: white;
-}
-.track-container .score-number span.percent-score-int {
-  font-size: 3.5rem;
-}
-.track-container .score-number span.percent-score-float {
-  font-size: 1.5rem;
-}
-.track-container .score-number span {
-  text-shadow: 0px 1px 5px rgba(0,0,0,0.3);
-}
+
 .waveEffect {
   position: relative;
   height: 100%;
@@ -489,15 +462,6 @@ h3 {
 }
 .waveEffect .graphic {
   background-color: transparent;
-}
-.wave {
-  position: absolute;
-  width: 100%;
-  left: 50%;
-  bottom: -20px;
-  border-radius: 25px;
-  transform: translateX(-50%);
-  z-index: 1;
 }
 .wrapperResult {
   display: flex;

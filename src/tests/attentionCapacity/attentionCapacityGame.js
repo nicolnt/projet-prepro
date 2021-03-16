@@ -47,18 +47,22 @@ class Game {
     }
   }
   checkAnswers(answers){
-    let actualScore = 0
-    answers.forEach( data => {
-      if(this.currentLevelData.answer.includes(data)){
-        actualScore++
-      } else {
+    let actualScore = 6
+    answers.forEach( userData => {
+      if(this.currentLevelData.answer.includes(userData) != true){
+        console.log ( 'Fausse réponse :' + userData)
         actualScore--
       }
     })
-    if(actualScore < 0){
-      actualScore = 0
-    }
-    this.score = (actualScore/this.currentLevelData.answer.length) *100
+    this.currentLevelData.answer.forEach ( testData => {
+      if (answers.includes(testData) != true){
+        console.log ('Réponse oubliée :' + testData)
+        actualScore--
+      }
+    })
+    console.log(actualScore)
+    this.score = Math.floor(actualScore/6) *100
+    console.log(this.score)
     this.callback()
   }
   startCurrentLevel(){

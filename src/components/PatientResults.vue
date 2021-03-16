@@ -14,7 +14,7 @@
     <div class="patientResultsContent">
       <div class="motricityResults results">
         <div class="header">
-          <h3>Test motricité fine<span> - réussi à 55%</span><span> - non validé</span></h3> 
+          <h3>Test Motricité fine<span> - réussi à 55%</span><span> - non validé</span></h3> 
         </div>
         <div class="motricityResultsHistory">
           <!-- J'ai fait quelques petites recherches quand on devra brancher ça sur la bdd on pourra faire avec v-for et des props-->
@@ -39,7 +39,6 @@
               </div>
             </div>
           </div>
-
         </div>
         <h3>Commentaire à propos du test : <strong>Motricité fine</strong></h3>
         <div class ="motricityResultsComment">
@@ -49,6 +48,46 @@
           </vs-button>
         </div> 
       </div>
+
+      <div class="attentionCapacityResults results">
+        <div class="header">
+          <h3>Test Capacités attentionnelles<span> - réussi à 55%</span><span> - non validé</span></h3> 
+        </div>
+        <div class="attentionCapacityResultsHistory">
+          <h3>Score</h3>
+          <WaveScore :score="attentionCapacity.score" showScore="true">
+          </WaveScore>
+          <h3>Nombre de fautes : {{ attentionCapacity.mistakeNb >= 50 }} </h3>
+        </div>
+        <h3>Commentaire à propos du test : <strong>Capacités attentionnelles</strong></h3>
+        <div class ="attentionCapacityResultsComment">
+          <textarea placeholder="Ajouter un commentaire"></textarea>
+          <vs-button color="#9082FF" type="filled" id="btnAttentionCapacityComment">
+            Enregistrer le commentaire
+          </vs-button>
+        </div> 
+      </div>
+
+      <div class="test3Results results">
+        <div class="header">
+          <h3>Test Comportement en situation complexe<span> - réussi à 55%</span><span> - non validé</span></h3> 
+        </div>
+        <div class="test3ResultsHistory">
+          <!--<div v-for="tentative in motricity" :key="tentative.id" class="circuit">
+            <img src="../../source en fonction du numéro de la situation" />
+            <h4>Situation {{ numero }} : {{ réussite }} </h4>
+          </div>
+          <h3><strong>Bilan : test {{ réussite globale }} </strong></h3>-->
+        </div>
+        <h3>Commentaire à propos du test : <strong>Comportement en situation complexe</strong></h3>
+        <div class ="test3ResultsComment">
+          <textarea placeholder="Ajouter un commentaire"></textarea>
+          <vs-button color="#9082FF" type="filled" id="btnTest3Comment">
+            Enregistrer le commentaire
+          </vs-button>
+        </div> 
+      </div>
+
       <div class="globalComment">
         <div class="header">
           <h3>Commentaire global</h3>
@@ -67,6 +106,7 @@
 <script>
 //import Hero from '@/components/Hero.vue'
 import { db } from '../services/firebase'
+require('firebase/auth')
 
 import WaveScore from './WaveScore'
 import TestTrackViewModal from './TestTrackViewModal'
@@ -77,6 +117,8 @@ export default {
   data() {
     return {
       motricity: [],
+      attentionCapacity: [],
+      test3: [],
       patient: {}
     }
   },
@@ -100,15 +142,16 @@ export default {
     },
   },
   mounted() {
-    const motricity = []
     db.collection('patients').doc(this.$store.state.currentPatient.id).get()
       .then(docs => {
         this.patient = docs.data()
       })
+    // Add motricity test results to data
+    const motricity = []
     db.collection('tentatives').where('idPatient', '==', this.$store.state.currentPatient.id)
       .get()
-      .then(docs => {
-        docs.forEach(doc => {
+      .then((docs) => {
+        docs.forEach((doc) => {
           const data = doc.data() 
           data.score = (data.score * 100).toFixed(2)
           switch(data.idTest) {
@@ -120,6 +163,36 @@ export default {
         // Sort tests by idParcours
         this.motricity = motricity.sort((a, b) => {
           return parseInt(a.idParcours) - parseInt(b.idParcours)
+        })
+      })
+      
+    // Add attention capacity test results to data
+    const attentionCapacity = []
+    db.collection('test2').where('idPatient', '==', this.$store.state.currentPatient.id)
+      .get()
+      .then((docs) => {
+        console.log('hey test 2')
+        docs.forEach((doc) => {
+          console.log('hola test 2')
+          const data = doc.data() 
+          //data.score = (data.score * 100).toFixed(2)
+          console.log(data)
+          attentionCapacity.push(data)
+        })
+      })
+
+    // Add test3 results to data
+    const test3 = []
+    db.collection('test3').where('idPatient', '==', this.$store.state.currentPatient.id)
+      .get()
+      .then((docs) => {
+        console.log('hey test 3')
+        docs.forEach((doc) => {
+          console.log('hola test 3')
+          const data = doc.data() 
+          //data.score = (data.score * 100).toFixed(2)
+          console.log(data)
+          test3.push(data)
         })
       })
   }
@@ -145,7 +218,7 @@ export default {
   margin: 0 auto;
   margin-top: 1%;
   border-radius: 16px;
-  padding-bottom: 2%;
+  padding-bottom: 10vh;
 }
 .results, .globalComment{
   background-color: white;
@@ -185,7 +258,7 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.globalCommentContent, .motricityResultsComment{
+.globalCommentContent, .motricityResultsComment, .attentionCapacityResultsComment, .test3ResultsComment{
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -193,7 +266,7 @@ export default {
   margin-top: 2%;
   padding-bottom: 2%;
 }
-.globalCommentContent textarea ,.motricityResultsComment textarea {
+.globalCommentContent textarea ,.motricityResultsComment textarea, .attentionCapacityResultsComment textarea, .test3ResultsComment textarea {
   width: 76%;
   height: 20vh;
   border: none;
@@ -201,21 +274,27 @@ export default {
   border-radius: 16px;
   padding: 10px;
 }
-.globalCommentContent #btnSaveGlobalComment, .motricityResultsComment #btnMotricityComment{
+.globalCommentContent #btnSaveGlobalComment, #btnMotricityComment, #btnAttentionCapacityComment, #btnTest3Comment{
   margin-left: 2%;
   width: 20%;
   border-radius: 16px;
 }
-.motricityResults h3{
+.motricityResults h3, .attentionCapacityResults h3, .test3Results h3 {
   margin-left: 2%;
 }
-.motricityResultsHistory{
+.motricityResultsHistory, .attentionCapacityResultsHistory{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width:96%;
   margin-left: 2%;
   padding-bottom: 2%;
+}
+.attentionCapacityResultsHistory{
+  flex-direction: column;
+}
+.attentionCapacityResultsHistory > * {
+  margin: 1% 0;
 }
 .circuit{
   width: 30%;

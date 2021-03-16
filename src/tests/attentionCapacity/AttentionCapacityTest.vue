@@ -31,7 +31,7 @@ import Game from "./attentionCapacityGame"
 import TestBeginModal from '@/components/TestBeginModal.vue'
 import TestHelpModal from '@/components/TestHelpModal.vue'
 
-//import { db } from '../../services/firebase'
+import { db } from '../../services/firebase'
 require('firebase/auth')
 
 export default {
@@ -79,17 +79,13 @@ export default {
       this.form = []
     },
     // adapter à notre test
-    /* sendLastestTestToDB(level) {
-      let game = this.game.gameData.testPaths[level]
-      db.collection("tentatives").add({
+    sendResultsToDB() {
+      db.collection("test2").add({
         idPatient: this.$store.state.currentPatient.id,
-        idTest: 'attentionCapacity',
-        idParcours: level,
-        patientTime: 100,
-        testCapture: game.level.traceImage,
+        mistakeNb: this.game.userErrors,
+        score: Math.floor(((this.game.score/20)*100)/6),
         dateTime: Date.now(),
-        succeed: (game.level.score >= 0.5) ? true : false,
-        score: game.level.score
+        succeed: (this.game.score >= 50) ? true : false
       })
         .then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);
@@ -97,18 +93,14 @@ export default {
         .catch(function(error) {
           console.error("Error adding document: ", error);
         })
-    }, */
+    }, 
     doAfterSuccess() {
       console.log('success')
-      if (this.game.state.doTraining === false) {
-        // Level done (not trainings)
-        //this.sendLastestTestToDB(this.game.state.currentLevel)
-        console.log('enregistrer les données')
-      }
       if (this.game.state.doTraining === false && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End test
         this.game.state.currentLevel = -1
-        this.$emit("ToggleInfosModal");
+        this.sendResultsToDB()
+        this.$emit("ToggleInfosModal")
       } else if (this.game.state.doTraining === true && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End training
         this.game.state.doTraining = false

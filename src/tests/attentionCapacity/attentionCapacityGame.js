@@ -10,6 +10,7 @@ class Game {
     this.currentAnswers = []
     this.currentLevelData = null
     this.score = 0
+    this.userErrors = 0
   }
   beginTraining() {
     this.state.doTraining = true
@@ -19,6 +20,8 @@ class Game {
   beginTest() {
     this.state.doTraining = false
     this.state.currentLevel = 0
+    this.userErrors = 0
+    this.score = 0
     this.startLevel()
   }
   switchToNextLevel() {
@@ -52,16 +55,18 @@ class Game {
       if(this.currentLevelData.answer.includes(userData) != true){
         console.log ( 'Fausse réponse :' + userData)
         actualScore--
+        this.userErrors++
       }
     })
     this.currentLevelData.answer.forEach ( testData => {
       if (answers.includes(testData) != true){
         console.log ('Réponse oubliée :' + testData)
         actualScore--
+        this.userErrors++
       }
     })
     console.log(actualScore)
-    this.score = Math.floor(actualScore/6) *100
+    this.score += actualScore
     console.log(this.score)
     this.callback()
   }

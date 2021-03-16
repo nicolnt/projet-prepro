@@ -75,7 +75,7 @@
 		{
 			"name": "test13",
 			"img": "test13.jpeg", 
-    		"answer": ["Automobile(s)","Panneaux de signalisation","Vélo(s)","2 roues","Piéton(s)"]
+    		"answer": ["Automobile(s)","Panneaux de signalisation","Vélo(s)","2 roues","Piéton(s)","Feux"]
 		},
 		{
 			"name": "test14",
@@ -90,7 +90,7 @@
 		{
 			"name": "test16",
 			"img": "test16.jpeg", 
-    		"answer": ["2 roues","Feux"]
+    		"answer": ["2 roues","Feux","Vélo(s)"]
 		},
 		{
 			"name": "test17",

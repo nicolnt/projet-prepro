@@ -170,13 +170,6 @@ export default {
       month < 10 ? month = '0'+(month+1) : month = (month+1)
       const date = creationDate.getDate() +'/' + month + '/'+ creationDate.getFullYear()
       return date
-    },
-    motricityAverage(){
-      let average = 0
-      this.motricity.tentatives.forEach ( item => {
-        average += parseInt(item.score)
-      })
-      return average / this.motricity.tentatives.length
     }
   },
   mounted() {

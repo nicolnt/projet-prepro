@@ -1,0 +1,30 @@
+{
+    "name": "Tip Tap",
+    "short_name": "Tip Tap",
+    "theme_color": "#5b9bd5",
+    "background_color": "white",
+    "display": "fullscreen",
+    "orientation": "landscape",
+    "start_url": "/?utm_source=launcher",
+    "version": "0.1.0",
+    "icons": [
+      {
+        "src": "img/icons/ic_launcher.png",
+        "sizes": "72x72",
+        "type": "image/png"
+      },
+      {
+        "size": "60x60",
+        "filename": "img/icons/180.png",
+        "idiom": "iphone",
+        "scale": "3x"
+      },
+      {
+        "size": "40x40",
+        "filename": "img/icons/80.png",
+        "idiom": "iphone",
+        "scale": "2x"
+      }
+    ]
+
+  }

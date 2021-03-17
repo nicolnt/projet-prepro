@@ -20,12 +20,12 @@
     },
     {
       "size": "60x60",
-      "src": "img/icons/180.png",
+      "src": "icons/180.png",
       "type": "image/png"
     },
     {
       "size": "40x40",
-      "src": "img/icons/80.png",
+      "src": "icons/80.png",
       "type": "image/png"
     }
   ]

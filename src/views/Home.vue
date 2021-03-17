@@ -1,29 +1,27 @@
+<!-- VIEW : HOME PAGE -->
 <template>
   <div class="home">
-    <NavBar p_color="#FF8D8B" p_colorBG="#ffffff"/>
     <div class="introduction-application">
       <div class="presentation-application">
-        <h1> Tapitap, l’application destinée aux psychologues </h1>
+        <h1> Tapitap </h1>
+        <h2> L’application destinée aux psychologues </h2>
         <p> Gagnez du temps afin de faire passer l’habilitation au permis de conduire à vos patients. </p>
-        <vs-button color="#FF8D8B" type="filled" v-on:click="goSignUp" id="btnSignUp">inscription</vs-button>
       </div>
-      <div class="illustration-application">
-        <img src="../assets/illustration-home.svg"/>
-      </div>
+      <Form/>
     </div>
     <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
   </div>
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue'
+import Form from '@/components/Form.vue'
 import Footer from '@/components/Footer.vue'
 import { mapGetters } from "vuex";
 
 export default {
   name: 'Home',
   components: {
-    NavBar,
+    Form,
     Footer
   },
   methods: {
@@ -35,7 +33,7 @@ export default {
   mounted: function(){
     console.log(this.user)
     if(this.user.loggedIn==true){
-      this.$router.push({name:'Dashboard'})
+      this.$router.push({path:'/dashboard'})
     }
   },
   computed: {
@@ -48,32 +46,38 @@ export default {
 
 <style scoped>
 .home {
-  height: 100%;
   width: 100%;
+  height: calc(100% - 70px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   background-image: url("../assets/background.svg");
   background-repeat: no-repeat;
   background-position:right bottom;
-  font-weight: 400;
 }
 .introduction-application {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 70%;
-  margin: auto;
+  width: 80%;
+  position: relative;
 }
 .presentation-application {
   text-align: left;
-  margin-right: 5rem;
+  margin-right: 2rem;
+  width: 45%;
 }
 h1 {
   font-size: 48px;
   font-weight: 600;
   color: #382C50;
+  position: absolute;
+  top: -6rem;
+}
+h2 {
+  font-size: 32px;
+  font-weight: 500;
+  color: #382C50;
+  margin-top: 2rem;
 }
 p {
   font-size: 18px;
@@ -94,21 +98,15 @@ input:-webkit-autofill:active  {
   padding: .5rem 1rem;
   font-size: 16px;
 }
-@media screen and (max-width: 1024px) {
+/* @media screen and (max-width: 800px) {
   .introduction-application {
-    width: 85%;
-  }
-  h1 {
-    font-size: 28px;
-  }
-}
-@media screen and (max-width: 780px) {
-  .introduction-application {
+    align-items: center;
     flex-direction: column;
   }
   .presentation-application {
     text-align: center;
     margin-right: 0;
+    width: 100%;
   }
   .illustration-application {
     margin-top: 3rem;
@@ -122,5 +120,5 @@ input:-webkit-autofill:active  {
   #btnSignUp {
     display: initial;
   }
-}
+} */
 </style>

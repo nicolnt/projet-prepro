@@ -1,25 +1,28 @@
+<!-- PAGE PATIENTS LIST -->
 <template>
   <div class="patientsList">
     <Hero title="Liste des patients"/>
-    <div id="actions">
-      <form class="form">
-        <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient"/>
-        <button type="button" class="btn--search btn--inside"><i class="material-icons">search</i></button>
-      </form>
-      <button class="add-patient" @click="toggleModal">
-        <p> Ajouter un patient </p>
-        <div class="material-icons">add_circle</div>
-      </button>
-      <AddPatientModal ref="addPatientModal"/>
-    </div>
-    <div id="list">
-      <ul>
-        <li v-on:click="goPatientProfil(patient)" v-for="patient in patients" :key="patient.firstName">
-          <img class="avatar" v-if="patient.gender == 1" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
-          <img class="avatar" v-if="patient.gender == 0"  alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
-          {{patient.lastName}} {{patient.firstName}}
-        </li>
-      </ul>
+    <div id="patientsList">
+      <div id="actions">
+        <form class="form">
+          <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient"/>
+          <button type="button" class="btn--search btn--inside"><i class="material-icons">search</i></button>
+        </form>
+        <button class="add-patient" @click="toggleModal">
+          <p> Ajouter un patient </p>
+          <div class="material-icons">add_circle</div>
+        </button>
+        <AddPatientModal ref="addPatientModal"/>
+      </div>
+      <div id="list">
+        <ul>
+          <li v-on:click="goPatientProfil(patient)" v-for="patient in patients" :key="patient.id">
+            <img class="avatar" v-if="patient.gender == 1" alt="Avatar man" src="../assets/avatar-man-illustration.svg"/>
+            <img class="avatar" v-if="patient.gender == 0"  alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
+            {{patient.lastName}} {{patient.firstName}}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -50,7 +53,7 @@ export default {
   watch: {
     message: function (val) {
       if(val.length > 0){
-        this.patients= this.patientsBackup.filter(patient => (patient.firstName.toLowerCase().trim().includes(val.toLowerCase().trim()) ||
+        this.patients = this.patientsBackup.filter(patient => (patient.firstName.toLowerCase().trim().includes(val.toLowerCase().trim()) ||
         patient.lastName.toLowerCase().trim().includes(val.toLowerCase().trim())))
       }
       else{
@@ -66,16 +69,15 @@ export default {
   },
   mounted: function(){
     this.getPatientList()
+    
   },
   methods: {
-    search(){
-      
-    },
     goPatientProfil(patient) {
-      if(this.$route.name !== 'PatientProfil')
-        this.$router.push({name:'PatientProfil',  params: { patient: patient } })
-      this.$store.commit("SET_CURRENT_PATIENT", patient)
-        // store pour faire renseigner user courant
+      if(this.$route.name != 'PatientProfil') {
+        this.$router.push({name:'PatientProfil'})
+        this.$store.commit("SET_CURRENT_PATIENT", patient)
+        // this.$store.dispatch("FETCH_PATIENT", patient);
+      }
     },
     toggleModal() {
       this.$refs.addPatientModal.toggle()
@@ -88,7 +90,7 @@ export default {
           if(doc.data().email == firebase.auth().currentUser.email){
               self.id = doc.id
           }
-        });
+        })
       })
       db.collection("patients").orderBy("lastName").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -98,16 +100,20 @@ export default {
             self.patients.push(tmp)
             self.patientsBackup.push(tmp)
           }
-        });
+        })
       })
     }
   }
 }
 </script>
     
-<style>
+<style scoped>
 .patientsList {
   text-align: left;
+  width: 100%;
+}
+#patientsList {
+  margin-top: 5rem;
 }
 .form {
   margin-right: 3rem;
@@ -118,7 +124,7 @@ export default {
   border-radius: 25px;
   border: 1px solid #EBEBEB;
   padding: 10px 10px 10px 15px;
-  font-size: 14px;
+  font-size: 16px;
   color: #B0B0B0;
   box-shadow: 0 0 19px -6px rgba(0, 0, 0, 0.20);
 }
@@ -135,7 +141,7 @@ export default {
   transition: all 0.5s ease;
 }
 .btn--search i {
-  font-size: 14px;
+  font-size: 16px;
 }
 .btn--inside {
   margin-left: -50px;
@@ -159,6 +165,7 @@ export default {
 
 .add-patient p {
   margin-right: 1rem;
+  font-size: 16px;
 }
 
 .add-patient:hover {
@@ -169,6 +176,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: row;
+  overflow: hidden;
 }
 #actions {
   display: flex;

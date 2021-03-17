@@ -1,10 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import AuthSignUp from "../views/AuthSignUp.vue";
-import AuthSignIn from "../views/AuthSignIn.vue";
 import CGU from "../views/CGU.vue";
-import LegalNotice from "../views/LegalNotice.vue";
 import Dashboard from "../views/Dashboard.vue";
 import GameView from "../views/GameView.vue";
 
@@ -28,30 +25,9 @@ const routes = [
     component: Home
   },
   {
-    path: "/signUp",
-    name: "AuthSignUp",
-    component: AuthSignUp,
-    meta: {
-      requiresGuest: true
-    }
-  },
-  {
-    path: "/signIn",
-    name: "AuthSignIn",
-    component: AuthSignIn,
-    meta: {
-      requiresGuest: true
-    }
-  },
-  {
-    path: "/cgu",
-    name: "CGU",
+    path: '/cgu',
+    name: 'CGU',
     component: CGU
-  },
-  {
-    path: "/legalNotice",
-    name: "LegalNotice",
-    component: LegalNotice
   },
   {
     path: "/game",

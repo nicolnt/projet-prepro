@@ -1,0 +1,33 @@
+{
+  "name": "Tipitap",
+  "short_name": "Tipitap",
+  "theme_color": "#DEDBFF",
+  "background_color": "#FFFFFF",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "start_url": "/?utm_source=launcher",
+  "version": "0.1.0",
+  "icons": [
+    {
+      "src": "icons/ic_launcher.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    },
+    {
+      "size": "60x60",
+      "src": "icons/180.png",
+      "type": "image/png"
+    },
+    {
+      "size": "40x40",
+      "src": "icons/80.png",
+      "type": "image/png"
+    }
+  ]
+
+}

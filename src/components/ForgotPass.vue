@@ -1,3 +1,4 @@
+<!-- MODAL FOR FORGOT PASSWORD -->
 <template lang="html">
   <div id="modalPassword">
     <vs-popup title="Mot de passe oublié" :active.sync="popupActivo">
@@ -15,8 +16,6 @@
 </template>
 
 <script>
-/*import { db } from '../services/firebase'
-import { mapGetters } from "vuex";*/
 import firebase from 'firebase/app'
 require('firebase/auth')
 
@@ -56,7 +55,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
 .vs-popup {
   position: relative;
   font-family: Poppins;

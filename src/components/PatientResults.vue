@@ -1,10 +1,11 @@
+<!-- PAGE PATIENT'S TESTS RESULTS -->
 <template>
   <div class="patientResults">
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     <div class="patientResultsHeader">
       <h1>Résultats de {{ patient.firstName }} {{ patient.lastName }}- évaluation [VALIDATION]</h1>
       <div class="patientResultsHeaderSubtitle">
-        <h3>Test effectué le {{ this.getDate(patient.dateCreation.toDate()) }}</h3>
+        <h3>Test effectué le {{ (patient.dateCreation) ? this.getDate(patient.dateCreation.toDate()) : '' }}</h3>
         <vs-button color="#9082FF" type="filled" v-on:click="download" id="btnDownload" icon="get_app">
           Télécharger les résultats
         </vs-button>
@@ -18,22 +19,16 @@
         <div class="motricityResultsHistory">
           <!-- J'ai fait quelques petites recherches quand on devra brancher ça sur la bdd on pourra faire avec v-for et des props-->
           <div v-for="tentative in motricity" :key="tentative.id" class="circuit">
+            <TestTrackViewModal :ref="tentative.idParcours" :capture="tentative.testCapture" :idTest="tentative.idParcours"/>
             <h4>Circuit {{ tentative.idParcours + 1 }}</h4>
-            <div class = "circuitInfo">
-              <div class="track-container">
-                <svg class="wave" :style="{ bottom: - (90 - (tentative.score/100 * 90))+'px'}" width="264" height="173" viewBox="0 0 264 173" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g opacity="0.82">
-                  <path d="M0 73.0446V28.727C52.8 5.09099 105.6 5.09099 158.4 28.727V73.0446H0Z" :fill="secondaryColor(tentative.score)"/>
-                  <path d="M0 175V19.8634C52.8 29.7118 101.2 29.7118 145.2 19.8634C189.2 10.0151 228.8 9.03027 264 16.9089V175H0Z" :fill="primaryColor(tentative.score)"/>
-                  </g>
-                </svg>
+            <div class="circuitInfo">
+              <WaveScore @click="toggleModal(tentative.idParcours)" :score="tentative.score" showScore="true">
                 <img class="track" :src="trackImage(tentative.idParcours)">
                 <img class="capture" :src="tentative.testCapture">
-                <div class="score-number">
-                  <span class="percent-score">{{ tentative.score }}</span>
-                  <span class="percent-sign">%</span>
+                <div class="fade-overlay">
+                  <i class="material-icons" size="large" color="lightgray">zoom_in</i>
                 </div>
-              </div>
+              </WaveScore>
               <div class="circuitInfoContent">
                 <ul>
                   <li>Score : {{ tentative.score }}/100 </li>
@@ -45,34 +40,6 @@
             </div>
           </div>
 
-          <!--<div class="circuit">-->
-            <!--<h4>Circuit 1</h4>-->
-            <!--<div class = "circuitInfo">-->
-              <!--<img src="../assets/img-path.svg">-->
-              <!--<div class="circuitInfoContent">-->
-                <!--<ul>-->
-                  <!--<li>Score : 90/100 </li>-->
-                  <!--<li>Nombre d’obstacles touchés : 2</li>-->
-                  <!--<li>Temps réalisé : 15 sec</li>-->
-                  <!--<li>Circuit réussi : oui </li>-->
-                <!--</ul>                -->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="circuit">-->
-            <!--<h4>Circuit 2</h4>-->
-            <!--<div class = "circuitInfo">-->
-              <!--<img src="../assets/img-path.svg">-->
-              <!--<div class="circuitInfoContent">-->
-                <!--<ul>-->
-                  <!--<li>Score : 90/100 </li>-->
-                  <!--<li>Nombre d’obstacles touchés : 2</li>-->
-                  <!--<li>Temps réalisé : 15 sec</li>-->
-                  <!--<li>Circuit réussi : oui </li>-->
-                <!--</ul>                -->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
         </div>
         <h3>Commentaire à propos du test : <strong>Motricité fine</strong></h3>
         <div class ="motricityResultsComment">
@@ -101,8 +68,12 @@
 //import Hero from '@/components/Hero.vue'
 import { db } from '../services/firebase'
 
+import WaveScore from './WaveScore'
+import TestTrackViewModal from './TestTrackViewModal'
+
 export default {
   name: 'PatientResults',
+  components: { TestTrackViewModal, WaveScore },
   data() {
     return {
       motricity: [],
@@ -110,11 +81,13 @@ export default {
     }
   },
   methods: {
+    toggleModal(id){
+      this.$refs[id][0].toggle()
+    },
     download(){
-      console.log("coucou")
+      // TODO
     },
     trackImage(id) {
-      //console.log(`../tests/motricity/paths/test${parseInt(id.idParcours)+1}_background.svg`)
       const image = require(`../tests/motricity/paths/test${id+1}_background.svg`)
       return image
     },
@@ -125,30 +98,6 @@ export default {
       const date = creationDate.getDate() +'/' + month + '/'+ creationDate.getFullYear()
       return date
     },
-    secondaryColor(score) {
-      if (score >= 90)
-        return '#75BE89'
-      else if (score >= 60)
-        return '#9EB056'
-      else if (score >= 40)
-        return '#E0832D'
-      else if (score >= 15)
-        return '#E0832D'
-      else
-        return '#A33425'
-    },
-    primaryColor(score) {
-      if (score >= 90)
-        return '#74DB63'
-      else if (score >= 60)
-        return '#B0CC41'
-      else if (score >= 40)
-        return '#D4BB5F'
-      else if (score >= 15)
-        return '#F0B747'
-      else
-        return '#E44B4B'
-    }
   },
   mounted() {
     const motricity = []
@@ -179,19 +128,14 @@ export default {
 
 <style scoped>
 .patientResults {
-  
   text-align: left;
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
+  overflow-y: scroll;
 }
 .patientResults a {
-  position: absolute;
-  margin-top: -40px;
-  margin-left: -28px;
-  font-size: 30px;
   cursor: pointer;
 } 
 .patientResultsContent{
@@ -201,8 +145,6 @@ export default {
   margin: 0 auto;
   margin-top: 1%;
   border-radius: 16px;
-  height: 55vh;
-  overflow-y: scroll;
   padding-bottom: 2%;
 }
 .results, .globalComment{
@@ -298,41 +240,41 @@ export default {
   margin-left: 10px;
   flex-grow: 1;
 }
-.track-container {
+.wave-container {
   position: relative;
   width: 250px;
   overflow: hidden;
   border-radius: 10px;
   height: 180px;
   box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.3);
+  cursor: pointer;
 }
-.track-container img {
+.wave-container img {
   position: absolute;
   width: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.track-container .wave {
-  position: absolute;
-  width: 100%;
-  left: 50%;
-  bottom: -20px;
-  transform: translateX(-50%);
+.wave-container:hover .fade-overlay {
+  display: block;
 }
 
-.track-container .score-number {
+.wave-container .fade-overlay {
+  display: none;
   position: absolute;
-  bottom: 0;
-  right: 10px;
-  font-weight: bold;
-  font-size: 2rem;
+  width: 100%;
+  height: 100%;
+  background: #ffffff80;
+}
+.wave-container .fade-overlay .material-icons {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 6rem;
   color: white;
-}
-.track-container .score-number span.percent-score {
-  font-size: 3rem;
-}
-.track-container .score-number span {
-  text-shadow: 0px 1px 5px rgba(0,0,0,0.3);
+  text-shadow: 0px 1px 5px rgba(0,0,0,0.5);
 }
 </style>

@@ -83,7 +83,7 @@ export default {
         mistakeNb: this.game.userErrors,
         score: Math.floor(((this.game.score/20)*100)/6),
         dateTime: Date.now(),
-        succeed: (this.game.score >= 50) ? true : false
+        succeed: (Math.floor(((this.game.score/20)*100)/6) >= 50) ? true : false
       })
         .then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);

@@ -16,38 +16,52 @@
         <div class="header">
           <h3>Test motricité fine<span> - réussi à 55%</span><span> - non validé</span></h3> 
         </div>
-        <div class="motricityResultsHistory">
-          <!-- J'ai fait quelques petites recherches quand on devra brancher ça sur la bdd on pourra faire avec v-for et des props-->
-          <div v-for="tentative in motricity.tentatives" :key="tentative.id" class="circuit">
-            <TestTrackViewModal :ref="tentative.idParcours" :capture="tentative.testCapture" :idTest="tentative.idParcours"/>
-            <h4>Circuit {{ tentative.idParcours + 1 }}</h4>
-            <div class="circuitInfo">
-              <WaveScore @click="toggleModal(tentative.idParcours)" :score="tentative.score" showScore="true">
-                <img class="track" :src="trackImage(tentative.idParcours)">
-                <img class="capture" :src="tentative.testCapture">
-                <div class="fade-overlay">
-                  <i class="material-icons" size="large" color="lightgray">zoom_in</i>
+        <div class="content">
+          <div class="motricityResultsHistory">
+            <!-- J'ai fait quelques petites recherches quand on devra brancher ça sur la bdd on pourra faire avec v-for et des props-->
+            <div v-for="tentative in motricity.tentatives" :key="tentative.id" class="circuit">
+              <TestTrackViewModal :ref="tentative.idParcours" :capture="tentative.testCapture" :idTest="tentative.idParcours"/>
+              <h4>Circuit {{ tentative.idParcours + 1 }}</h4>
+              <div class="circuitInfo">
+                <WaveScore @click="toggleModal(tentative.idParcours)" :score="tentative.score" showScore="true">
+                  <img class="track" :src="trackImage(tentative.idParcours)">
+                  <img class="capture" :src="tentative.testCapture">
+                  <div class="fade-overlay">
+                    <i class="material-icons" size="large" color="lightgray">zoom_in</i>
+                  </div>
+                </WaveScore>
+                <div class="circuitInfoContent">
+                  <ul>
+                    <li>Score : {{ tentative.score }}/100 </li>
+                    <!-- <li>Nombre d’obstacles touchés : 2</li> -->
+                    <!-- <li>Temps réalisé : 15 sec</li> -->
+                    <li>Circuit réussi : {{ (tentative.score >= 50) ? 'oui': 'non' }} </li>
+                  </ul>                
                 </div>
-              </WaveScore>
-              <div class="circuitInfoContent">
-                <ul>
-                  <li>Score : {{ tentative.score }}/100 </li>
-                  <!-- <li>Nombre d’obstacles touchés : 2</li> -->
-                  <!-- <li>Temps réalisé : 15 sec</li> -->
-                  <li>Circuit réussi : {{ (tentative.score >= 50) ? 'oui': 'non' }} </li>
-                </ul>                
               </div>
             </div>
+          
           </div>
-
+          <h4 class="comment-title">Commentaire à propos du test <strong>Motricité fine</strong> :</h4>
+          <div class="motricityResultsComment">
+            <div v-if="motricity.commenting === false" class="comment">
+              <div class="comment-content">
+                {{ motricity.comment }}
+              </div>
+              <div class="edit-icon">
+                <div class="edit-icon-background" @click="motricity.commenting = true">
+                  <i class="material-icons">edit</i>
+                </div>
+              </div>
+            </div>
+            <div v-else-if="motricity.commenting === true" class="comment-editor">
+              <textarea autofocus placeholder="Ajouter un commentaire" v-model="motricity.comment"></textarea>
+              <vs-button @click="sendComment('motricity')" color="#9082FF" type="filled" id="btnMotricityComment">
+                Enregistrer le commentaire
+              </vs-button>
+            </div>
+          </div> 
         </div>
-        <h3>Commentaire à propos du test : <strong>Motricité fine</strong></h3>
-        <div class ="motricityResultsComment">
-          <textarea placeholder="Ajouter un commentaire" v-model="motricity.comment"></textarea>
-          <vs-button @click="sendComment('motricity')" color="#9082FF" type="filled" id="btnMotricityComment">
-            Enregistrer le commentaire
-          </vs-button>
-        </div> 
       </div>
       <div class="globalComment">
         <div class="header">
@@ -78,14 +92,15 @@ export default {
     return {
       motricity: {
         tentatives: [],
-        comment: ''
+        comment: '',
+        commenting: false
       },
       patient: {}
     }
   },
   methods: {
     sendComment(test) {
-      console.log('goo')
+      this[test].commenting = false
       db.collection('comments')
         .where('idPatient', '==', this.$store.state.currentPatient.id)
         .where('idTest', '==', test)
@@ -157,8 +172,10 @@ export default {
       .then(docs => {
         docs.forEach(doc => {
           const data = doc.data()
-          if (data.idTest === 'motricity')
+          if (data.idTest === 'motricity' && data.comment)
             this.motricity.comment = data.comment
+          else
+            this.motricity.commenting = true
         })
       })
   }
@@ -186,6 +203,52 @@ export default {
   border-radius: 16px;
   padding-bottom: 2%;
 }
+.comment-editor {
+  width: 100%;
+}
+
+.comment {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+}
+.comment-content {
+  background-color: #F0F0F0;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  flex-grow: 1;
+  align-items: stretch;
+}
+.comment .edit-icon {
+  opacity: 0;
+  width: 60px;
+  position: relative;
+}
+.comment:hover .edit-icon {
+  opacity: 1;
+}
+.comment .edit-icon .edit-icon-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background-color: #F0F0F0;
+  border-radius: 50%;
+}
+.comment .edit-icon:hover .edit-icon-background {
+  cursor: pointer;
+  background-color: #C1BFBF;
+}
+.comment .edit-icon i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .results, .globalComment{
   background-color: white;
   box-shadow: 0 4px 16px 0 rgba(0,0,0,.05);
@@ -203,6 +266,9 @@ export default {
 }
 .header h3, .header span {
   margin-left: 2%;
+}
+.results .content {
+  padding: 2%;
 }
 .patientResultsHeader{
   margin-top: 2%;
@@ -228,32 +294,28 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  margin-left:2%;
-  margin-top: 2%;
-  padding-bottom: 2%;
 }
 .globalCommentContent textarea ,.motricityResultsComment textarea {
-  width: 76%;
-  height: 20vh;
+  width: 100%;
   border: none;
   background-color: #F0F0F0;
   border-radius: 16px;
   padding: 10px;
 }
 .globalCommentContent #btnSaveGlobalComment, .motricityResultsComment #btnMotricityComment{
-  margin-left: 2%;
+  margin-top: 10px;
   width: 20%;
   border-radius: 16px;
 }
-.motricityResults h3{
-  margin-left: 2%;
+.patientResultsContent h4 {
+  font-weight: normal;
 }
+
 .motricityResultsHistory{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width:96%;
-  margin-left: 2%;
   padding-bottom: 2%;
 }
 .circuit{

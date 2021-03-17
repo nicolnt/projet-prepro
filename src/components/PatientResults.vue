@@ -16,48 +16,42 @@
         <div class="header">
           <h3>Test motricité fine<span> - réussi à 55%</span><span> - non validé</span></h3> 
         </div>
-        <div class="motricityResultsHistory">
-          <!-- J'ai fait quelques petites recherches quand on devra brancher ça sur la bdd on pourra faire avec v-for et des props-->
-          <div v-for="tentative in motricity.tentatives" :key="tentative.id" class="circuit">
-            <TestTrackViewModal :ref="tentative.idParcours" :capture="tentative.testCapture" :idTest="tentative.idParcours"/>
-            <h4>Circuit {{ tentative.idParcours + 1 }}</h4>
-            <div class="circuitInfo">
-              <WaveScore @click="toggleModal(tentative.idParcours)" :score="tentative.score" showScore="true">
-                <img class="track" :src="trackImage(tentative.idParcours)">
-                <img class="capture" :src="tentative.testCapture">
-                <div class="fade-overlay">
-                  <i class="material-icons" size="large" color="lightgray">zoom_in</i>
+        <div class="content">
+          <div class="motricityResultsHistory">
+            <!-- J'ai fait quelques petites recherches quand on devra brancher ça sur la bdd on pourra faire avec v-for et des props-->
+            <div v-for="tentative in motricity.tentatives" :key="tentative.id" class="circuit">
+              <TestTrackViewModal :ref="tentative.idParcours" :capture="tentative.testCapture" :idTest="tentative.idParcours"/>
+              <h4>Circuit {{ tentative.idParcours + 1 }}</h4>
+              <div class="circuitInfo">
+                <WaveScore @click="toggleModal(tentative.idParcours)" :score="tentative.score" showScore="true">
+                  <img class="track" :src="trackImage(tentative.idParcours)">
+                  <img class="capture" :src="tentative.testCapture">
+                  <div class="fade-overlay">
+                    <i class="material-icons" size="large" color="lightgray">zoom_in</i>
+                  </div>
+                </WaveScore>
+                <div class="circuitInfoContent">
+                  <ul>
+                    <li>Score : {{ tentative.score }}/100 </li>
+                    <!-- <li>Nombre d’obstacles touchés : 2</li> -->
+                    <!-- <li>Temps réalisé : 15 sec</li> -->
+                    <li>Circuit réussi : {{ (tentative.score >= 50) ? 'oui': 'non' }} </li>
+                  </ul>                
                 </div>
-              </WaveScore>
-              <div class="circuitInfoContent">
-                <ul>
-                  <li>Score : {{ tentative.score }}/100 </li>
-                  <!-- <li>Nombre d’obstacles touchés : 2</li> -->
-                  <!-- <li>Temps réalisé : 15 sec</li> -->
-                  <li>Circuit réussi : {{ (tentative.score >= 50) ? 'oui': 'non' }} </li>
-                </ul>                
               </div>
             </div>
+          
           </div>
-
+          <h4 class="comment-title">Commentaire à propos du test <strong>Motricité fine</strong> :</h4>
+          <ResultComment type="motricity"/>
         </div>
-        <h3>Commentaire à propos du test : <strong>Motricité fine</strong></h3>
-        <div class ="motricityResultsComment">
-          <textarea placeholder="Ajouter un commentaire" v-model="motricity.comment"></textarea>
-          <vs-button @click="sendComment('motricity')" color="#9082FF" type="filled" id="btnMotricityComment">
-            Enregistrer le commentaire
-          </vs-button>
-        </div> 
       </div>
       <div class="globalComment">
         <div class="header">
           <h3>Commentaire global</h3>
         </div>
-        <div class="globalCommentContent">
-          <textarea placeholder="Ajouter un commentaire"></textarea>
-          <vs-button color="#9082FF" type="filled" id="btnSaveGlobalComment">
-            Enregistrer le commentaire
-          </vs-button>
+        <div class="content">
+          <ResultComment type="global" />
         </div>
       </div>
     </div>
@@ -69,23 +63,25 @@
 import { db } from '../services/firebase'
 
 import WaveScore from './WaveScore'
+import ResultComment from './ResultComment'
 import TestTrackViewModal from './TestTrackViewModal'
 
 export default {
   name: 'PatientResults',
-  components: { TestTrackViewModal, WaveScore },
+  components: { TestTrackViewModal, WaveScore, ResultComment },
   data() {
     return {
       motricity: {
         tentatives: [],
-        comment: ''
+        comment: '',
+        commenting: false
       },
       patient: {}
     }
   },
   methods: {
     sendComment(test) {
-      console.log('goo')
+      this[test].commenting = false
       db.collection('comments')
         .where('idPatient', '==', this.$store.state.currentPatient.id)
         .where('idTest', '==', test)
@@ -157,8 +153,10 @@ export default {
       .then(docs => {
         docs.forEach(doc => {
           const data = doc.data()
-          if (data.idTest === 'motricity')
+          if (data.idTest === 'motricity' && data.comment)
             this.motricity.comment = data.comment
+          else
+            this.motricity.commenting = true
         })
       })
   }
@@ -177,7 +175,7 @@ export default {
 .patientResults a {
   cursor: pointer;
 } 
-.patientResultsContent{
+.patientResultsContent {
   background-color : #F0F0F0;
   box-shadow: 0 4px 16px 0 rgba(0,0,0,.05);
   width: 98%;
@@ -186,7 +184,8 @@ export default {
   border-radius: 16px;
   padding-bottom: 2%;
 }
-.results, .globalComment{
+
+.results, .globalComment {
   background-color: white;
   box-shadow: 0 4px 16px 0 rgba(0,0,0,.05);
   border-radius: 16px;
@@ -194,6 +193,7 @@ export default {
   margin: 0 auto;
   text-align: left;
   margin-top:2%;
+  margin-bottom: 50px;
 }
 .header{
   background-color:#9082FF;
@@ -203,6 +203,9 @@ export default {
 }
 .header h3, .header span {
   margin-left: 2%;
+}
+.content {
+  padding: 2%;
 }
 .patientResultsHeader{
   margin-top: 2%;
@@ -228,32 +231,15 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  margin-left:2%;
-  margin-top: 2%;
-  padding-bottom: 2%;
 }
-.globalCommentContent textarea ,.motricityResultsComment textarea {
-  width: 76%;
-  height: 20vh;
-  border: none;
-  background-color: #F0F0F0;
-  border-radius: 16px;
-  padding: 10px;
-}
-.globalCommentContent #btnSaveGlobalComment, .motricityResultsComment #btnMotricityComment{
-  margin-left: 2%;
-  width: 20%;
-  border-radius: 16px;
-}
-.motricityResults h3{
-  margin-left: 2%;
+.patientResultsContent h4 {
+  font-weight: normal;
 }
 .motricityResultsHistory{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width:96%;
-  margin-left: 2%;
   padding-bottom: 2%;
 }
 .circuit{

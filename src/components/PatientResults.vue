@@ -51,13 +51,13 @@
 
       <div class="attentionCapacityResults results">
         <div class="header">
-          <h3>Test Capacités attentionnelles<span> - réussi à 55%</span><span> - non validé</span></h3> 
+          <h3>Test Capacités attentionnelles<span> - réussi à {{ attentionCapacity[0].score }}%</span><span> - {{ (attentionCapacity[0].succeed) ? '': 'non' }} validé</span></h3> 
         </div>
         <div class="attentionCapacityResultsHistory">
-          <h3>Score</h3>
-          <WaveScore :score="attentionCapacity.score" showScore="true">
+          <h3>Score :</h3>
+          <WaveScore :score="attentionCapacity[0].score" showScore="true">
           </WaveScore>
-          <h3>Nombre de fautes : {{ attentionCapacity.mistakeNb >= 50 }} </h3>
+          <h3>Nombre de fautes : {{ attentionCapacity[0].mistakeNb }} </h3>
         </div>
         <h3>Commentaire à propos du test : <strong>Capacités attentionnelles</strong></h3>
         <div class ="attentionCapacityResultsComment">
@@ -70,14 +70,14 @@
 
       <div class="test3Results results">
         <div class="header">
-          <h3>Test Comportement en situation complexe<span> - réussi à 55%</span><span> - non validé</span></h3> 
+          <h3>Test Comportement en situation complexe<span> - {{ (test3[0].succeed) ? '': 'non' }} validé</span></h3> 
         </div>
         <div class="test3ResultsHistory">
-          <!--<div v-for="tentative in motricity" :key="tentative.id" class="circuit">
-            <img src="../../source en fonction du numéro de la situation" />
-            <h4>Situation {{ numero }} : {{ réussite }} </h4>
+          <div v-for="smallTest in test3[0].allResults" :key="smallTest.id" class="circuit">
+            <!--<img src="../../source en fonction du numéro de la situation" />-->
+            <h4>Situation {{  }} : {{ (smallTest) ? '' : 'non' }} réussie</h4>
           </div>
-          <h3><strong>Bilan : test {{ réussite globale }} </strong></h3>-->
+          <h3><strong>Bilan : test {{ (test3[0].succeed) ? '' : 'non' }} réussi</strong></h3>
         </div>
         <h3>Commentaire à propos du test : <strong>Comportement en situation complexe</strong></h3>
         <div class ="test3ResultsComment">
@@ -104,9 +104,7 @@
 </template>
 
 <script>
-//import Hero from '@/components/Hero.vue'
 import { db } from '../services/firebase'
-require('firebase/auth')
 
 import WaveScore from './WaveScore'
 import TestTrackViewModal from './TestTrackViewModal'
@@ -171,14 +169,11 @@ export default {
     db.collection('test2').where('idPatient', '==', this.$store.state.currentPatient.id)
       .get()
       .then((docs) => {
-        console.log('hey test 2')
         docs.forEach((doc) => {
-          console.log('hola test 2')
           const data = doc.data() 
-          //data.score = (data.score * 100).toFixed(2)
-          console.log(data)
           attentionCapacity.push(data)
         })
+        this.attentionCapacity = attentionCapacity
       })
 
     // Add test3 results to data
@@ -186,14 +181,11 @@ export default {
     db.collection('test3').where('idPatient', '==', this.$store.state.currentPatient.id)
       .get()
       .then((docs) => {
-        console.log('hey test 3')
         docs.forEach((doc) => {
-          console.log('hola test 3')
           const data = doc.data() 
-          //data.score = (data.score * 100).toFixed(2)
-          console.log(data)
           test3.push(data)
         })
+        this.test3 = test3
       })
   }
 }

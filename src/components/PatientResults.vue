@@ -15,7 +15,7 @@
       <span id="toHide">Aucun test n'a été effectué par ce patient pour le moment.</span>
       <div class="motricityResults results hidden">
         <div class="header">
-          <h3>Test Motricité fine<span> - réussi à 55%</span><span> - non validé</span></h3> 
+          <h3>Test Motricité fine<span> - réussi à {{motricity.average}} %</span><span> - {{ (motricity.average >= 50) ? '': 'non' }} validé</span></h3> 
         </div>
         <div class="content">
           <div class="motricityResultsHistory">
@@ -119,7 +119,8 @@ export default {
       motricity: {
         tentatives: [],
         comment: '',
-        commenting: false
+        commenting: false,
+        average : 0
       },
       patient: {}
     }
@@ -170,6 +171,13 @@ export default {
       const date = creationDate.getDate() +'/' + month + '/'+ creationDate.getFullYear()
       return date
     },
+    motricityAverage(){
+      let average = 0
+      this.motricity.tentatives.forEach ( item => {
+        average += parseInt(item.score)
+      })
+      return average / this.motricity.tentatives.length
+    }
   },
   mounted() {
     db.collection('patients').doc(this.$store.state.currentPatient.id).get()
@@ -187,6 +195,7 @@ export default {
           switch(data.idTest) {
             case 'motricity':
               motricity.push(data)
+              this.motricity.average += data.score
               break
           }
           document.querySelector('.motricityResults').classList.remove('hidden')
@@ -196,6 +205,11 @@ export default {
         this.motricity.tentatives = motricity.sort((a, b) => {
           return parseInt(a.idParcours) - parseInt(b.idParcours)
         })
+        let average = 0
+        this.motricity.tentatives.forEach ( item => {
+          average += parseInt(item.score)
+        })
+        this.motricity.average = average / this.motricity.tentatives.length
       })
     db.collection('comments').where('idPatient', '==', this.$store.state.currentPatient.id).get()
       .then(docs => {

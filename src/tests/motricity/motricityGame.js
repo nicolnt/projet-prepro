@@ -1,7 +1,7 @@
 class Track {
-	static trackReady = false
-	static trackImageBackground = new Image()
-	static trackImageTrack = new Image()
+  static trackReady = false
+  static trackImageBackground = new Image()
+  static trackImageTrack = new Image()
 
   /**
    * Init a new track
@@ -9,13 +9,13 @@ class Track {
   static setTrack(trackImageName) {
     Track.trackReady = false
 
-		Track.trackCanvas = document.getElementById('pickerTrack')
-		Track.backgroundCanvas = document.getElementById('backgroundTrack')
-		Track.trackCanvasContext = Track.trackCanvas.getContext('2d')
-		Track.backgroundCanvasContext = Track.backgroundCanvas.getContext('2d')
+    Track.trackCanvas = document.getElementById('pickerTrack')
+    Track.backgroundCanvas = document.getElementById('backgroundTrack')
+    Track.trackCanvasContext = Track.trackCanvas.getContext('2d')
+    Track.backgroundCanvasContext = Track.backgroundCanvas.getContext('2d')
 
-		Track.traceCanvas = document.getElementById('traceCanvas')
-		Track.traceCanvasContext = Track.traceCanvas.getContext('2d')
+    Track.traceCanvas = document.getElementById('traceCanvas')
+    Track.traceCanvasContext = Track.traceCanvas.getContext('2d')
 
     Track.trackImageBackground.src = require(`./paths/${trackImageName}_background.svg`)
     Track.trackImageTrack.src = require(`./paths/${trackImageName}_track.svg`)
@@ -37,11 +37,11 @@ class Track {
     return Track.traceCanvas.toDataURL("image/png");
   }
 
-	static trackLoaded() {
-		if (Track.trackImageBackground.complete && Track.trackImageTrack.complete) {
-			const imageRatio = Track.trackImageBackground.width / Track.trackImageBackground.height
-			const canvasWidth = Track.traceCanvas.clientWidth
-			const canvasHeight = Track.traceCanvas.clientHeight
+  static trackLoaded() {
+    if (Track.trackImageBackground.complete && Track.trackImageTrack.complete) {
+      const imageRatio = Track.trackImageBackground.width / Track.trackImageBackground.height
+      const canvasWidth = Track.traceCanvas.clientWidth
+      const canvasHeight = Track.traceCanvas.clientHeight
 
       Track.traceCanvas.width = canvasWidth
       Track.traceCanvas.height = canvasHeight
@@ -95,17 +95,17 @@ class Track {
 }
 
 function finPos(target, offset) {
-	let left = 0;
-	let top = 0;
-	if (target.offsetParent) {
-		do {
-			left += target.offsetLeft
-			top += target.offsetTop
-			/* eslint no-cond-assign: "off" */
-		} while (target = target.offsetParent)
-	}
-	offset.x = left
-	offset.y = top
+  let left = 0;
+  let top = 0;
+  if (target.offsetParent) {
+    do {
+      left += target.offsetLeft
+      top += target.offsetTop
+      /* eslint no-cond-assign: "off" */
+    } while (target = target.offsetParent)
+  }
+  offset.x = left
+  offset.y = top
 }
 
 /**
@@ -125,7 +125,7 @@ class Level {
   timeElapsed = Date.now()
   callback
 
-	static currentLevel
+  static currentLevel
 
   constructor(levelData, callback) {
     this.callback = callback
@@ -158,8 +158,8 @@ class Level {
           finPos(pointer.target, offset)
         }
 
-				Level.currentLevel.drawing = true
-				const coords = { x: pointer.changedTouches[0].pageX - offset.x, y: pointer.changedTouches[0].pageY - offset.y }
+        Level.currentLevel.drawing = true
+        const coords = { x: pointer.changedTouches[0].pageX - offset.x, y: pointer.changedTouches[0].pageY - offset.y }
 
         Level.currentLevel.addPoint(coords, true)
         Level.currentLevel.traces++

@@ -14,7 +14,7 @@
     <div class="patientResultsContent">
       <div class="motricityResults results">
         <div class="header">
-          <h3>Test motricité fine<span> - réussi à 55%</span><span> - non validé</span></h3> 
+          <h3>Test Motricité fine<span> - réussi à 55%</span><span> - non validé</span></h3> 
         </div>
         <div class="content">
           <div class="motricityResultsHistory">
@@ -46,6 +46,46 @@
           <ResultComment type="motricity"/>
         </div>
       </div>
+
+      <div class="attentionCapacityResults results">
+        <div class="header">
+          <h3>Test Capacités attentionnelles<span> - réussi à {{ attentionCapacity[0].score }}%</span><span> - {{ (attentionCapacity[0].succeed) ? '': 'non' }} validé</span></h3> 
+        </div>
+        <div class="attentionCapacityResultsHistory">
+          <h3>Score :</h3>
+          <WaveScore :score="attentionCapacity[0].score" showScore="true">
+          </WaveScore>
+          <h3>Nombre de fautes : {{ attentionCapacity[0].mistakeNb }} </h3>
+        </div>
+        <h3>Commentaire à propos du test : <strong>Capacités attentionnelles</strong></h3>
+        <div class ="attentionCapacityResultsComment">
+          <textarea placeholder="Ajouter un commentaire"></textarea>
+          <vs-button color="#9082FF" type="filled" id="btnAttentionCapacityComment">
+            Enregistrer le commentaire
+          </vs-button>
+        </div> 
+      </div>
+
+      <div class="test3Results results">
+        <div class="header">
+          <h3>Test Comportement en situation complexe<span> - {{ (test3[0].succeed) ? '': 'non' }} validé</span></h3> 
+        </div>
+        <div class="test3ResultsHistory">
+          <div v-for="(smallTest, index) in test3[0].allResults" :key="smallTest.id" class="circuit">
+            <!--<img src="../../source en fonction du numéro de la situation" />-->
+            <h4>Situation {{ index + 1 }} : {{ (smallTest) ? '' : 'non' }} réussie</h4>
+          </div>
+          <h3><strong>Bilan : test {{ (test3[0].succeed) ? '' : 'non' }} réussi</strong></h3>
+        </div>
+        <h3>Commentaire à propos du test : <strong>Comportement en situation complexe</strong></h3>
+        <div class ="test3ResultsComment">
+          <textarea placeholder="Ajouter un commentaire"></textarea>
+          <vs-button color="#9082FF" type="filled" id="btnTest3Comment">
+            Enregistrer le commentaire
+          </vs-button>
+        </div> 
+      </div>
+
       <div class="globalComment">
         <div class="header">
           <h3>Commentaire global</h3>
@@ -59,7 +99,6 @@
 </template>
 
 <script>
-//import Hero from '@/components/Hero.vue'
 import { db } from '../services/firebase'
 
 import WaveScore from './WaveScore'
@@ -71,6 +110,8 @@ export default {
   components: { TestTrackViewModal, WaveScore, ResultComment },
   data() {
     return {
+      attentionCapacity: [],
+      test3: [],
       motricity: {
         tentatives: [],
         comment: '',
@@ -127,15 +168,16 @@ export default {
     },
   },
   mounted() {
-    const motricity = []
     db.collection('patients').doc(this.$store.state.currentPatient.id).get()
       .then(docs => {
         this.patient = docs.data()
       })
+    // Add motricity test results to data
+    const motricity = []
     db.collection('tentatives').where('idPatient', '==', this.$store.state.currentPatient.id)
       .get()
-      .then(docs => {
-        docs.forEach(doc => {
+      .then((docs) => {
+        docs.forEach((doc) => {
           const data = doc.data() 
           data.score = (data.score * 100).toFixed(2)
           switch(data.idTest) {
@@ -158,6 +200,30 @@ export default {
           else
             this.motricity.commenting = true
         })
+      })
+      
+    // Add attention capacity test results to data
+    const attentionCapacity = []
+    db.collection('test2').where('idPatient', '==', this.$store.state.currentPatient.id)
+      .get()
+      .then((docs) => {
+        docs.forEach((doc) => {
+          const data = doc.data() 
+          attentionCapacity.push(data)
+        })
+        this.attentionCapacity = attentionCapacity
+      })
+
+    // Add test3 results to data
+    const test3 = []
+    db.collection('test3').where('idPatient', '==', this.$store.state.currentPatient.id)
+      .get()
+      .then((docs) => {
+        docs.forEach((doc) => {
+          const data = doc.data() 
+          test3.push(data)
+        })
+        this.test3 = test3
       })
   }
 }
@@ -182,7 +248,7 @@ export default {
   margin: 0 auto;
   margin-top: 1%;
   border-radius: 16px;
-  padding-bottom: 2%;
+  padding-bottom: 10vh;
 }
 
 .results, .globalComment {
@@ -227,20 +293,39 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.globalCommentContent, .motricityResultsComment{
+.globalCommentContent, .motricityResultsComment, .attentionCapacityResultsComment, .test3ResultsComment{
   display: flex;
   flex-direction: row;
   align-items: flex-end;
 }
-.patientResultsContent h4 {
-  font-weight: normal;
+.globalCommentContent textarea ,.motricityResultsComment textarea, .attentionCapacityResultsComment textarea, .test3ResultsComment textarea {
+  width: 76%;
+  height: 20vh;
+  border: none;
+  background-color: #F0F0F0;
+  border-radius: 16px;
+  padding: 10px;
 }
-.motricityResultsHistory{
+.globalCommentContent #btnSaveGlobalComment, #btnMotricityComment, #btnAttentionCapacityComment, #btnTest3Comment{
+  margin-left: 2%;
+  width: 20%;
+  border-radius: 16px;
+}
+.motricityResults h3, .attentionCapacityResults h3, .test3Results h3 {
+  margin-left: 2%;
+}
+.motricityResultsHistory, .attentionCapacityResultsHistory, .test3ResultsHistory{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width:96%;
   padding-bottom: 2%;
+}
+.attentionCapacityResultsHistory, .test3ResultsHistory{
+  flex-direction: column;
+}
+.attentionCapacityResultsHistory > * {
+  margin: 1% 0;
 }
 .circuit{
   width: 30%;

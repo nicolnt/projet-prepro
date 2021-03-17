@@ -9,6 +9,9 @@ import 'vuesax/dist/vuesax.css' //Vuesax styles
 import 'material-icons/iconfont/material-icons.css'
 import store from "./services/stores/logStore";
 
+import './registerServiceWorker'
+
+
 import VueApexCharts from 'vue-apexcharts'
 
 import { rtdbPlugin } from 'vuefire'

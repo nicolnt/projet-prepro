@@ -1,10 +1,7 @@
 <!-- FOOTER -->
 <template>
   <div class="footer">
-    <div id="footer">
-      <vs-button type="flat" v-bind:text-color="txtColor" v-on:click="goLegalNotice">Mentions légales</vs-button>
-      <vs-button type="flat" v-bind:text-color="txtColor" v-on:click="goCGU">CGU</vs-button>
-    </div>
+    <vs-button type="flat" v-bind:text-color="txtColor" v-on:click="goCGU">CGU</vs-button>
   </div>
 </template>
 
@@ -22,10 +19,6 @@ export default {
     }
   },
   methods: {
-    goLegalNotice() {
-      if(this.$route.name != 'LegalNotice')
-        this.$router.push({name:'LegalNotice'})
-    },
     goCGU() {
       if(this.$route.name != 'CGU')
         this.$router.push({name:'CGU'})
@@ -43,8 +36,6 @@ export default {
   background-color: white;
   text-align: center;
   z-index: 1;
-}
-#footer {
   padding: 1rem 0;
 }
 .vs-button {

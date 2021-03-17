@@ -9,12 +9,12 @@
   "version": "0.1.0",
   "icons": [
     {
-      "src": "img/icons/ic_launcher.png",
+      "src": "icons/ic_launcher.png",
       "sizes": "72x72",
       "type": "image/png"
     },
     {
-      "src": "img/icons/1024.png",
+      "src": "icons/1024.png",
       "sizes": "1024x1024",
       "type": "image/png"
     },

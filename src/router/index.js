@@ -41,6 +41,10 @@ const routes = [
       {
         path: "attentionCapacity",
         component: AttentionCapacityTest
+      },
+      {
+        path: "thinkingSkills",
+        component: MotricityTest
       }
     ]
   },

@@ -20,13 +20,15 @@
                 <i class="material-icons" aria-hidden="true">person</i>
               </span>
             </div>
-            <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-              <input class="input" id="email" type="email" name="email" required v-model="form.email"/>
-              <span class="focus-input"></span>
-              <span class="symbol-input">
-                <i class="material-icons" aria-hidden="true">email</i>
-              </span>            
-            </div>
+          </div>
+          <div class="wrap-input validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+            <input class="input" id="email" type="email" name="email" required v-model="form.email"/>
+            <span class="focus-input"></span>
+            <span class="symbol-input">
+              <i class="material-icons" aria-hidden="true">email</i>
+            </span>            
+          </div>
+          <div class="wrapperInfosForm">
             <div class="wrap-input validate-input" data-validate = "Valid birthday is required: 10/05/21">
               <input class="input" id="birthday" type="date" name="birthday" required v-model="form.birthday"/>
               <span class="focus-input"></span>
@@ -38,13 +40,15 @@
               </select>
               <span class="focus-input"></span>
             </div>
-            <div class="wrap-input validate-input" data-validate = "Valid address is required">
-              <input class="input" id="address" type="text" name="address" required v-model="form.address"/>
-              <span class="focus-input"></span>
-              <span class="symbol-input">
-                <i class="material-icons" aria-hidden="true">place</i>
-              </span>
-            </div>
+          </div>
+          <div class="wrap-input validate-input" data-validate = "Valid address is required">
+            <input class="input" id="address" type="text" name="address" required v-model="form.address"/>
+            <span class="focus-input"></span>
+            <span class="symbol-input">
+              <i class="material-icons" aria-hidden="true">place</i>
+            </span>
+          </div>
+          <div class="wrapperInfosForm">
             <div class="wrap-input validate-input" data-validate = "Valid code postal is required: 26730">
               <input class="input" id="cp" type="number" name="cp" required v-model="form.cp"/>
               <span class="focus-input"></span>
@@ -59,13 +63,13 @@
                 <i class="material-icons" aria-hidden="true">place</i>
               </span>
             </div>
-            <div class="wrap-input validate-input" data-validate = "Valid reason is required">
-              <input class="input" id="reason" type="text" name="reason" required v-model="form.reason"/>
-              <span class="reason focus-input"></span>
-            </div>
-            <div v-if="error" class="connectionError">{{error}}</div>
-            <button color="#9082FF" type="submit" class="button">Modifier</button>
           </div>
+          <div class="wrap-input validate-input" data-validate = "Valid reason is required">
+            <input class="input" id="reason" type="text" name="reason" required v-model="form.reason"/>
+            <span class="reason focus-input"></span>
+          </div>
+          <div v-if="error" class="connectionError">{{error}}</div>
+          <button color="#9082FF" type="submit" class="button">Modifier</button>
         </form>
         <img class="plane-purple" src="../assets/plane-purple-illustration.svg"/>
       </div>
@@ -73,7 +77,7 @@
       <!-- Update psy's informations -->
       <div v-if="personType === 'psy'" id="modalContentPsy">
         <form action="#" @submit="submit">
-          <div class="wrapperInfosForm">
+          <div class="wrapperPsyInfosForm">
             <div class="wrap-input validate-input" data-validate = "Valid last name is required">
               <input class="input" id="lastName" type="text" name="lastName" required autofocus v-model="form.lastName"/>
               <span class="focus-input"></span>
@@ -156,9 +160,6 @@ export default {
       user: "user",
       patient: "currentPatient"
     }),
-    // ...mapState({
-    //   patient: 'currentPatient'
-    // })
   },
   methods: {
     submit() {
@@ -186,23 +187,24 @@ export default {
         });
       } else if(this.personType === 'patient') {
         this.popupActivo = !this.popupActivo
-        db.collection("patients").doc(self.patient.id).update({
-            firstName: self.form.firstName,
-            lastName: self.form.lastName,
-            email: self.form.email,
-            birthday: self.form.birthday,
-            address: self.form.address,
-            cp: self.form.cp,
-            city: self.form.city,
-            testReason: self.form.reason,
-            gender: self.form.gender
-        }).catch(function(error) {
+        const patientTest = {
+          firstName: self.form.firstName,
+          lastName: self.form.lastName,
+          email: self.form.email,
+          birthday: self.form.birthday,
+          address: self.form.address,
+          cp: self.form.cp,
+          city: self.form.city,
+          testReason: self.form.reason,
+          gender: self.form.gender
+        }
+        db.collection("patients").doc(self.patient.id)
+          .update(patientTest)
+          .catch(function(error) {
           console.error("Error adding document: ", error);
         });
+        this.$store.commit("SET_CURRENT_PATIENT", patientTest)
       }
-      // this.$store.dispatch("FETCH_PATIENT");
-      // console.log(this.patient)
-      // this.$store.dispatch("FETCH_PATIENT", this.patient);
     },
     toggle() {
       this.popupActivo = !this.open;
@@ -234,11 +236,16 @@ export default {
   border-radius: 20px;
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.7);    
   width: 600px!important;
+  text-align: center;
 }
 .wrapperInfosForm {
   display: flex;
-  flex-flow: row wrap;
   justify-content: space-between;
+}
+.wrapperPsyInfosForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .wrapperInfosForm > div { 
   width: 48%;
@@ -273,7 +280,8 @@ export default {
   margin-bottom: 1.5rem;
 }
 .input {
-  font-size: 14px;
+  font-size: 15px;
+  font-family: 'Poppins';
   line-height: 1.5;
   color: rgb(118, 118, 118);
   display: block;
@@ -290,11 +298,12 @@ export default {
 }
 #birthday, #gender {
   padding: 0 30px;
+  font-family: 'Poppins';
 }
 #reason {
   border-radius: 0px;
   height: 80px;
-  font-family: Arial;
+  font-family: 'Poppins';
   padding: 10px 30px;
 }
 .reason.focus-input {
@@ -391,9 +400,5 @@ export default {
   position: absolute;
   top: -19px;
   left: -44px;
-}
-.vs-popup h3 {
-  text-align: center;
-  font: 400 13.3333px Arial;
 }
 </style>

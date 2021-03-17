@@ -74,9 +74,8 @@ export default {
   methods: {
     goPatientProfil(patient) {
       if(this.$route.name != 'PatientProfil') {
-        this.$router.push({name:'PatientProfil'})
         this.$store.commit("SET_CURRENT_PATIENT", patient)
-        // this.$store.dispatch("FETCH_PATIENT", patient);
+        this.$router.push({name:'PatientProfil'})
       }
     },
     toggleModal() {

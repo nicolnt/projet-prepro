@@ -1,14 +1,13 @@
+<!-- SIDEBAR ON THE LEFT WITH PSY'S PROFIL AND NAVIGATION -->
 <template>
   <div class="sideBar">
+    <h2 v-on:click="goDashboard"> Tapitap </h2>
     <div size="small" id="cardUser">
       <!-- changer l'avatar en homme/femme en fonction de la connexion  -->
-      <img class="avatar" alt="Avatar woman" src="../assets/avatar-woman-illustration.svg"/>
+      <img class="avatar" alt="Avatar woman" src="../assets/avatarPsy.svg"/>
       <div id="txtCardUser">
         <h3>{{user.data.displayName}}</h3>
         <p>Psychologue</p>
-      </div>
-      <div class="icon-settings">
-        <vs-icon class="icon-settings-animation" icon="settings" v-on:click="goPsyInformations"></vs-icon>
       </div>
     </div>
     <div id="tag">
@@ -51,6 +50,23 @@ export default {
       user: "user"
     })
   },
+  created() {
+    if(this.$route.name === 'PatientsList') {
+      this.isActiveStats = false
+      this.isActiveParams = false
+      this.isActivePatients = true
+    }
+    if(this.$route.name === 'Stats') {
+      this.isActiveParams = false
+      this.isActivePatients = false
+      this.isActiveStats = true
+    }
+    if(this.$route.name === 'AppParams') {
+      this.isActiveStats = false
+      this.isActivePatients = false
+      this.isActiveParams = true
+    }
+  },
   methods: { 
     activePage(isActive){
       if(isActive === 'isActivePatients' && this.$route.name != 'PatientsList') {
@@ -75,6 +91,10 @@ export default {
     goPsyInformations() {
       if(this.$route.name != 'PsyInformations')
         this.$router.push({name:'PsyInformations'})
+    }, 
+    goDashboard() {
+      if(this.$route.name != 'PatientsList')
+        this.$router.push({name:'PatientsList'})
     }
   }
 }
@@ -91,6 +111,10 @@ export default {
   box-shadow: 17px 0px 30px -24px rgba(200, 200, 200, 0.2);
   position: relative;
   z-index: 2;
+}
+.sideBar h2 {
+  cursor: pointer;
+  margin: 2rem 0;
 }
 .pages {
   display: flex;
@@ -135,17 +159,16 @@ export default {
   margin-right: 10px;
 }
 #cardUser {
-  height: 80px;
+  height: 90px;
   width: 90%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: left;
   align-items: center;
   align-content: center;
   background-color: #9082FF;
-  margin-top: 15px;
   border-radius: 10px;
-  padding: 10px;
+  padding: 1rem;
 }
 .avatar {
   width: 50px;
@@ -155,20 +178,7 @@ export default {
   flex-direction: column;
   text-align: left;
   color: #fff;
-}
-.icon-settings {
-  display: flex;
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 3px;
-  color: #9082FF;
-  cursor: pointer;
-}
-.icon-settings-animation {
-  transition: all 2s ease;
-}
-.icon-settings-animation:hover {
-  transform: rotate(360deg) scale(1.2);
+  margin: 0 1rem;
 }
 .material-icons {
   margin-left: 0;
@@ -193,9 +203,10 @@ export default {
   bottom: 0;
   left: 20px;
 }
+
 @media screen and (max-width: 1025px) {
   .sideBar {
-    width: auto;
+    width: 180px;
     padding: 1rem;
   }
   #cardUser {

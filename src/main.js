@@ -9,12 +9,18 @@ import 'vuesax/dist/vuesax.css' //Vuesax styles
 import 'material-icons/iconfont/material-icons.css'
 import store from "./services/stores/logStore";
 
+import './registerServiceWorker'
+
+
+import VueApexCharts from 'vue-apexcharts'
+
 import { rtdbPlugin } from 'vuefire'
 Vue.use(rtdbPlugin)
 
 Vue.config.productionTip = false
 
 Vue.use(Vuesax);
+Vue.use(VueApexCharts);
 
 store.dispatch("FETCH_USER");
 

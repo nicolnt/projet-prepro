@@ -1,3 +1,4 @@
+<!-- ADD PATIENT MODAL -->
 <template lang="html">
   <div id="modalPatient">
     <vs-popup title="Ajouter un patient" :active.sync="popupActivo">
@@ -160,7 +161,6 @@
 </template>
 
 <script>
-// import Input from '@/components/Input.vue'
 import { db } from '../services/firebase'
 import { mapGetters } from "vuex";
 import firebase from 'firebase/app'
@@ -171,19 +171,6 @@ export default {
   data() {
     return { 
       popupActivo: false,
-      m_valueLastName: "",
-      m_valueFirstName: "",
-      m_valueEmail: "",
-      m_valueBirthday: "",
-      m_valueAddress: "",
-      m_valueCp: "",
-      m_valueCity: "",
-      m_valueReason : "",
-      selectGenre: "Genre",
-      options:[
-        {text: 'Homme', value: 1},
-        {text: 'Femme', value: 2}
-      ],
       form: {
         firstName: "",
         lastName: "",
@@ -199,12 +186,9 @@ export default {
       id:null
     }
   },
-  components: {
-    // Input
-  },
   computed: {
     ...mapGetters({
-// map `this.user` to `this.$store.getters.user`
+      // map `this.user` to `this.$store.getters.user`
       user: "user"
     })
   },
@@ -253,9 +237,6 @@ export default {
       }
     },
     confirm() {
-      /*this.checkInput(this.m_valueEmail)
-      this.checkInput(this.m_valueLastName)
-      this.checkInput(this.m_valueFirstName)*/
       this.popupActivo = !this.popupActivo
       this.$router.go(0)
     }
@@ -263,7 +244,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
 #modalPatient .vs-popup {
   position: relative;
   font-family: Poppins;
@@ -330,7 +311,7 @@ export default {
 #reason {
   border-radius: 0px;
   height: 80px;
-  font-family: Arial;
+  font-family: Poppins;
   padding: 10px 30px;
 }
 .reason.focus-input {
@@ -422,15 +403,12 @@ export default {
 .button:hover {
   background-color: #9082FF;
 }
-#genreListTitle {
-  font: 400 13.3333px Arial;
-}
 .plane-purple {
   position: absolute;
   top: -19px;
   left: -44px;
 }
-.vs-popup h3 {
+.vs-popup >>> .vs-popup--title h3 {
   text-align: center;
 }
 </style>

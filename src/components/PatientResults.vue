@@ -73,9 +73,9 @@
           <h3>Test Comportement en situation complexe<span> - {{ (test3[0].succeed) ? '': 'non' }} validé</span></h3> 
         </div>
         <div class="test3ResultsHistory">
-          <div v-for="smallTest in test3[0].allResults" :key="smallTest.id" class="circuit">
+          <div v-for="(smallTest, index) in test3[0].allResults" :key="smallTest.id" class="circuit">
             <!--<img src="../../source en fonction du numéro de la situation" />-->
-            <h4>Situation {{  }} : {{ (smallTest) ? '' : 'non' }} réussie</h4>
+            <h4>Situation {{ index + 1 }} : {{ (smallTest) ? '' : 'non' }} réussie</h4>
           </div>
           <h3><strong>Bilan : test {{ (test3[0].succeed) ? '' : 'non' }} réussi</strong></h3>
         </div>
@@ -274,7 +274,7 @@ export default {
 .motricityResults h3, .attentionCapacityResults h3, .test3Results h3 {
   margin-left: 2%;
 }
-.motricityResultsHistory, .attentionCapacityResultsHistory{
+.motricityResultsHistory, .attentionCapacityResultsHistory, .test3ResultsHistory{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -282,7 +282,7 @@ export default {
   margin-left: 2%;
   padding-bottom: 2%;
 }
-.attentionCapacityResultsHistory{
+.attentionCapacityResultsHistory, .test3ResultsHistory{
   flex-direction: column;
 }
 .attentionCapacityResultsHistory > * {

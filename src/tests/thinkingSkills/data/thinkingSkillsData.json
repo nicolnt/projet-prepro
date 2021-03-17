@@ -1,0 +1,34 @@
+{
+	"training" : [
+		{
+			"name": "training1",
+    		"answers": ["./data/visuals/essai1.jpg","./data/visuals/essai2.jpg"]
+		},
+		{
+			"name": "training2",
+    		"answer": ["Automobile(s)","2 roues"]
+		}
+	],
+	"test": [
+		{
+			"name": "test1",
+    		"answer": ["Automobile(s)","Vélo(s)","2 roues"]
+		},
+		{
+			"name": "test2",
+    		"answer": ["Automobile(s)","Panneaux de signalisation"]
+		},
+		{
+			"name": "test3",
+    		"answer": ["Automobile(s)","Piéton(s)","2 roues","Panneaux de signalisation","Feux"]
+		},
+		{
+			"name": "test4",
+    		"answer": ["Automobile(s)","Piéton(s)","2 roues","Panneaux de signalisation","Feux"]
+		},
+		{
+			"name": "test5",
+    		"answer": ["Automobile(s)","Panneaux de signalisation"]
+		}
+	]
+}

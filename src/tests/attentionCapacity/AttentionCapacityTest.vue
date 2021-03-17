@@ -1,7 +1,7 @@
 <template>
   <div id="capacity-container">
     <div class="test-bar">
-      <span class="test-counter hidden">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
+      <span class="test-counter" v-if="game.currentLevelNumber() != 0">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
       <vs-button
         @click="ToggleHelpModal"
         radius
@@ -18,7 +18,7 @@
         <div id="checkboxesContener">
           <vs-checkbox size="large" v-model="form" class="choice" v-for="answer in answers" :key="answer" :vs-value="answer">{{answer}}</vs-checkbox>
         </div>
-        <vs-button color="#9082FF" id="submitAnswers" type="filled" icon="done" v-on:click="submit(form)"> Valider</vs-button>
+        <vs-button color="#9082FF" id="submitAnswers" type="filled" icon="done" v-on:click="submit(form)">Valider</vs-button>
       </div>
     </div>
     <TestBeginModal title="Capacités attentionnelles" :instructions="instructions" @train="train" @play='play' ref="TestBeginModal"/>
@@ -67,11 +67,9 @@ export default {
       this.$refs.TestHelpModal.toggle()
     },
     train() {
-      document.querySelector('.test-counter').classList.remove('hidden')
       this.game.beginTraining()
     },
     play() {
-      document.querySelector('.test-counter').classList.remove('hidden')
       this.game.beginTest()
     },
     submit(form) {
@@ -98,16 +96,17 @@ export default {
       console.log('success')
       if (this.game.state.doTraining === false && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End test
-        this.game.state.currentLevel = -1
+        this.game.switchToEnd()
         this.sendResultsToDB()
         this.$emit("ToggleInfosModal")
       } else if (this.game.state.doTraining === true && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End training
-        this.game.state.doTraining = false
-        this.game.state.currentLevel = -1
+        this.game.switchToEnd()
         this.ToggleBeginModal()
+      } else {
+        // Not the end : next level
+        this.game.switchToNextLevel();
       }
-      this.game.switchToNextLevel();
     } 
   }
 };
@@ -131,12 +130,21 @@ export default {
   padding: 10px;
   line-height: 18px;
 }
-#attention-capacity-test-content img{
+#attention-capacity-test-content {
   position: absolute;
-  height: 80vh;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 55px 0;
+  overflow: hidden;
+}
+#attention-capacity-test-content img{
+  width: 100%;
 }
 .hidden {
   display: none;
@@ -145,6 +153,7 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translateY(-50%) translateX(-50%);
 }
 #choices {
   position: absolute;
@@ -153,7 +162,9 @@ export default {
   transform: translateY(-50%) translateX(-50%);
   background-color: white;
   border-radius : 10px;
-  padding: 2% 2%;
+  padding: 20px;
+  width: 85%;
+  max-width: 400px;
 }
 .blurred{
   filter: blur(0.8rem);
@@ -161,9 +172,21 @@ export default {
 #submitAnswers{
   left: 50%;
   transform: translateX(-50%);
+  border-radius: 15px;
+  padding: 10px 20px;
 }
 #checkboxesContener{
-  margin: 6% 0;
+  margin: 20px 0;
+}
+#checkboxesContener >>> .con-vs-checkbox{
+  justify-content: left;
+  margin-bottom: 8px;
+}
+#checkboxesContener >>> .con-slot-label{
+  text-align: left;
+}
+#checkboxesContener >>> .con-vs-checkbox.vs-checkbox-large .vs-checkbox{
+  min-width: 24px;
 }
 h3{
   font-weight: 600;

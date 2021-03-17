@@ -12,11 +12,13 @@ class Game {
     this.score = 0
     this.userErrors = 0
   }
+
   beginTraining() {
     this.state.doTraining = true
     this.state.currentLevel = 0
     this.startLevel()
   }
+
   beginTest() {
     this.state.doTraining = false
     this.state.currentLevel = 0
@@ -24,12 +26,20 @@ class Game {
     this.score = 0
     this.startLevel()
   }
+
   switchToNextLevel() {
+    document.querySelector("#attention-capacity-test-content img").src = ""
     this.state.currentLevel++
     this.startLevel()
   }  
+
+  switchToEnd() {
+    this.state.doTraining = false
+    this.state.currentLevel = -1
+    document.querySelector("#attention-capacity-test-content img").src = ""
+  }
+
   startLevel() {
-    document.querySelector('#attention-capacity-test-content').classList.remove('hidden')
     if (this.gameData.training.length && this.state.doTraining === true) {
       this.currentLevelData = this.gameData.training[this.state.currentLevel]
     } else {
@@ -49,6 +59,7 @@ class Game {
       return this.gameData.training.length
     }
   }
+
   checkAnswers(answers){
     let actualScore = 6
     answers.forEach( userData => {
@@ -70,6 +81,7 @@ class Game {
     console.log(this.score)
     this.callback()
   }
+
   startCurrentLevel(){
     const DOM = document.querySelector("#attention-capacity-test-content")
     DOM.querySelector('img').src = require(`./data/visuals/${this.currentLevelData.img}`)
@@ -82,11 +94,13 @@ class Game {
       setTimeout(this.showQuizz, 2000)
     },false)
   }
+
   showQuizz(){
     const DOM = document.querySelector("#attention-capacity-test-content")
     DOM.querySelector("#choices").classList.remove('hidden')
     document.querySelector("#attention-capacity-test-content").querySelector('img').classList.add('blurred')
   }
+
   onSubmit (answers){
     const DOM = document.querySelector("#attention-capacity-test-content")
     document.querySelectorAll('input[type=checkbox]').forEach( element => element.checked = false)
@@ -97,8 +111,3 @@ class Game {
 }
 
 export default Game
-//export default Level
-//level.setupLevel('path.svg', 800, 600)
-
-// TODO check https://stackoverflow.com/questions/16968945/convert-base64-png-data-to-javascript-file-objects
-// Do perf benchmark

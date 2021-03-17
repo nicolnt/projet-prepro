@@ -90,15 +90,15 @@ export default {
       }
       if (this.game.state.doTraining === false && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End test
-        this.game.switchToEnd();
+        this.game.switchToEnd()
         this.$emit("ToggleInfosModal");
       } else if (this.game.state.doTraining === true && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End training
-        this.game.switchToEnd();
+        this.game.switchToEnd()
         this.ToggleBeginModal()
       } else {
         // Not the end : next level
-        this.game.switchToNextLevel();
+        this.game.switchToNextLevel()
       }
     }
   }

@@ -12,7 +12,8 @@
       </div>
     </div>
     <div class="patientResultsContent">
-      <div class="motricityResults results">
+      <span id="toHide">Aucun test n'a été effectué par ce patient pour le moment.</span>
+      <div class="motricityResults results hidden">
         <div class="header">
           <h3>Test Motricité fine<span> - réussi à 55%</span><span> - non validé</span></h3> 
         </div>
@@ -47,43 +48,38 @@
         </div>
       </div>
 
-      <div class="attentionCapacityResults results">
+       <div class="attentionCapacityResults results hidden">
         <div class="header">
-          <h3>Test Capacités attentionnelles<span> - réussi à {{ attentionCapacity[0].score }}%</span><span> - {{ (attentionCapacity[0].succeed) ? '': 'non' }} validé</span></h3> 
+          <h3>Test Capacités attentionnelles<span> - réussi à {{attentionCapacity.score}} %</span><span> -  {{ (attentionCapacity.succeed) ? '': 'non' }} validé</span></h3> 
         </div>
-        <div class="attentionCapacityResultsHistory">
-          <h3>Score :</h3>
-          <WaveScore :score="attentionCapacity[0].score" showScore="true">
-          </WaveScore>
-          <h3>Nombre de fautes : {{ attentionCapacity[0].mistakeNb }} </h3>
+        <div class="content">
+          <div class="attentionCapacityResultsHistory">
+            <h3>Score :</h3>
+            <WaveScore :score="attentionCapacity.score" showScore="true">
+            </WaveScore>
+            <h3>Nombre de fautes : {{attentionCapacity.mistakeNb}} </h3>
+          </div>
+          <h4 class="comment-title">Commentaire à propos du test <strong>Capacités attentionnelles</strong> :</h4>
+          <ResultComment type="attentionCapacity"/>
         </div>
-        <h3>Commentaire à propos du test : <strong>Capacités attentionnelles</strong></h3>
-        <div class ="attentionCapacityResultsComment">
-          <textarea placeholder="Ajouter un commentaire"></textarea>
-          <vs-button color="#9082FF" type="filled" id="btnAttentionCapacityComment">
-            Enregistrer le commentaire
-          </vs-button>
-        </div> 
       </div>
 
-      <div class="test3Results results">
+     <div class="thinkingSkillsResults results hidden">
         <div class="header">
-          <h3>Test Comportement en situation complexe<span> - {{ (test3[0].succeed) ? '': 'non' }} validé</span></h3> 
+          <h3>Test Comportement en situation complexe<span> - {{ (thinkingSkills.succeed) ? '': 'non' }} validé</span></h3> 
         </div>
-        <div class="test3ResultsHistory">
-          <div v-for="(smallTest, index) in test3[0].allResults" :key="smallTest.id" class="circuit">
-            <!--<img src="../../source en fonction du numéro de la situation" />-->
-            <h4>Situation {{ index + 1 }} : {{ (smallTest) ? '' : 'non' }} réussie</h4>
+        <div class="content">
+          <div class="thinkingSkillsResultsHistory">
+            <div v-for="(smallTest, index) in thinkingSkills.allResults" :key="smallTest.id" class="circuit">
+              <!--<img src="../../source en fonction du numéro de la situation" />-->
+              <h4>Situation {{ index + 1 }} : {{ (smallTest) ? '' : 'non' }} réussie</h4>
+            </div>
+            <h3><strong>Bilan : test {{ (thinkingSkills.succeed) ? '' : 'non' }} réussi</strong></h3>
           </div>
-          <h3><strong>Bilan : test {{ (test3[0].succeed) ? '' : 'non' }} réussi</strong></h3>
+          <h4 class="comment-title">Commentaire à propos du test <strong>Comportement en situation complexe</strong> :</h4>
+          <ResultComment type="thinkingSkillsResults"/>
         </div>
-        <h3>Commentaire à propos du test : <strong>Comportement en situation complexe</strong></h3>
-        <div class ="test3ResultsComment">
-          <textarea placeholder="Ajouter un commentaire"></textarea>
-          <vs-button color="#9082FF" type="filled" id="btnTest3Comment">
-            Enregistrer le commentaire
-          </vs-button>
-        </div> 
+
       </div>
 
       <div class="globalComment">
@@ -110,8 +106,15 @@ export default {
   components: { TestTrackViewModal, WaveScore, ResultComment },
   data() {
     return {
-      attentionCapacity: [],
-      test3: [],
+      attentionCapacity: {
+        score : 0,
+        mistakeNb : 0,
+        succeed : false
+      },
+      thinkingSkills: {
+        allResults : [],
+        succeed : false
+      },
       motricity: {
         tentatives: [],
         comment: '',
@@ -185,6 +188,8 @@ export default {
               motricity.push(data)
               break
           }
+          document.querySelector('.motricityResults').classList.remove('hidden')
+          document.querySelector('#toHide').classList.add('hidden')
         })
         // Sort tests by idParcours
         this.motricity.tentatives = motricity.sort((a, b) => {
@@ -203,27 +208,31 @@ export default {
       })
       
     // Add attention capacity test results to data
-    const attentionCapacity = []
     db.collection('test2').where('idPatient', '==', this.$store.state.currentPatient.id)
       .get()
       .then((docs) => {
         docs.forEach((doc) => {
-          const data = doc.data() 
-          attentionCapacity.push(data)
+          console.log(doc.data())
+          const data = doc.data()
+          this.attentionCapacity.score = data.score
+          this.attentionCapacity.mistakeNb = data.mistakeNb
+          this.attentionCapacity.succeed = data.succeed
+          document.querySelector('.attentionCapacityResults').classList.remove('hidden')
+          document.querySelector('#toHide').classList.add('hidden')
         })
-        this.attentionCapacity = attentionCapacity
-      })
+      }) 
 
     // Add test3 results to data
-    const test3 = []
     db.collection('test3').where('idPatient', '==', this.$store.state.currentPatient.id)
       .get()
       .then((docs) => {
         docs.forEach((doc) => {
           const data = doc.data() 
-          test3.push(data)
+          this.thinkingSkills.allResults = data.allResults
+          this.thinkingSkills.succeed = data.succeed
+          document.querySelector('.thinkingSkillsResults').classList.remove('hidden')
+          document.querySelector('#toHide').classList.add('hidden')
         })
-        this.test3 = test3
       })
   }
 }
@@ -232,11 +241,11 @@ export default {
 <style scoped>
 .patientResults {
   text-align: left;
-  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  margin-bottom: 5rem;
 }
 .patientResults a {
   cursor: pointer;
@@ -248,7 +257,6 @@ export default {
   margin: 0 auto;
   margin-top: 1%;
   border-radius: 16px;
-  padding-bottom: 10vh;
 }
 
 .results, .globalComment {
@@ -327,6 +335,10 @@ export default {
 .attentionCapacityResultsHistory > * {
   margin: 1% 0;
 }
+.thinkingSkillsResultsHistory h3 {
+  margin: 2% 0;
+  text-align: center;
+}
 .circuit{
   width: 30%;
   min-width: 420px;
@@ -386,5 +398,8 @@ export default {
   font-size: 6rem;
   color: white;
   text-shadow: 0px 1px 5px rgba(0,0,0,0.5);
+}
+.hidden {
+  display : none;
 }
 </style>

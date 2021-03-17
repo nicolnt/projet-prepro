@@ -43,35 +43,15 @@
           
           </div>
           <h4 class="comment-title">Commentaire à propos du test <strong>Motricité fine</strong> :</h4>
-          <div class="motricityResultsComment">
-            <div v-if="motricity.commenting === false" class="comment">
-              <div class="comment-content">
-                {{ motricity.comment }}
-              </div>
-              <div class="edit-icon">
-                <div class="edit-icon-background" @click="motricity.commenting = true">
-                  <i class="material-icons">edit</i>
-                </div>
-              </div>
-            </div>
-            <div v-else-if="motricity.commenting === true" class="comment-editor">
-              <textarea autofocus placeholder="Ajouter un commentaire" v-model="motricity.comment"></textarea>
-              <vs-button @click="sendComment('motricity')" color="#9082FF" type="filled" id="btnMotricityComment">
-                Enregistrer le commentaire
-              </vs-button>
-            </div>
-          </div> 
+          <ResultComment type="motricity"/>
         </div>
       </div>
       <div class="globalComment">
         <div class="header">
           <h3>Commentaire global</h3>
         </div>
-        <div class="globalCommentContent">
-          <textarea placeholder="Ajouter un commentaire"></textarea>
-          <vs-button color="#9082FF" type="filled" id="btnSaveGlobalComment">
-            Enregistrer le commentaire
-          </vs-button>
+        <div class="content">
+          <ResultComment type="global" />
         </div>
       </div>
     </div>
@@ -83,11 +63,12 @@
 import { db } from '../services/firebase'
 
 import WaveScore from './WaveScore'
+import ResultComment from './ResultComment'
 import TestTrackViewModal from './TestTrackViewModal'
 
 export default {
   name: 'PatientResults',
-  components: { TestTrackViewModal, WaveScore },
+  components: { TestTrackViewModal, WaveScore, ResultComment },
   data() {
     return {
       motricity: {
@@ -194,7 +175,7 @@ export default {
 .patientResults a {
   cursor: pointer;
 } 
-.patientResultsContent{
+.patientResultsContent {
   background-color : #F0F0F0;
   box-shadow: 0 4px 16px 0 rgba(0,0,0,.05);
   width: 98%;
@@ -203,53 +184,8 @@ export default {
   border-radius: 16px;
   padding-bottom: 2%;
 }
-.comment-editor {
-  width: 100%;
-}
 
-.comment {
-  width: 100%;
-  display: flex;
-  margin-top: 10px;
-}
-.comment-content {
-  background-color: #F0F0F0;
-  border-radius: 16px;
-  font-size: 1.2rem;
-  padding: 10px 20px;
-  flex-grow: 1;
-  align-items: stretch;
-}
-.comment .edit-icon {
-  opacity: 0;
-  width: 60px;
-  position: relative;
-}
-.comment:hover .edit-icon {
-  opacity: 1;
-}
-.comment .edit-icon .edit-icon-background {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
-  background-color: #F0F0F0;
-  border-radius: 50%;
-}
-.comment .edit-icon:hover .edit-icon-background {
-  cursor: pointer;
-  background-color: #C1BFBF;
-}
-.comment .edit-icon i {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.results, .globalComment{
+.results, .globalComment {
   background-color: white;
   box-shadow: 0 4px 16px 0 rgba(0,0,0,.05);
   border-radius: 16px;
@@ -257,6 +193,7 @@ export default {
   margin: 0 auto;
   text-align: left;
   margin-top:2%;
+  margin-bottom: 50px;
 }
 .header{
   background-color:#9082FF;
@@ -267,7 +204,7 @@ export default {
 .header h3, .header span {
   margin-left: 2%;
 }
-.results .content {
+.content {
   padding: 2%;
 }
 .patientResultsHeader{
@@ -295,22 +232,9 @@ export default {
   flex-direction: row;
   align-items: flex-end;
 }
-.globalCommentContent textarea ,.motricityResultsComment textarea {
-  width: 100%;
-  border: none;
-  background-color: #F0F0F0;
-  border-radius: 16px;
-  padding: 10px;
-}
-.globalCommentContent #btnSaveGlobalComment, .motricityResultsComment #btnMotricityComment{
-  margin-top: 10px;
-  width: 20%;
-  border-radius: 16px;
-}
 .patientResultsContent h4 {
   font-weight: normal;
 }
-
 .motricityResultsHistory{
   display: flex;
   flex-direction: row;

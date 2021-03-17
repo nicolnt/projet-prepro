@@ -25,7 +25,7 @@ class Track {
   }
 
   static setStrokeColorAccordingToType(type) {
-    if (type === 'path')
+    if (type === 'path' || type === 'end')
       Track.traceCanvasContext.strokeStyle = '#53ff53'
     else if (type === 'beforeStart')
       Track.traceCanvasContext.strokeStyle = '#9082FF'

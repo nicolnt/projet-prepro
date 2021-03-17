@@ -252,6 +252,7 @@ export default {
   border-radius: 20px;
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.7);    
   width: 600px!important;
+  text-align: center;
 }
 .wrapperInfosForm {
   display: flex;
@@ -407,8 +408,5 @@ export default {
   position: absolute;
   top: -19px;
   left: -44px;
-}
-.vs-popup >>> .vs-popup--title h3 {
-  text-align: center;
 }
 </style>

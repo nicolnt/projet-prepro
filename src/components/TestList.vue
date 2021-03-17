@@ -4,7 +4,7 @@
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     <Hero title="Liste des tests"/>
     <div class="testListContent">
-      <TestCard testName="Motricité fine" img="motricite-illustration.svg"/>
+      <TestCard @click.native="startMotricity()" testName="Motricité fine" img="motricite-illustration.svg"/>
       <TestCard testName="Capacités attentionnelles" img="capacite-attentionnelle-illustration.svg"/>
       <TestCard testName="Comportement en situation complexe" img="situation-complexe-illustration.svg"/>
     </div>
@@ -15,9 +15,6 @@
 import Hero from '@/components/Hero.vue'
 import TestCard from '@/components/TestCard.vue'
 
-import { db } from '../services/firebase'
-require('firebase/auth')
-
 export default {
   name: 'TestList',
   components: {
@@ -26,22 +23,6 @@ export default {
   },
    methods: {
       startMotricity() {
-        const batch = db.batch()
-        db.collection('tentatives').where('idPatient', '==', this.$store.state.currentPatient.id)
-          .get()
-          .then(docs => {
-            docs.forEach(doc => {
-              batch.delete(db.collection('tentatives').doc(doc.id))
-            })
-            batch.commit()
-              .then(() => {
-                console.log('Tests supprimés')
-              })
-              .catch(err => {
-                console.log('Impossible de supprimer les tests', err)
-              })
-          })
-
         this.$router.push({
           path: '/game/motricity',
         })
@@ -57,9 +38,10 @@ export default {
   text-align: left;
   height: 100%;
 }
-.testList a {
+.testList .testCard {
   cursor: pointer;
 }
+
 .testListContent {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

@@ -18,7 +18,7 @@
         </div>
         <div class="motricityResultsHistory">
           <!-- J'ai fait quelques petites recherches quand on devra brancher ça sur la bdd on pourra faire avec v-for et des props-->
-          <div v-for="tentative in motricity" :key="tentative.id" class="circuit">
+          <div v-for="tentative in motricity.tentatives" :key="tentative.id" class="circuit">
             <TestTrackViewModal :ref="tentative.idParcours" :capture="tentative.testCapture" :idTest="tentative.idParcours"/>
             <h4>Circuit {{ tentative.idParcours + 1 }}</h4>
             <div class="circuitInfo">
@@ -43,8 +43,8 @@
         </div>
         <h3>Commentaire à propos du test : <strong>Motricité fine</strong></h3>
         <div class ="motricityResultsComment">
-          <textarea placeholder="Ajouter un commentaire"></textarea>
-          <vs-button color="#9082FF" type="filled" id="btnMotricityComment">
+          <textarea placeholder="Ajouter un commentaire" v-model="motricity.comment"></textarea>
+          <vs-button @click="sendComment('motricity')" color="#9082FF" type="filled" id="btnMotricityComment">
             Enregistrer le commentaire
           </vs-button>
         </div> 
@@ -76,11 +76,42 @@ export default {
   components: { TestTrackViewModal, WaveScore },
   data() {
     return {
-      motricity: [],
+      motricity: {
+        tentatives: [],
+        comment: ''
+      },
       patient: {}
     }
   },
   methods: {
+    sendComment(test) {
+      console.log('goo')
+      db.collection('comments')
+        .where('idPatient', '==', this.$store.state.currentPatient.id)
+        .where('idTest', '==', test)
+        .get().then(docs => {
+          docs.forEach(doc => {
+            if (doc) {
+              db.collection('comments').doc(doc.id).set({
+                comment: this[test].comment
+              }, { merge: true })
+            }
+            else {
+              db.collection('comments').add({
+                idPatient: this.$store.state.currentPatient.id,
+                idTest: test,
+                comment: this[test].comment
+              })
+                .then(function(docRef) {
+                  console.log("Document written with ID: ", docRef.id);
+                })
+                .catch(function(error) {
+                  console.error("Error adding document: ", error);
+                })
+            }
+          })
+        })
+    },
     toggleModal(id){
       this.$refs[id][0].toggle()
     },
@@ -118,8 +149,16 @@ export default {
           }
         })
         // Sort tests by idParcours
-        this.motricity = motricity.sort((a, b) => {
+        this.motricity.tentatives = motricity.sort((a, b) => {
           return parseInt(a.idParcours) - parseInt(b.idParcours)
+        })
+      })
+    db.collection('comments').where('idPatient', '==', this.$store.state.currentPatient.id).get()
+      .then(docs => {
+        docs.forEach(doc => {
+          const data = doc.data()
+          if (data.idTest === 'motricity')
+            this.motricity.comment = data.comment
         })
       })
   }

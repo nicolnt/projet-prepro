@@ -42,5 +42,12 @@
 			"startingPoint": false,
 			"meanLength": 4.08
 		}
+	],
+	"defaultPath": [
+		{
+			"name": "test0",
+			"startingPoint": false,
+			"meanLength": 0
+		}
 	]
 }

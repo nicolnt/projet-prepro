@@ -1,6 +1,8 @@
 <template>
   <div class="test">
-    <NavBarTest @ToggleQuitModal="ToggleQuitModal" testName="Motricité fine" p_color="#FF8D8B" p_colorBG="#FFFFFF" />
+    <div class="test-quit">
+      <vs-button color="#9082FF" type="filled" @click="ToggleQuitModal">Quitter le test</vs-button>
+    </div>
     <div class="test-content">
         <router-view ref="test" @ToggleInfosModal="ToggleInfosModal"></router-view>
         <TestQuitModal ref="TestQuitModal"/>
@@ -10,14 +12,12 @@
 </template>
 
 <script>
-import NavBarTest from '@/components/NavBarTest.vue'
 import TestQuitModal from '@/components/TestQuitModal.vue'
 import TestInfosModal from '@/components/TestInfosModal.vue'
 
 export default {
-  name: 'MotricityTest',
+  name: 'Test',
   components: {
-    NavBarTest,
     TestQuitModal,
     TestInfosModal
   },
@@ -49,6 +49,16 @@ export default {
   justify-content: space-between;
   background-color: #EDEDED;
   user-select: none;
+}
+.test-quit {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  z-index: 5;
+}
+.test-quit > button {
+  border-radius: 15px;
+  padding: 10px 20px;
 }
 .test-content {
   background-color: #FFFFFF;

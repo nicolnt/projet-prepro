@@ -78,41 +78,19 @@ export default {
     },
     // adapter à notre test
     sendResultsToDB() {
-      if(db.collection('test2').where('idPatient', '==', this.$store.state.currentPatient.id).get()){
-        console.log('oui')
-        let id = ''
-        db.collection('test2').where('idPatient', '==', this.$store.state.currentPatient.id).get()
-        .then((querySnapshot) => {
-          //console.log(querySnapshot)
-         querySnapshot.forEach((doc) => {
-           //console.log(doc.id)
-            id = doc.id
-          })
-        })
-        console.log('coucou',id)
-        /* db.collection('test2').where('idPatient', '==', this.$store.state.currentPatient.id).update({
-          idPatient: this.$store.state.currentPatient.id,
-          mistakeNb: this.game.userErrors,
-          score: Math.floor(((this.game.score/this.game.totalLevelForCurrentType())*100)/6),
-          dateTime: Date.now(),
-          succeed: (Math.floor(((this.game.score/this.game.totalLevelForCurrentType())*100)/6) >= 50) ? true : false
-        }) */
-      } else { 
-        console.log('je suis là')
-        db.collection("test2").add({
-          idPatient: this.$store.state.currentPatient.id,
-          mistakeNb: this.game.userErrors,
-          score: Math.floor(((this.game.score/this.game.totalLevelForCurrentType())*100)/6),
-          dateTime: Date.now(),
-          succeed: (Math.floor(((this.game.score/this.game.totalLevelForCurrentType())*100)/6) >= 50) ? true : false
-        })
+      db.collection("test2").add({
+        idPatient: this.$store.state.currentPatient.id,
+        mistakeNb: this.game.userErrors,
+        score: Math.floor(((this.game.score/20)*100)/6),
+        dateTime: Date.now(),
+        succeed: (Math.floor(((this.game.score/20)*100)/6) >= 50) ? true : false
+      })
         .then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);
         })
         .catch(function(error) {
           console.error("Error adding document: ", error);
         })
-      }
     }, 
     doAfterSuccess() {
       console.log('success')

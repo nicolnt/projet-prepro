@@ -109,7 +109,8 @@ export default {
       attentionCapacity: {
         score : 0,
         mistakeNb : 0,
-        succeed : false
+        succeed : false,
+        allResults : []
       },
       thinkingSkills: {
         allResults : [],
@@ -208,19 +209,30 @@ export default {
       })
       
     // Add attention capacity test results to data
+    //if there are more than one result it displays the more recent
     db.collection('test2').where('idPatient', '==', this.$store.state.currentPatient.id)
       .get()
       .then((docs) => {
         docs.forEach((doc) => {
-          console.log(doc.data())
           const data = doc.data()
-          this.attentionCapacity.score = data.score
-          this.attentionCapacity.mistakeNb = data.mistakeNb
-          this.attentionCapacity.succeed = data.succeed
+          this.attentionCapacity.allResults.push(data)
           document.querySelector('.attentionCapacityResults').classList.remove('hidden')
           document.querySelector('#toHide').classList.add('hidden')
         })
-      }) 
+        let recent = 0
+        this.attentionCapacity.allResults.forEach( item => {
+          if(item.dateTime > recent){
+            recent = item.dateTime
+          }
+        })
+        this.attentionCapacity.allResults.forEach( item => {
+          if(item.dateTime === recent){
+            this.attentionCapacity.score = item.score
+            this.attentionCapacity.mistakeNb = item.mistakeNb
+            this.attentionCapacity.succeed = item.succeed
+          }
+        })
+      })
 
     // Add test3 results to data
     db.collection('test3').where('idPatient', '==', this.$store.state.currentPatient.id)

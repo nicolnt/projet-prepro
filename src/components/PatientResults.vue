@@ -12,9 +12,10 @@
       </div>
     </div>
     <div class="patientResultsContent">
-      <div class="motricityResults results">
+      <span id="toHide">Aucun test n'a été effectué par ce patient pour le moment.</span>
+      <div class="motricityResults results hidden">
         <div class="header">
-          <h3>Test motricité fine<span> - réussi à 55%</span><span> - non validé</span></h3> 
+          <h3>Test Motricité fine<span> - réussi à {{motricity.average}} %</span><span> - {{ (motricity.average >= 50) ? '': 'non' }} validé</span></h3> 
         </div>
         <div class="content">
           <div class="motricityResultsHistory">
@@ -46,6 +47,41 @@
           <ResultComment type="motricity"/>
         </div>
       </div>
+
+       <div class="attentionCapacityResults results hidden">
+        <div class="header">
+          <h3>Test Capacités attentionnelles<span> - réussi à {{attentionCapacity.score}} %</span><span> -  {{ (attentionCapacity.succeed) ? '': 'non' }} validé</span></h3> 
+        </div>
+        <div class="content">
+          <div class="attentionCapacityResultsHistory">
+            <h3>Score :</h3>
+            <WaveScore :score="attentionCapacity.score" showScore="true">
+            </WaveScore>
+            <h3>Nombre de fautes : {{attentionCapacity.mistakeNb}} </h3>
+          </div>
+          <h4 class="comment-title">Commentaire à propos du test <strong>Capacités attentionnelles</strong> :</h4>
+          <ResultComment type="attentionCapacity"/>
+        </div>
+      </div>
+
+     <div class="thinkingSkillsResults results hidden">
+        <div class="header">
+          <h3>Test Comportement en situation complexe<span> - {{ (thinkingSkills.succeed) ? '': 'non' }} validé</span></h3> 
+        </div>
+        <div class="content">
+          <div class="thinkingSkillsResultsHistory">
+            <div v-for="(smallTest, index) in thinkingSkills.allResults" :key="smallTest.id" class="circuit">
+              <!--<img src="../../source en fonction du numéro de la situation" />-->
+              <h4>Situation {{ index + 1 }} : {{ (smallTest) ? '' : 'non' }} réussie</h4>
+            </div>
+            <h3><strong>Bilan : test {{ (thinkingSkills.succeed) ? '' : 'non' }} réussi</strong></h3>
+          </div>
+          <h4 class="comment-title">Commentaire à propos du test <strong>Comportement en situation complexe</strong> :</h4>
+          <ResultComment type="thinkingSkillsResults"/>
+        </div>
+
+      </div>
+
       <div class="globalComment">
         <div class="header">
           <h3>Commentaire global</h3>
@@ -59,7 +95,6 @@
 </template>
 
 <script>
-//import Hero from '@/components/Hero.vue'
 import { db } from '../services/firebase'
 
 import WaveScore from './WaveScore'
@@ -71,10 +106,21 @@ export default {
   components: { TestTrackViewModal, WaveScore, ResultComment },
   data() {
     return {
+      attentionCapacity: {
+        score : 0,
+        mistakeNb : 0,
+        succeed : false,
+        allResults : []
+      },
+      thinkingSkills: {
+        allResults : [],
+        succeed : false
+      },
       motricity: {
         tentatives: [],
         comment: '',
-        commenting: false
+        commenting: false,
+        average : 0
       },
       patient: {}
     }
@@ -124,30 +170,39 @@ export default {
       month < 10 ? month = '0'+(month+1) : month = (month+1)
       const date = creationDate.getDate() +'/' + month + '/'+ creationDate.getFullYear()
       return date
-    },
+    }
   },
   mounted() {
-    const motricity = []
     db.collection('patients').doc(this.$store.state.currentPatient.id).get()
       .then(docs => {
         this.patient = docs.data()
       })
+    // Add motricity test results to data
+    const motricity = []
     db.collection('tentatives').where('idPatient', '==', this.$store.state.currentPatient.id)
       .get()
-      .then(docs => {
-        docs.forEach(doc => {
+      .then((docs) => {
+        docs.forEach((doc) => {
           const data = doc.data() 
           data.score = (data.score * 100).toFixed(2)
           switch(data.idTest) {
             case 'motricity':
               motricity.push(data)
+              this.motricity.average += data.score
               break
           }
+          document.querySelector('.motricityResults').classList.remove('hidden')
+          document.querySelector('#toHide').classList.add('hidden')
         })
         // Sort tests by idParcours
         this.motricity.tentatives = motricity.sort((a, b) => {
           return parseInt(a.idParcours) - parseInt(b.idParcours)
         })
+        let average = 0
+        this.motricity.tentatives.forEach ( item => {
+          average += parseInt(item.score)
+        })
+        this.motricity.average = average / this.motricity.tentatives.length
       })
     db.collection('comments').where('idPatient', '==', this.$store.state.currentPatient.id).get()
       .then(docs => {
@@ -159,6 +214,45 @@ export default {
             this.motricity.commenting = true
         })
       })
+      
+    // Add attention capacity test results to data
+    //if there are more than one result it displays the more recent
+    db.collection('test2').where('idPatient', '==', this.$store.state.currentPatient.id)
+      .get()
+      .then((docs) => {
+        docs.forEach((doc) => {
+          const data = doc.data()
+          this.attentionCapacity.allResults.push(data)
+          document.querySelector('.attentionCapacityResults').classList.remove('hidden')
+          document.querySelector('#toHide').classList.add('hidden')
+        })
+        let recent = 0
+        this.attentionCapacity.allResults.forEach( item => {
+          if(item.dateTime > recent){
+            recent = item.dateTime
+          }
+        })
+        this.attentionCapacity.allResults.forEach( item => {
+          if(item.dateTime === recent){
+            this.attentionCapacity.score = item.score
+            this.attentionCapacity.mistakeNb = item.mistakeNb
+            this.attentionCapacity.succeed = item.succeed
+          }
+        })
+      })
+
+    // Add test3 results to data
+    db.collection('test3').where('idPatient', '==', this.$store.state.currentPatient.id)
+      .get()
+      .then((docs) => {
+        docs.forEach((doc) => {
+          const data = doc.data() 
+          this.thinkingSkills.allResults = data.allResults
+          this.thinkingSkills.succeed = data.succeed
+          document.querySelector('.thinkingSkillsResults').classList.remove('hidden')
+          document.querySelector('#toHide').classList.add('hidden')
+        })
+      })
   }
 }
 </script>
@@ -166,11 +260,11 @@ export default {
 <style scoped>
 .patientResults {
   text-align: left;
-  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  margin-bottom: 5rem;
 }
 .patientResults a {
   cursor: pointer;
@@ -182,7 +276,6 @@ export default {
   margin: 0 auto;
   margin-top: 1%;
   border-radius: 16px;
-  padding-bottom: 2%;
 }
 
 .results, .globalComment {
@@ -227,20 +320,43 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.globalCommentContent, .motricityResultsComment{
+.globalCommentContent, .motricityResultsComment, .attentionCapacityResultsComment, .test3ResultsComment{
   display: flex;
   flex-direction: row;
   align-items: flex-end;
 }
-.patientResultsContent h4 {
-  font-weight: normal;
+.globalCommentContent textarea ,.motricityResultsComment textarea, .attentionCapacityResultsComment textarea, .test3ResultsComment textarea {
+  width: 76%;
+  height: 20vh;
+  border: none;
+  background-color: #F0F0F0;
+  border-radius: 16px;
+  padding: 10px;
 }
-.motricityResultsHistory{
+.globalCommentContent #btnSaveGlobalComment, #btnMotricityComment, #btnAttentionCapacityComment, #btnTest3Comment{
+  margin-left: 2%;
+  width: 20%;
+  border-radius: 16px;
+}
+.motricityResults h3, .attentionCapacityResults h3, .test3Results h3 {
+  margin-left: 2%;
+}
+.motricityResultsHistory, .attentionCapacityResultsHistory, .test3ResultsHistory{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width:96%;
   padding-bottom: 2%;
+}
+.attentionCapacityResultsHistory, .test3ResultsHistory{
+  flex-direction: column;
+}
+.attentionCapacityResultsHistory > * {
+  margin: 1% 0;
+}
+.thinkingSkillsResultsHistory h3 {
+  margin: 2% 0;
+  text-align: center;
 }
 .circuit{
   width: 30%;
@@ -301,5 +417,8 @@ export default {
   font-size: 6rem;
   color: white;
   text-shadow: 0px 1px 5px rgba(0,0,0,0.5);
+}
+.hidden {
+  display : none;
 }
 </style>

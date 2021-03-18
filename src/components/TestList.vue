@@ -4,9 +4,9 @@
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     <Hero title="Liste des tests"/>
     <div class="testListContent">
-      <TestCard @click.native="startMotricity()" testName="Motricité fine" img="motricite-illustration.svg"/>
-      <TestCard testName="Capacités attentionnelles" img="capacite-attentionnelle-illustration.svg"/>
-      <TestCard testName="Comportement en situation complexe" img="situation-complexe-illustration.svg"/>
+      <TestCard @click.native="startTest('motricity')" testName="Motricité fine" img="motricite-illustration.svg"/>
+      <TestCard @click.native="startTest('attentionCapacity')" testName="Capacités attentionnelles" img="capacite-attentionnelle-illustration.svg"/>
+      <TestCard @click.native="startTest('thinkingSkills')" testName="Comportement en situation complexe" img="situation-complexe-illustration.svg"/>
     </div>
   </div>
 </template>
@@ -22,9 +22,9 @@ export default {
     TestCard
   },
    methods: {
-      startMotricity() {
+      startTest(type) {
         this.$router.push({
-          path: '/game/motricity',
+          path: '/game/'+type
         })
       }
    }

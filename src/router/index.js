@@ -14,6 +14,7 @@ import PatientProfil from "../components/PatientProfil.vue";
 import TestList from "../components/TestList.vue";
 import MotricityTest from "../tests/motricity/MotricityTest.vue";
 import firebase from "firebase/app";
+import AttentionCapacityTest from "../tests/attentionCapacity/AttentionCapacityTest.vue"
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,14 @@ const routes = [
     children: [
       {
         path: "motricity",
+        component: MotricityTest,
+      },
+      {
+        path: "attentionCapacity",
+        component: AttentionCapacityTest
+      },
+      {
+        path: "thinkingSkills",
         component: MotricityTest
       }
     ]
@@ -90,6 +99,11 @@ const routes = [
     component: MotricityTest
   },
   {
+    path: "/attentionCapacityTest",
+    name: "attentionCapacityTest",
+    component: AttentionCapacityTest
+  },
+  {
     path: "*",
     name: "default",
     component: Home
@@ -122,7 +136,7 @@ router.beforeEach((to, from, next) => {
     if (firebase.auth().currentUser) {
       // go to login
       next({
-        path: "/dashboard/patientList",
+        path: "/dashboard/patientsList",
         query: {
           redirect: to.fullPath
         }

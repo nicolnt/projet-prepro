@@ -5,7 +5,7 @@
     <div id="patientsList">
       <div id="actions">
         <form class="form">
-          <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient"/>
+          <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient" v-on:keyup.enter.prevent="getMessage(message)"/>
           <button type="button" class="btn--search btn--inside"><i class="material-icons">search</i></button>
         </form>
         <button class="add-patient" @click="toggleModal">
@@ -52,13 +52,7 @@ export default {
   },
   watch: {
     message: function (val) {
-      if(val.length > 0){
-        this.patients = this.patientsBackup.filter(patient => (patient.firstName.toLowerCase().trim().includes(val.toLowerCase().trim()) ||
-        patient.lastName.toLowerCase().trim().includes(val.toLowerCase().trim())))
-      }
-      else{
-        this.patients = this.patientsBackup
-      }
+      this.getMessage(val)
     }
   },
   computed: {
@@ -69,9 +63,20 @@ export default {
   },
   mounted: function(){
     this.getPatientList()
-    
   },
   methods: {
+    getMessage(val){
+      /*if(e){
+        e.preventDefault()
+      }*/
+      if(val.length > 0){
+        this.patients = this.patientsBackup.filter(patient => (patient.firstName.toLowerCase().trim().includes(val.toLowerCase().trim()) ||
+        patient.lastName.toLowerCase().trim().includes(val.toLowerCase().trim())))
+      }
+      else{
+        this.patients = this.patientsBackup
+      }
+    },
     goPatientProfil(patient) {
       if(this.$route.name != 'PatientProfil') {
         this.$store.commit("SET_CURRENT_PATIENT", patient)

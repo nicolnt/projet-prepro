@@ -9,18 +9,15 @@
         </transition>
       </div>
     </div>
-    <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
   </div>
 </template>
 
 <script>
-import Footer from '@/components/Footer.vue'
 import SideBar from '@/components/SideBar.vue'
 
 export default {
   name: 'Dashboard',
   components : {
-    Footer,
     SideBar
   }
 }

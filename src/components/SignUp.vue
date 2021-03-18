@@ -64,6 +64,7 @@
           <i class="material-icons" aria-hidden="true">lock_outline</i>
         </span>
       </div>
+      <p>En vous inscrivant, vous acceptez les Conditions générales d'utilisation.</p>
       <div class="btn-submit">
         <div v-if="error" class="connectionError">{{error}}</div>
         <button type="submit" class="button">S'inscrire</button>
@@ -137,6 +138,9 @@ export default {
 </script>
 
 <style scoped>
+p{
+  font-size: 1.6vh;
+}
 h2 {
   margin-bottom: 2vh;
 }
@@ -230,6 +234,7 @@ input:-webkit-autofill:active  {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 15px;
 }
 .connectionError {
   margin-bottom: 1rem;

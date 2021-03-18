@@ -5,7 +5,7 @@
       <div class="presentation-application">
         <h1> Tapitap </h1>
         <h2> L’application destinée aux psychologues </h2>
-        <p> Gagnez du temps afin de faire passer l’habilitation au permis de conduire à vos patients. </p>
+        <p> Gagnez du temps afin de faire passer l’habilitation au permis de conduire à vos patients.</p>
       </div>
       <Form/>
     </div>

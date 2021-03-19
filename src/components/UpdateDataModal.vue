@@ -168,7 +168,7 @@ export default {
       db.collection("users").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           if(doc.data().email == user.email){
-              self.id = doc.id
+            self.id = doc.id
           }
         });
       })

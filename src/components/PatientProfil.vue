@@ -15,7 +15,7 @@
           <!-- <p><span> Date de création : </span> {{ this.getDate(patient.dateCreation.toDate()) }}</p> -->
           <div id="actionsPatient">
             <vs-button color="#9082FF" type="filled" class="btnPatient edit" @click="toggleModal">Modifier les informations</vs-button>
-            <vs-button color="#9082FF" type="filled" class="btnPatient">Supprimer ce patient</vs-button>
+            <vs-button color="#9082FF" type="filled" class="btnPatient" @onclick="deletePatient">Supprimer ce patient</vs-button>
           </div>
         </div>
       </div>
@@ -31,6 +31,9 @@
 <script>
 import UpdateDataModal from '@/components/UpdateDataModal.vue'
 import {mapGetters} from 'vuex'
+import { db } from '../services/firebase'
+import firebase from 'firebase/app'
+require('firebase/auth')
 
 export default {
   name: 'PatientProfil',
@@ -73,6 +76,24 @@ export default {
     goPatientsList() {
       if(this.$route.name != 'PatientsList')
         this.$router.push({name:'PatientsList'})
+    },
+    deletePatient() {
+      var self = this
+      const user = firebase.auth().currentUser
+      db.collection("users").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if(doc.data().email == user.email){
+              self.id = doc.id
+          }
+        });
+      })
+      db.collection("patients").doc("self.patient.id").delete().then(() => {
+        console.log("Patient successfully deleted!")
+      })
+      .catch(function(error) {
+        console.error("Error delete patient ", error);
+      })
+      this.$store.commit("SET_CURRENT_PATIENT", null)
     }
   }
 }

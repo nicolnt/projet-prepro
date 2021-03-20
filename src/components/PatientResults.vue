@@ -3,23 +3,22 @@
   <div class="patientResults">
     <a @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
     <div class="patientResultsHeader">
-      <h1>Résultats de {{ patient.firstName }} {{ patient.lastName }}- évaluation [VALIDATION]</h1>
+      <h1>Résultats de {{ patient.firstName }} {{ patient.lastName }}</h1>
       <div class="patientResultsHeaderSubtitle">
         <h3>Test effectué le {{ (patient.dateCreation) ? this.getDate(patient.dateCreation.toDate()) : '' }}</h3>
-        <vs-button color="#9082FF" type="filled" v-on:click="download" id="btnDownload" icon="get_app">
+        <!-- <vs-button color="#9082FF" type="filled" v-on:click="download" id="btnDownload" icon="get_app"> 
           Télécharger les résultats
-        </vs-button>
+        </vs-button> -->
       </div>
     </div>
     <div class="patientResultsContent">
       <span id="toHide">Aucun test n'a été effectué par ce patient pour le moment.</span>
       <div class="motricityResults results hidden">
         <div class="header">
-          <h3>Test Motricité fine<span> - réussi à {{motricity.average}} %</span><span> - {{ (motricity.average >= 50) ? '': 'non' }} validé</span></h3> 
+          <h3>Test Motricité fine<span> - réussi à {{motricity.average.toFixed(2)}} %</span><span> - {{ (motricity.average >= 50) ? '': 'non' }} validé</span></h3> 
         </div>
         <div class="content">
           <div class="motricityResultsHistory">
-            <!-- J'ai fait quelques petites recherches quand on devra brancher ça sur la bdd on pourra faire avec v-for et des props-->
             <div v-for="tentative in motricity.tentatives" :key="tentative.id" class="circuit">
               <TestTrackViewModal :ref="tentative.idParcours" :capture="tentative.testCapture" :idTest="tentative.idParcours"/>
               <h4>Circuit {{ tentative.idParcours + 1 }}</h4>
@@ -34,8 +33,6 @@
                 <div class="circuitInfoContent">
                   <ul>
                     <li>Score : {{ tentative.score }}/100 </li>
-                    <!-- <li>Nombre d’obstacles touchés : 2</li> -->
-                    <!-- <li>Temps réalisé : 15 sec</li> -->
                     <li>Circuit réussi : {{ (tentative.score >= 50) ? 'oui': 'non' }} </li>
                   </ul>                
                 </div>
@@ -188,7 +185,6 @@ export default {
           switch(data.idTest) {
             case 'motricity':
               motricity.push(data)
-              this.motricity.average += data.score
               break
           }
           document.querySelector('.motricityResults').classList.remove('hidden')
@@ -198,6 +194,28 @@ export default {
         this.motricity.tentatives = motricity.sort((a, b) => {
           return parseInt(a.idParcours) - parseInt(b.idParcours)
         })
+        // Get the more recent result for each parcours
+        let temporary = []
+        for( let i = 0 ; i< 5; i++){
+          let recent = 0
+          this.motricity.tentatives.forEach( item => {
+            if (item.idParcours === i){
+              if(item.dateTime > recent){
+                recent = item.dateTime
+              }
+            }
+            
+          })
+          this.motricity.tentatives.forEach(item =>{ 
+            if (item.idParcours === i){
+              if(item.dateTime === recent){
+                temporary.push(item)
+              }
+            }
+  
+          })
+        }
+        this.motricity.tentatives = temporary
         let average = 0
         this.motricity.tentatives.forEach ( item => {
           average += parseInt(item.score)

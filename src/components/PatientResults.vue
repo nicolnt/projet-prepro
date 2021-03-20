@@ -115,42 +115,12 @@ export default {
       },
       motricity: {
         tentatives: [],
-        comment: '',
-        commenting: false,
         average : 0
       },
       patient: {}
     }
   },
   methods: {
-    sendComment(test) {
-      this[test].commenting = false
-      db.collection('comments')
-        .where('idPatient', '==', this.$store.state.currentPatient.id)
-        .where('idTest', '==', test)
-        .get().then(docs => {
-          docs.forEach(doc => {
-            if (doc) {
-              db.collection('comments').doc(doc.id).set({
-                comment: this[test].comment
-              }, { merge: true })
-            }
-            else {
-              db.collection('comments').add({
-                idPatient: this.$store.state.currentPatient.id,
-                idTest: test,
-                comment: this[test].comment
-              })
-                .then(function(docRef) {
-                  console.log("Document written with ID: ", docRef.id);
-                })
-                .catch(function(error) {
-                  console.error("Error adding document: ", error);
-                })
-            }
-          })
-        })
-    },
     toggleModal(id){
       this.$refs[id][0].toggle()
     },

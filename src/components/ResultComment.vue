@@ -99,7 +99,7 @@ export default {
   align-items: stretch;
 }
 .comment .edit-icon {
-  opacity: 0;
+  opacity: 1;
   width: 60px;
   position: relative;
 }

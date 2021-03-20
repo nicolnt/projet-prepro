@@ -38,7 +38,6 @@
                 </div>
               </div>
             </div>
-          
           </div>
           <h4 class="comment-title">Commentaire à propos du test <strong>Motricité fine</strong> :</h4>
           <ResultComment type="motricity"/>
@@ -174,7 +173,6 @@ export default {
                 recent = item.dateTime
               }
             }
-            
           })
           this.motricity.tentatives.forEach(item =>{ 
             if (item.idParcours === i){

@@ -28,7 +28,7 @@ class Game {
   }
 
   switchToNextLevel() {
-    document.querySelector("#attention-capacity-test-content img").src = ""
+    document.querySelector("#AttentionCapacityContent>img").src = ""
     this.state.currentLevel++
     this.startLevel()
   }  
@@ -36,7 +36,7 @@ class Game {
   switchToEnd() {
     this.state.doTraining = false
     this.state.currentLevel = -1
-    document.querySelector("#attention-capacity-test-content img").src = ""
+    document.querySelector("#AttentionCapacityContent>img").src = ""
   }
 
   startLevel() {
@@ -64,26 +64,22 @@ class Game {
     let actualScore = 6
     answers.forEach( userData => {
       if(this.currentLevelData.answer.includes(userData) != true){
-        console.log ( 'Fausse réponse :' + userData)
         actualScore--
         this.userErrors++
       }
     })
     this.currentLevelData.answer.forEach ( testData => {
       if (answers.includes(testData) != true){
-        console.log ('Réponse oubliée :' + testData)
         actualScore--
         this.userErrors++
       }
     })
-    console.log(actualScore)
     this.score += actualScore
-    console.log(this.score)
     this.callback()
   }
 
   startCurrentLevel(){
-    const DOM = document.querySelector("#attention-capacity-test-content")
+    const DOM = document.querySelector("#AttentionCapacityContent")
     DOM.querySelector('img').src = require(`./data/visuals/${this.currentLevelData.img}`)
     if(DOM.querySelector('#showImg').classList.contains('hidden')){
       DOM.querySelector('#showImg').classList.remove('hidden')
@@ -96,15 +92,15 @@ class Game {
   }
 
   showQuizz(){
-    const DOM = document.querySelector("#attention-capacity-test-content")
+    const DOM = document.querySelector("#AttentionCapacityContent")
     DOM.querySelector("#choices").classList.remove('hidden')
-    document.querySelector("#attention-capacity-test-content").querySelector('img').classList.add('blurred')
+    DOM.querySelector('img').classList.add('blurred')
   }
 
   onSubmit (answers){
-    const DOM = document.querySelector("#attention-capacity-test-content")
-    document.querySelectorAll('input[type=checkbox]').forEach( element => element.checked = false)
-    answers.forEach( element => this.currentAnswers.push(element))
+    const DOM = document.querySelector("#AttentionCapacityContent")
+    DOM.querySelectorAll('input[type=checkbox]').forEach( element => element.checked = false)
+    answers.forEach(element => this.currentAnswers.push(element))
     DOM.querySelector("#choices").classList.add('hidden')
     this.checkAnswers(answers)
   }

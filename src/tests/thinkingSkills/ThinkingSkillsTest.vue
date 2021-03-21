@@ -1,7 +1,7 @@
 <template>
-  <div id="capacity-container">
-    <div class="test-bar">
-      <span class="test-counter" v-if="game.currentLevelNumber() != 0">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
+  <div id="thinkingSkillsContainer">
+    <div class="testBar">
+      <span class="testCounter" v-if="game.currentLevelNumber() != 0">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
       <vs-button
         @click="ToggleHelpModal"
         radius
@@ -10,13 +10,28 @@
         color="#9082FF"
       ></vs-button>
     </div>
-    <div id="thinking-skills-test-content">
-      <div id="choices" class="hidden">
-        <h3>est à : ce que est à :</h3>
-        <div id="checkboxesContener">
-          <img v-for="n in 5" src="" :key="n" :alt="'Réponse '+n" />
+    <div id="thinkingSkillsContent">
+      <div id="question" class="hidden">
+        <h3>Quelle image correspond le mieux ?</h3>
+        <div id="questionStatement">
+          <div>
+            <img id="statementEx1" src="" alt="Exemple 1" />
+            <p>est à :</p>
+            <img id="statementEx2" src="" alt="Exemple 2" />
+          </div>
+          <div>
+            <p>ce que</p>
+            <img id="statementQuestion" src="" alt="Question" />
+            <p>est à :</p>
+          </div>
         </div>
-        <vs-button color="#9082FF" id="submitAnswers" type="filled" icon="done" v-on:click="submit(form)">Valider</vs-button>
+        <div id="questionAnswers">
+            <label :for="'answer'+n" v-for="n in 5" :key="n">
+              <input type="radio" :id="'answer'+n" :value="'answer'+n" v-model="picked">
+              <img src="" :alt="'Réponse '+n" />
+            </label>
+        </div>
+        <vs-button color="#9082FF" id="submitAnswers" type="filled" icon="done" v-on:click="submit(picked)">Valider</vs-button>
       </div>
     </div>
     <TestBeginModal title="Capacités de raisonnement" :instructions="instructions" @train="train" @play='play' ref="TestBeginModal"/>
@@ -45,7 +60,7 @@ export default {
         {
           img: 'tests_visuals/attentionCapacityTest_eye.jpg',
           altImg: '',
-          desc: "Observez l'illustration présentée",
+          desc: "Observez les illustrations présentées",
         },
         {
           img: 'tests_visuals/attentionCapacityTest_choice.jpg',
@@ -53,7 +68,7 @@ export default {
           desc: "Répondez à la question logique",
         }
       ],
-      form: []
+      picked: 'answer1'
     }
   },
   methods: {
@@ -71,16 +86,14 @@ export default {
     },
     submit(form) {
       this.game.onSubmit(form)
-      this.form = []
     },
-    // adapter à notre test
     sendResultsToDB() {
       db.collection("test2").add({
         idPatient: this.$store.state.currentPatient.id,
-        mistakeNb: this.game.userErrors,
-        score: Math.floor(((this.game.score/20)*100)/6),
+        mistakeNb: 5-(this.game.score),
+        score: Math.floor(((this.game.score)*100)/5),
         dateTime: Date.now(),
-        succeed: (this.game.score >= 50) ? true : false
+        succeed: (this.game.score >= 4) ? true : false
       })
         .then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);
@@ -90,7 +103,7 @@ export default {
         })
     }, 
     doAfterSuccess() {
-      console.log('success')
+      this.picked = 'answer1'
       if (this.game.state.doTraining === false && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End test
         this.game.switchToEnd()
@@ -110,80 +123,108 @@ export default {
 </script>
 
 <style scoped>
-#capacity-container {
-  background: white;
-  height: 100%;
-  border-radius: 30px;
-  width: 100%;
-  overflow: hidden;
+.hidden {
+  transition: opacity .5s ease;
+  opacity: 0;
+  pointer-events: none;
 }
-.test-bar {
+#thinkingSkillsContainer {
+  background: #FFFFFF;
+  border-radius: 30px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.testBar {
   display: flex;
   position: absolute;
   top: 10px;
   right: 10px;
 }
-.test-bar > .test-counter {
-  padding: 10px;
+.testBar > .testCounter {
   line-height: 18px;
+  padding: 10px;
 }
-#attention-capacity-test-content {
-  position: absolute;
-  width: 100%;
-  height: auto;
+#thinkingSkillsContent {
   display: flex;
   align-items: center;
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  margin: 55px 0;
   overflow: hidden;
-}
-#attention-capacity-test-content img{
+  margin: 55px 0;
   width: 100%;
+  height: auto;
 }
-.hidden {
-  display: none;
-}
-#showImg{
+#question {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-}
-#choices {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
   background-color: white;
   border-radius : 10px;
   padding: 20px;
+  transform: translateY(-50%) translateX(-50%);
   width: 85%;
-  max-width: 400px;
+  max-width: 600px;
 }
-.blurred{
-  filter: blur(0.8rem);
-}
-#submitAnswers{
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 15px;
-  padding: 10px 20px;
-}
-#checkboxesContener{
+#questionStatement, 
+#questionAnswers {
   margin: 20px 0;
 }
-#checkboxesContener >>> .con-vs-checkbox{
-  justify-content: left;
-  margin-bottom: 8px;
+#questionStatement {
+  background-color: #EDEDED;
+  border-radius: 10px;
+  padding: 20px;
 }
-#checkboxesContener >>> .con-slot-label{
-  text-align: left;
+#questionStatement > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0;
 }
-#checkboxesContener >>> .con-vs-checkbox.vs-checkbox-large .vs-checkbox{
-  min-width: 24px;
+#questionStatement img {
+  margin: 0 15px;
+  width: 100px;
+  min-width: 0;
+}
+#questionAnswers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#questionAnswers > label {
+  flex-basis: 20%;
+  padding-right: 8px;
+}
+#questionAnswers > label:last-child {
+  padding-right: 0;
+}
+#questionAnswers img {
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 10px;
+  width: 100%;
+  max-width: 150px;
+  min-width: 50px;
+}
+#questionAnswers [type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+#questionAnswers [type=radio]:checked + img {
+  border-color: #9082FF;
+  border-radius: 15px;
+}
+#submitAnswers{
+  border-radius: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
 }
 h3{
   font-weight: 600;

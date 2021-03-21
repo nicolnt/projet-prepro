@@ -7,10 +7,8 @@ class Game {
   constructor(gameData, callAfterSuccess) {
     this.gameData = gameData
     this.callback = callAfterSuccess
-    this.currentAnswers = []
     this.currentLevelData = null
     this.score = 0
-    this.userErrors = 0
   }
 
   beginTraining() {
@@ -35,10 +33,10 @@ class Game {
   switchToEnd() {
     this.state.doTraining = false
     this.state.currentLevel = -1
+    document.getElementById('question').classList.add("hidden")
   }
 
   startLevel() {
-    console.log("startLevel")
     if (this.gameData.training.length && this.state.doTraining === true) {
       this.currentLevelData = this.gameData.training[this.state.currentLevel]
     } else {
@@ -48,18 +46,26 @@ class Game {
   }
 
   startCurrentLevel(){
-    console.log("startCurrentLevel")
-    const DOM = document.querySelector("#thinking-skills-test-content")
-    console.log(DOM.querySelector('#checkboxesContener'))
+    const DOM = document.querySelector("#thinkingSkillsContent")
+    DOM.querySelector("#statementEx1").src = require(`./data/visuals/${this.currentLevelData.name}/ex1.svg`)
+    DOM.querySelector("#statementEx2").src = require(`./data/visuals/${this.currentLevelData.name}/ex2.svg`)
+    DOM.querySelector("#statementQuestion").src = require(`./data/visuals/${this.currentLevelData.name}/question.svg`)
     for (let i = 0; i < 5; i++) {
-      DOM.querySelector('#checkboxesContener').children[i].src = require(`./data/visuals/${this.currentLevelData.name}_answer${i}.jpeg`)
+      DOM.querySelector('#questionAnswers').children[i].querySelector('img').src = require(`./data/visuals/${this.currentLevelData.name}/answer${i+1}.svg`)
     }
+    setTimeout(function(){ document.getElementById('question').classList.remove("hidden") }, 1000);
   }
 
-  showQuizz(){
-    const DOM = document.querySelector("#attention-capacity-test-content")
-    DOM.querySelector("#choices").classList.remove('hidden')
-    document.querySelector("#attention-capacity-test-content").querySelector('img').classList.add('blurred')
+  onSubmit(answer){
+    document.getElementById('question').classList.add("hidden")
+    this.checkAnswers(answer)
+  }
+
+  checkAnswers(answer){
+    if(answer === this.currentLevelData.goodAnswer){
+      this.score++
+    }
+    setTimeout(this.callback.bind(this), 500);
   }
 
   currentLevelNumber() {
@@ -72,36 +78,6 @@ class Game {
     } else {
       return this.gameData.training.length
     }
-  }
-
-  checkAnswers(answers){
-    let actualScore = 6
-    answers.forEach( userData => {
-      if(this.currentLevelData.answer.includes(userData) != true){
-        console.log ( 'Fausse réponse :' + userData)
-        actualScore--
-        this.userErrors++
-      }
-    })
-    this.currentLevelData.answer.forEach ( testData => {
-      if (answers.includes(testData) != true){
-        console.log ('Réponse oubliée :' + testData)
-        actualScore--
-        this.userErrors++
-      }
-    })
-    console.log(actualScore)
-    this.score += actualScore
-    console.log(this.score)
-    this.callback()
-  }
-
-  onSubmit (answers){
-    const DOM = document.querySelector("#attention-capacity-test-content")
-    document.querySelectorAll('input[type=checkbox]').forEach( element => element.checked = false)
-    answers.forEach( element => this.currentAnswers.push(element))
-    DOM.querySelector("#choices").classList.add('hidden')
-    this.checkAnswers(answers)
   }
 }
 

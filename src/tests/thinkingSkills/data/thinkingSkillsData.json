@@ -2,33 +2,33 @@
 	"training" : [
 		{
 			"name": "training1",
-    		"answers": ["./data/visuals/essai1.jpg","./data/visuals/essai2.jpg"]
+    		"goodAnswer": "answer2"
 		},
 		{
 			"name": "training2",
-    		"answer": ["Automobile(s)","2 roues"]
+			"goodAnswer": "answer3"
 		}
 	],
 	"test": [
 		{
 			"name": "test1",
-    		"answer": ["Automobile(s)","Vélo(s)","2 roues"]
+    		"goodAnswer": "answer4"
 		},
 		{
 			"name": "test2",
-    		"answer": ["Automobile(s)","Panneaux de signalisation"]
+    		"goodAnswer": "answer3"
 		},
 		{
 			"name": "test3",
-    		"answer": ["Automobile(s)","Piéton(s)","2 roues","Panneaux de signalisation","Feux"]
+    		"goodAnswer": "answer1"
 		},
 		{
 			"name": "test4",
-    		"answer": ["Automobile(s)","Piéton(s)","2 roues","Panneaux de signalisation","Feux"]
+    		"goodAnswer": "answer5"
 		},
 		{
 			"name": "test5",
-    		"answer": ["Automobile(s)","Panneaux de signalisation"]
+    		"goodAnswer": "answer4"
 		}
 	]
 }

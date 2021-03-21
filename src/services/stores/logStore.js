@@ -54,10 +54,10 @@ export default new Vuex.Store({
           commit("SET_LOGGED_OUT");
         })
       },
-      FETCH_PATIENT({ commit }) {
-        (currentPatient) => {
-          commit("SET_CURRENT_PATIENT", currentPatient)
-        }
-      }
+      // FETCH_PATIENT({ commit }) {
+      //   (currentPatient) => {
+      //     commit("SET_CURRENT_PATIENT", currentPatient)
+      //   }
+      // }
     }
   })

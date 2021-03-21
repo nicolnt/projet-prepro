@@ -15,7 +15,7 @@
           <!-- <p><span> Date de création : </span> {{ this.getDate(patient.dateCreation.toDate()) }}</p> -->
           <div id="actionsPatient">
             <vs-button color="#9082FF" type="filled" class="btnPatient edit" @click="toggleModal">Modifier les informations</vs-button>
-            <vs-button color="#9082FF" type="filled" class="btnPatient">Supprimer ce patient</vs-button>
+            <vs-button color="#9082FF" type="filled" class="btnPatient" @click="deletePatient">Supprimer ce patient</vs-button>
           </div>
         </div>
       </div>
@@ -31,6 +31,8 @@
 <script>
 import UpdateDataModal from '@/components/UpdateDataModal.vue'
 import {mapGetters} from 'vuex'
+import { db } from '../services/firebase'
+require('firebase/auth')
 
 export default {
   name: 'PatientProfil',
@@ -73,6 +75,16 @@ export default {
     goPatientsList() {
       if(this.$route.name != 'PatientsList')
         this.$router.push({name:'PatientsList'})
+    },
+    deletePatient() {
+      db.collection('patients').doc(this.patient.id).get().then((doc) => {
+        doc.ref.delete();
+      })
+      .catch(function(error) {
+        console.error("Error delete patient ", error);
+      })
+      this.$store.commit("SET_CURRENT_PATIENT", null)
+      this.$router.push({name:'PatientsList'})
     }
   }
 }

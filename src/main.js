@@ -26,6 +26,20 @@ store.dispatch("FETCH_USER");
 
 let app;
 
+function preventDefault(e){
+  e.preventDefault();
+}
+
+function disableScroll(){
+  document.body.addEventListener('touchmove', preventDefault, { passive: false });
+}
+function enableScroll(){
+  document.body.removeEventListener('touchmove', preventDefault);
+}
+
+disableScroll()
+enableScroll()
+
 firebase.auth().onAuthStateChanged(() => {
   if(!app) {
     app = new Vue({

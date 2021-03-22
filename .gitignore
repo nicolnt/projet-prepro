@@ -1,7 +1,12 @@
 .DS_Store
 node_modules
 /dist
-
+/resources/android/icon
+/resources/android/splash
+/resources/ios/icon
+/resources/ios/splash
+/android
+/ios
 
 # local env files
 .env.local

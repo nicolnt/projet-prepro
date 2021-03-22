@@ -54,3 +54,10 @@ firebase deploy --only hosting
 ```
 npm run resources
 ```
+
+## Capacitor IOS
+```
+npx cap add ios
+npx cap copy
+npx cap open ios
+```

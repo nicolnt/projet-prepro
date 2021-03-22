@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="patientResultsContent">
-      <span id="toHide">Aucun test n'a été effectué par ce patient pour le moment.</span>
+      <p id="toHide">Aucun test n'a été effectué par ce patient pour le moment.</p>
       <div class="motricityResults results hidden">
         <div class="header">
           <h3>Test Motricité fine<span> - réussi à {{motricity.average.toFixed(2)}} %</span><span> - {{ (motricity.average >= 50) ? '': 'non' }} validé</span></h3> 
@@ -62,17 +62,18 @@
 
      <div class="thinkingSkillsResults results hidden">
         <div class="header">
-          <h3>Test Comportement en situation complexe<span> - {{ (thinkingSkills.succeed) ? '': 'non' }} validé</span></h3> 
+          <h3>Test Capacités de raisonnement<span> - {{ (thinkingSkills.succeed) ? '': 'non' }} validé</span></h3> 
         </div>
         <div class="content">
           <div class="thinkingSkillsResultsHistory">
-            <div v-for="(smallTest, index) in thinkingSkills.allResults" :key="smallTest.id" class="circuit">
-              <!--<img src="../../source en fonction du numéro de la situation" />-->
+            <div v-for="(smallTest, index) in thinkingSkills.allResults" :key="smallTest.id" class="circuit" id="imageThinkingDiv">
+              <ThinkingSkillsViewModal :ref="index" :idTest="index"/>
+              <img :src="getImageThinkingSkillsResult(index)" @click="toggleThinking(index)" id="thinkingImg"/>
               <h4>Situation {{ index + 1 }} : {{ (smallTest) ? '' : 'non' }} réussie</h4>
             </div>
             <h3><strong>Bilan : test {{ (thinkingSkills.succeed) ? '' : 'non' }} réussi</strong></h3>
           </div>
-          <h4 class="comment-title">Commentaire à propos du test <strong>Comportement en situation complexe</strong> :</h4>
+          <h4 class="comment-title">Commentaire à propos du test <strong>Capacités de raisonnement</strong> :</h4>
           <ResultComment type="thinkingSkillsResults"/>
         </div>
 
@@ -96,10 +97,11 @@ import { db } from '../services/firebase'
 import WaveScore from './WaveScore'
 import ResultComment from './ResultComment'
 import TestTrackViewModal from './TestTrackViewModal'
+import ThinkingSkillsViewModal from './ThinkingSkillsViewModal'
 
 export default {
   name: 'PatientResults',
-  components: { TestTrackViewModal, WaveScore, ResultComment },
+  components: { TestTrackViewModal, WaveScore, ResultComment, ThinkingSkillsViewModal },
   data() {
     return {
       attentionCapacity: {
@@ -116,18 +118,26 @@ export default {
         tentatives: [],
         average : 0
       },
-      patient: {}
+      patient: {},
+      popupActive: false
     }
   },
   methods: {
     toggleModal(id){
       this.$refs[id][0].toggle()
     },
+    toggleThinking(index){
+      this.$refs[index][1].toggleThinkingSkills()
+    },
     download(){
       // TODO
     },
     trackImage(id) {
       const image = require(`../tests/motricity/paths/test${id+1}_background.svg`)
+      return image
+    },
+    getImageThinkingSkillsResult(id) {
+      const image = require(`../assets/result_assets/thinkingSkills_screen_${id+1}.png`)
       return image
     },
     getDate(dateISO){ 
@@ -386,7 +396,6 @@ export default {
 .wave-container:hover .fade-overlay {
   display: block;
 }
-
 .wave-container .fade-overlay {
   display: none;
   position: absolute;
@@ -406,5 +415,18 @@ export default {
 }
 .hidden {
   display : none;
+}
+#imageThinkingDiv{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  width: auto;
+  margin: 10px;
+}
+#toHide{
+  margin: 10px;
+}
+#thinkingImg{
+  width: 250px;
 }
 </style>

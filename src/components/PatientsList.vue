@@ -4,8 +4,8 @@
     <Hero title="Liste des patients"/>
     <div id="patientsList">
       <div id="actions">
-        <form class="form">
-          <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient" v-on:keyup.enter.prevent="getMessage(message)"/>
+        <form class="form" v-on:submit.prevent>
+          <input type="text" class="form-field" v-model="message" placeholder="Rechercher un patient" />
           <button type="button" class="btn--search btn--inside"><i class="material-icons">search</i></button>
         </form>
         <button class="add-patient" @click="toggleModal">
@@ -66,9 +66,6 @@ export default {
   },
   methods: {
     getMessage(val){
-      /*if(e){
-        e.preventDefault()
-      }*/
       if(val.length > 0){
         this.patients = this.patientsBackup.filter(patient => (patient.firstName.toLowerCase().trim().includes(val.toLowerCase().trim()) ||
         patient.lastName.toLowerCase().trim().includes(val.toLowerCase().trim())))

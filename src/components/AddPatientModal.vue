@@ -238,7 +238,7 @@ export default {
     },
     confirm() {
       this.popupActivo = !this.popupActivo
-      this.$router.go(0)
+      location.reload()
     }
   }
 }

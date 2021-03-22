@@ -49,3 +49,8 @@ The build folder is dist, in the project folder.
 ```
 firebase deploy --only hosting
 ```
+
+## Icon Android
+```
+npm run resources
+```

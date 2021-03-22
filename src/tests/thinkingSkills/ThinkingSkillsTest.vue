@@ -88,12 +88,11 @@ export default {
       this.game.onSubmit(form)
     },
     sendResultsToDB() {
-      db.collection("test2").add({
+      db.collection("test3").add({
         idPatient: this.$store.state.currentPatient.id,
-        mistakeNb: 5-(this.game.score),
-        score: Math.floor(((this.game.score)*100)/5),
+        allResults: this.game.state.allResults,
         dateTime: Date.now(),
-        succeed: (this.game.score >= 4) ? true : false
+        succeed: (this.game.score >= 3) ? true : false
       })
         .then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);

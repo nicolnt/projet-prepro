@@ -1,14 +1,15 @@
 class Game {
   state = {
     doTraining: false,
-    currentLevel: -1
+    currentLevel: -1,
+    allResults: [],
+    score: 0
   }
 
   constructor(gameData, callAfterSuccess) {
     this.gameData = gameData
     this.callback = callAfterSuccess
     this.currentLevelData = null
-    this.score = 0
   }
 
   beginTraining() {
@@ -20,8 +21,6 @@ class Game {
   beginTest() {
     this.state.doTraining = false
     this.state.currentLevel = 0
-    this.userErrors = 0
-    this.score = 0
     this.startLevel()
   }
 
@@ -63,7 +62,10 @@ class Game {
 
   checkAnswers(answer){
     if(answer === this.currentLevelData.goodAnswer){
-      this.score++
+      this.state.score++
+      this.state.allResults.push(true)
+    } else {
+      this.state.allResults.push(false)
     }
     setTimeout(this.callback.bind(this), 500);
   }

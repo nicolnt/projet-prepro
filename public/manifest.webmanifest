@@ -1,33 +1,32 @@
 {
-    "name": "Tapitap",
-    "short_name": "Tapitap",
-    "theme_color": "#DEDBFF",
-    "background_color": "#FFFFFF",
-    "display": "fullscreen",
-    "orientation": "landscape",
-    "start_url": "/?utm_source=launcher",
-    "version": "0.1.0",
-    "icons": [
-      {
-        "src": "img/icons/ic_launcher.png",
-        "sizes": "72x72",
-        "type": "image/png"
-      },
-      {
-        "src": "img/icons/1024.png",
-        "sizes": "1024x1024",
-        "type": "image/png"
-      },
-      {
-        "size": "60x60",
-        "src": "img/icons/180.png",
-        "type": "image/png"
-      },
-      {
-        "size": "40x40",
-        "src": "img/icons/80.png",
-        "type": "image/png"
-      }
-    ]
-
-  }
+  "name": "Tapitap",
+  "short_name": "Tapitap",
+  "theme_color": "#DEDBFF",
+  "background_color": "#FFFFFF",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "start_url": "/?utm_source=launcher",
+  "version": "0.1.0",
+  "icons": [
+    {
+      "src": "img/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icons/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

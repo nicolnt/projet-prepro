@@ -5,7 +5,7 @@
       <div class="presentation-application">
         <h1> Tapitap </h1>
         <h2> L’application destinée aux psychologues </h2>
-        <p> Gagnez du temps afin de faire passer l’habilitation au permis de conduire à vos patients. </p>
+        <p> Tapitap permet de tester les aptitudes d’une personne à plusieurs niveaux, grâce à des tests simples et directement intégrés dans l’application. </p>
       </div>
       <Form/>
     </div>
@@ -33,7 +33,7 @@ export default {
   mounted: function(){
     console.log(this.user)
     if(this.user.loggedIn==true){
-      this.$router.push({path:'/dashboard'})
+      this.$router.push({path:'/dashboard/patientsList'})
     }
   },
   computed: {
@@ -47,7 +47,7 @@ export default {
 <style scoped>
 .home {
   width: 100%;
-  height: calc(100% - 70px);
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -55,6 +55,7 @@ export default {
   background-image: url("../assets/background.svg");
   background-repeat: no-repeat;
   background-position:right bottom;
+  position: relative;
 }
 .introduction-application {
   display: flex;

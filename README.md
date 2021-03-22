@@ -44,3 +44,8 @@ The build folder is dist, in the project folder.
 - [VueX](https://vuex.vuejs.org/). For store
 - [Firebase](https://firebase.google.com/). For backend
 - [Vue-fire](https://vuefire.vuejs.org/). To link firebase and vuejs app
+
+## Firebase
+```
+firebase deploy --only hosting
+```

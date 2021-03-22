@@ -27,14 +27,16 @@ export default {
   data() {
     return {
       content: '',
-      commenting: false
+      commenting: false,
+      commented: false
     }
   },
   props: ['type'],
   methods: {
     sendComment() {
       this.commenting = false
-      db.collection('comments')
+      if(this.commented){
+        db.collection('comments')
         .where('idPatient', '==', this.$store.state.currentPatient.id)
         .where('idTest', '==', this.type)
         .get().then(docs => {
@@ -44,21 +46,21 @@ export default {
                 comment: this.content
               }, { merge: true })
             }
-            else {
-              db.collection('comments').add({
-                idPatient: this.$store.state.currentPatient.id,
-                idTest: this.type,
-                comment: this.content
-              })
-                .then(function(docRef) {
-                  console.log("Document written with ID: ", docRef.id);
-                })
-                .catch(function(error) {
-                  console.error("Error adding document: ", error);
-                })
-            }
           })
         })
+      } else {
+          db.collection('comments').add({
+            idPatient: this.$store.state.currentPatient.id,
+            idTest: this.type,
+            comment: this.content
+          })
+          .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+          })
+          .catch(function(error) {
+            console.error("Error adding document: ", error);
+          })
+      }
     }
   },
   mounted() {
@@ -66,10 +68,12 @@ export default {
       .then(docs => {
         docs.forEach(doc => {
           const data = doc.data()
-          if (data.idTest === this.type && data.comment && data.comment !== '')
+          if (data.idTest === this.type && data.comment && data.comment !== ''){
             this.content = data.comment
+            this.commented= true
+          } 
           else
-            this.commenting = true
+            this.commenting = false
         })
       })
   }
@@ -95,7 +99,7 @@ export default {
   align-items: stretch;
 }
 .comment .edit-icon {
-  opacity: 0;
+  opacity: 1;
   width: 60px;
   position: relative;
 }

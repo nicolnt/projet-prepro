@@ -168,7 +168,7 @@ export default {
       db.collection("users").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           if(doc.data().email == user.email){
-              self.id = doc.id
+            self.id = doc.id
           }
         });
       })
@@ -187,7 +187,7 @@ export default {
         });
       } else if(this.personType === 'patient') {
         this.popupActivo = !this.popupActivo
-        const patientTest = {
+        const updatePatient = {
           firstName: self.form.firstName,
           lastName: self.form.lastName,
           email: self.form.email,
@@ -199,11 +199,11 @@ export default {
           gender: self.form.gender
         }
         db.collection("patients").doc(self.patient.id)
-          .update(patientTest)
+          .update(updatePatient)
           .catch(function(error) {
           console.error("Error adding document: ", error);
         });
-        this.$store.commit("SET_CURRENT_PATIENT", patientTest)
+        this.$store.commit("SET_CURRENT_PATIENT", updatePatient)
       }
     },
     toggle() {
@@ -231,7 +231,7 @@ export default {
 
 .modalPatient >>> .vs-popup {
   position: relative;
-  font-family: Poppins;
+  font-family: 'Poppins';
   background-color: #eaedf0;
   border-radius: 20px;
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.7);    

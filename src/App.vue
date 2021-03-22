@@ -7,24 +7,9 @@
 </template>
 
 <script>
-// import { db } from './services/firebase'
 
 export default {
-  
   name: 'App',
-  created () {
-    this.checkDataBase()
-  },
-  methods: {
-    checkDataBase () {
-      // var query = db.ref('patients').orderByKey()
-      // query.once('value').then(function (snapshot) {
-      //   snapshot.forEach(function (childSnapshot) {
-      //      console.log(childSnapshot.val())
-      //   })
-      // })
-    }
-  }
 }
 </script>
 
@@ -39,19 +24,25 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #222222;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   overflow: hidden;
 }
+body, html {
+  position: fixed;
+}
+
 body {
-  /*height: 92vh;*/
-  /*width: 100vw;*/
   position: absolute;
   max-height: 100%;
   bottom: 0;
   top: 0;
   right: 0;
   left: 0;
+  /* Disables pull-to-refresh and overscroll glow effect.
+    Still keeps swipe navigations. */
+  overscroll-behavior: none;
+  overflow: hidden;
 }
 h1, h2, h3, p {
   margin: 0;

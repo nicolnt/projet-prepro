@@ -9,25 +9,24 @@
   "version": "0.1.0",
   "icons": [
     {
-      "src": "icons/ic_launcher.png",
-      "sizes": "72x72",
+      "src": "img/icons/icon-192x192.png",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icons/1024.png",
-      "sizes": "1024x1024",
+      "src": "img/icons/icon-256x256.png",
+      "sizes": "256x256",
       "type": "image/png"
     },
     {
-      "size": "60x60",
-      "src": "icons/180.png",
+      "src": "img/icons/icon-384x384.png",
+      "sizes": "384x384",
       "type": "image/png"
     },
     {
-      "size": "40x40",
-      "src": "icons/80.png",
+      "src": "img/icons/icon-512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
-
 }

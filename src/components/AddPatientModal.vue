@@ -1,7 +1,7 @@
 <!-- ADD PATIENT MODAL -->
 <template lang="html">
   <div id="modalPatient">
-    <vs-popup title="Ajouter un patient" :active.sync="popupActivo">
+    <vs-popup class="modalPatient" title="Ajouter un patient" :active.sync="popupActivo">
     <div id="modalContent">
       <form action="#" @submit.prevent="submit">
         <div class="wrapperInfosForm">
@@ -238,16 +238,17 @@ export default {
     },
     confirm() {
       this.popupActivo = !this.popupActivo
-      this.$router.go(0)
+      location.reload()
     }
   }
 }
 </script>
 
 <style scoped>
-#modalPatient .vs-popup {
+
+.modalPatient >>> .vs-popup {
   position: relative;
-  font-family: Poppins;
+  font-family: 'Poppins';
   background-color: #eaedf0;
   border-radius: 20px;
   box-shadow: 0px 2px 30px rgba(200, 200, 200, 0.7);    
@@ -257,6 +258,11 @@ export default {
 .wrapperInfosForm {
   display: flex;
   justify-content: space-between;
+}
+.wrapperPsyInfosForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .wrapperInfosForm > div { 
   width: 48%;
@@ -284,11 +290,6 @@ export default {
   top: 17px;
   right: 27%;
 }
-#modalContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 .wrap-input {
   position: relative;
   width: 100%;
@@ -296,7 +297,8 @@ export default {
   margin-bottom: 1.5rem;
 }
 .input {
-  font-size: 14px;
+  font-size: 15px;
+  font-family: 'Poppins';
   line-height: 1.5;
   color: rgb(118, 118, 118);
   display: block;
@@ -306,20 +308,24 @@ export default {
   border-radius: 25px;
   padding: 0 30px 0 68px;
 }
+#modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 #birthday, #gender {
   padding: 0 30px;
+  font-family: 'Poppins';
 }
 #reason {
   border-radius: 0px;
   height: 80px;
-  font-family: Poppins;
+  font-family: 'Poppins';
   padding: 10px 30px;
 }
 .reason.focus-input {
   border-radius: 0;
 }
-
-/* Animation de la box-shadow */
 .focus-input {
   display: block;
   position: absolute;
@@ -403,6 +409,9 @@ export default {
 }
 .button:hover {
   background-color: #9082FF;
+}
+#genreListTitle {
+  font: 400 13.3333px Arial;
 }
 .plane-purple {
   position: absolute;

@@ -83,14 +83,39 @@ export default {
           console.error("Error adding document: ", error);
         })
     },
+    sendTestsToDB() {
+      const tentatives = db.collection('tentatives')
+      for (let i=0; i<this.game.gameData.testPaths.length; i++) {
+        const game = this.game.gameData.testPaths[i]
+        tentatives.add({
+          idPatient: this.$store.state.currentPatient.id,
+          idTest: 'motricity',
+          idParcours: i+1,
+          patientTime: 100,
+          testCapture: game.level.traceImage,
+          dateTime: Date.now(),
+          succeed: (game.level.score >= 0.5) ? true : false,
+          score: game.level.score
+        })
+        .then(function(docRef) {
+          console.log("Test written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+          console.error("Error adding test: ", error);
+        })
+      }
+      
+    },
     doAfterSuccess() {
       if (this.game.state.doTraining === false) {
         // Level done (not trainings)
-        this.sendLastestTestToDB(this.game.state.currentLevel)
+        //this.sendLastestTestToDB(this.game.state.currentLevel)
       }
       if (this.game.state.doTraining === false && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End test
         this.game.switchToEnd()
+        this.game.state.currentLevel = -1
+        this.sendTestsToDB()
         this.$emit("ToggleInfosModal");
       } else if (this.game.state.doTraining === true && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End training

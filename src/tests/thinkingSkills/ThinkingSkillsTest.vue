@@ -154,7 +154,6 @@ export default {
   left: 0;
   right: 0;
   overflow: hidden;
-  margin: 55px 0;
   width: 100%;
   height: auto;
 }
@@ -167,16 +166,16 @@ export default {
   padding: 20px;
   transform: translateY(-50%) translateX(-50%);
   width: 85%;
-  max-width: 600px;
+  max-width: 750px;
 }
 #questionStatement, 
 #questionAnswers {
-  margin: 20px 0;
+  margin: 15px 0;
 }
 #questionStatement {
   background-color: #EDEDED;
   border-radius: 10px;
-  padding: 20px;
+  padding: 10px;
 }
 #questionStatement > div {
   display: flex;
@@ -186,8 +185,10 @@ export default {
 }
 #questionStatement img {
   margin: 0 15px;
-  width: 100px;
-  min-width: 0;
+  width: 100%;
+  padding: 10px;
+  max-width: 100px;
+  min-width: 50px;
 }
 #questionAnswers {
   display: flex;
@@ -208,7 +209,7 @@ export default {
   padding: 10px;
   width: 100%;
   max-width: 150px;
-  min-width: 50px;
+  min-width: 70px;
 }
 #questionAnswers [type=radio] { 
   position: absolute;

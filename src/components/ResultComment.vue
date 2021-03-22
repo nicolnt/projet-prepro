@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       content: '',
-      commenting: false,
+      commenting: true,
       commented: false
     }
   },
@@ -45,6 +45,9 @@ export default {
               db.collection('comments').doc(doc.id).set({
                 comment: this.content
               }, { merge: true })
+              if(this.content === ''){
+                this.commenting = true
+              }
             }
           })
         })
@@ -71,9 +74,8 @@ export default {
           if (data.idTest === this.type && data.comment && data.comment !== ''){
             this.content = data.comment
             this.commented= true
-          } 
-          else
             this.commenting = false
+          } 
         })
       })
   }

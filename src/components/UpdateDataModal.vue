@@ -76,7 +76,7 @@
 
       <!-- Update psy's informations -->
       <div v-if="personType === 'psy'" id="modalContentPsy">
-        <form action="#" @submit="submit">
+        <form action="#" @submit.prevent="submit">
           <div class="wrapperPsyInfosForm">
             <div class="wrap-input validate-input" data-validate = "Valid last name is required">
               <input class="input" id="lastName" type="text" name="lastName" required autofocus v-model="form.lastName"/>
@@ -181,6 +181,8 @@ export default {
             firstName: self.form.firstName,
             lastName: self.form.lastName,
             email: self.form.email
+          }).then(function() {
+          self.confirm()
           })
         }).catch(function(error) {
           console.error("Error adding document: ", error);
@@ -205,6 +207,9 @@ export default {
         });
         this.$store.commit("SET_CURRENT_PATIENT", updatePatient)
       }
+    },
+    confirm() {
+      location.reload()
     },
     toggle() {
       this.popupActivo = !this.open;

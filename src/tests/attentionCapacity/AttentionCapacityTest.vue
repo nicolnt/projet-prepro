@@ -127,7 +127,7 @@ export default {
   top: 10px;
   right: 10px;
 }
-.testBar > .testCunter {
+.testBar > .testCounter {
   padding: 10px;
   line-height: 18px;
 }

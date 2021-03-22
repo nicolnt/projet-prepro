@@ -92,7 +92,7 @@ export default {
         idPatient: this.$store.state.currentPatient.id,
         allResults: this.game.state.allResults,
         dateTime: Date.now(),
-        succeed: (this.game.score >= 3) ? true : false
+        succeed: (this.game.state.score >= 3) ? true : false
       })
         .then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);

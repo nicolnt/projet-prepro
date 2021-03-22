@@ -1,6 +1,6 @@
 {
-  "appId": "com.imac.tapitap",
-  "appName": "tapitap",
+  "appId": "com.imac.Tapitap",
+  "appName": "Tapitap",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "dist",

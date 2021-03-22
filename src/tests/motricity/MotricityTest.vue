@@ -1,7 +1,7 @@
 <template>
-  <div id="motricity-container">
-    <div class="test-bar">
-      <span class="test-counter" v-if="game.currentLevelNumber() != 0">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
+  <div id="motricityContainer">
+    <div class="testBar">
+      <span class="testCounter" v-if="game.currentLevelNumber() != 0">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
       <vs-button
         @click="ToggleHelpModal"
         radius
@@ -106,7 +106,7 @@ export default {
 </script>
 
 <style scoped>
-#motricity-container {
+#motricityContainer {
   background: white;
   height: 100%;
   border-radius: 30px;
@@ -134,13 +134,13 @@ canvas#traceCanvas {
 canvas#pickerTrack {
   visibility: hidden;
 }
-.test-bar {
+.testBar {
   display: flex;
   position: absolute;
   top: 10px;
   right: 10px;
 }
-.test-bar > .test-counter {
+.testBar > .testCounter {
   padding: 10px;
   line-height: 18px;
 }

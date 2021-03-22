@@ -1,7 +1,7 @@
 <template>
-  <div id="capacity-container">
-    <div class="test-bar">
-      <span class="test-counter" v-if="game.currentLevelNumber() != 0">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
+  <div id="AttentionCapacityContainer">
+    <div class="testBar">
+      <span class="testCounter" v-if="game.currentLevelNumber() != 0">{{ game.currentLevelNumber() }}/{{ game.totalLevelForCurrentType() }}</span>
       <vs-button
         @click="ToggleHelpModal"
         radius
@@ -10,15 +10,15 @@
         color="#9082FF"
       ></vs-button>
     </div>
-    <div id="attention-capacity-test-content" class="hidden">
+    <div id="AttentionCapacityContent" class="hidden">
       <img src="" alt="" class="blurred">
       <vs-button radius icon="play_arrow" color="#9082FF" id="showImg" size="large" type="filled"></vs-button>
       <div id="choices" class="hidden">
         <h3>Qu'avez vous vu sur l'image ?</h3>
         <div id="checkboxesContener">
-          <vs-checkbox size="large" v-model="form" class="choice" v-for="answer in answers" :key="answer" :vs-value="answer">{{answer}}</vs-checkbox>
+          <vs-checkbox size="large" v-model="checkedNames" class="choice" v-for="answer in answers" :key="answer" :vs-value="answer">{{answer}}</vs-checkbox>
         </div>
-        <vs-button color="#9082FF" id="submitAnswers" type="filled" icon="done" v-on:click="submit(form)">Valider</vs-button>
+        <vs-button color="#9082FF" id="submitAnswers" type="filled" icon="done" v-on:click="submit(checkedNames)">Valider</vs-button>
       </div>
     </div>
     <TestBeginModal title="Capacités attentionnelles" :instructions="instructions" @train="train" @play='play' ref="TestBeginModal"/>
@@ -56,7 +56,7 @@ export default {
         }
       ],
       answers : ["Automobile(s)","Piéton(s)","2 roues","Panneaux de signalisation","Feux","Vélo(s)"],
-      form: []
+      checkedNames: []
     }
   },
   methods: {
@@ -76,7 +76,6 @@ export default {
       this.game.onSubmit(form)
       this.form = []
     },
-    // adapter à notre test
     sendResultsToDB() {
       db.collection("test2").add({
         idPatient: this.$store.state.currentPatient.id,
@@ -93,7 +92,6 @@ export default {
         })
     }, 
     doAfterSuccess() {
-      console.log('success')
       if (this.game.state.doTraining === false && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End test
         this.game.switchToEnd()
@@ -113,24 +111,27 @@ export default {
 </script>
 
 <style scoped>
-#capacity-container {
+.hidden {
+  display: none;
+}
+#capacityContainer {
   background: white;
   height: 100%;
   border-radius: 30px;
   width: 100%;
   overflow: hidden;
 }
-.test-bar {
+.testBar {
   display: flex;
   position: absolute;
   top: 10px;
   right: 10px;
 }
-.test-bar > .test-counter {
+.testBar > .testCunter {
   padding: 10px;
   line-height: 18px;
 }
-#attention-capacity-test-content {
+#AttentionCapacityContent {
   position: absolute;
   width: 100%;
   height: auto;
@@ -143,11 +144,8 @@ export default {
   margin: 55px 0;
   overflow: hidden;
 }
-#attention-capacity-test-content img{
+#AttentionCapacityContent>img{
   width: 100%;
-}
-.hidden {
-  display: none;
 }
 #showImg{
   position: absolute;

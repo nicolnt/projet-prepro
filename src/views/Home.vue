@@ -9,20 +9,17 @@
       </div>
       <Form/>
     </div>
-    <Footer p_txtColor="#000000" p_colorBG="#ffffff"/>
   </div>
 </template>
 
 <script>
 import Form from '@/components/Form.vue'
-import Footer from '@/components/Footer.vue'
 import { mapGetters } from "vuex";
 
 export default {
   name: 'Home',
   components: {
     Form,
-    Footer
   },
   methods: {
     goSignUp() {
@@ -63,8 +60,7 @@ export default {
 }
 .presentation-application {
   text-align: left;
-  margin-right: 2rem;
-  width: 45%;
+  width: 40%;
 }
 h1 {
   font-size: 48px;
@@ -98,27 +94,4 @@ input:-webkit-autofill:active  {
   padding: .5rem 1rem;
   font-size: 16px;
 }
-/* @media screen and (max-width: 800px) {
-  .introduction-application {
-    align-items: center;
-    flex-direction: column;
-  }
-  .presentation-application {
-    text-align: center;
-    margin-right: 0;
-    width: 100%;
-  }
-  .illustration-application {
-    margin-top: 3rem;
-  }
-  h1 {
-    font-size: 28px;
-  }
-  img {
-    max-width: 70%;
-  }
-  #btnSignUp {
-    display: initial;
-  }
-} */
 </style>

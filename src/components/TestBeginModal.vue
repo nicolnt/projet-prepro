@@ -78,9 +78,9 @@ export default {
 }
 .test-modal-buttons > button {
   margin: 10px;
-  border-radius: 15px;
+  border-radius: 16px;
   padding: 10px 20px;
-  height: 44px;
+  font-size: 16px;
 }
 
 @media only screen and (max-width: 576px) {

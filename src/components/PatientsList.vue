@@ -128,6 +128,7 @@ export default {
   font-size: 16px;
   color: #B0B0B0;
   box-shadow: 0 0 19px -6px rgba(0, 0, 0, 0.20);
+  background-clip: padding-box;
 }
 .btn--search {
   width: 50px;

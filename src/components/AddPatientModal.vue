@@ -304,9 +304,11 @@ export default {
   display: block;
   width: 100%;
   border: 1px solid #EBEBEB;
+  background-color: #FFFFFF;
   height: 45px;
   border-radius: 25px;
   padding: 0 30px 0 68px;
+  background-clip: padding-box;
 }
 #modalContent {
   display: flex;
@@ -316,6 +318,8 @@ export default {
 #birthday, #gender {
   padding: 0 30px;
   font-family: 'Poppins';
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
 }
 #reason {
   border-radius: 0px;
@@ -396,7 +400,7 @@ export default {
   justify-content: center;
 }
 .button {
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 25px;
   height: 45px;
   width: 45%;

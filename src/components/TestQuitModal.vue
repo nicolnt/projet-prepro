@@ -7,8 +7,8 @@
             </p>
         </div>
         <div class="test-modal-buttons">       
-            <vs-button id="btnQuitTest" color="#9082FF" @click="stopTest">Quitter</vs-button>
-            <vs-button id="btnResumeTest" color="#9082FF" icon="play_arrow" @click="toggle">Continuer</vs-button>
+            <vs-button id="btnQuitTest" color="#9082FF" @click.native="stopTest">Quitter</vs-button>
+            <vs-button id="btnResumeTest" color="#9082FF" icon="play_arrow" @click.native="toggle">Continuer</vs-button>
         </div>
     </VsPopupCustom>
 </template>
@@ -66,7 +66,8 @@ export default {
 }
 .test-modal-buttons > button {
   margin: 0 10px;
-  border-radius: 15px;
+  border-radius: 16px;
   padding: 10px 20px;
+  font-size: 16px;
 }
 </style>

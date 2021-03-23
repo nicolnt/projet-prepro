@@ -58,7 +58,8 @@ export default {
 }
 .test-modal-buttons > button {
   margin: 0 10px;
-  border-radius: 15px;
+  border-radius: 16px;
   padding: 10px 20px;
+  font-size: 16px;
 }
 </style>

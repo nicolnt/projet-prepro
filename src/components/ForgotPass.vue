@@ -128,6 +128,7 @@ export default {
   height: 45px;
   border-radius: 25px;
   padding: 0 30px 0 68px;
+  background-clip: padding-box;
 }
 .focus-input {
   display: block;
@@ -193,7 +194,7 @@ export default {
   justify-content: center;
 }
 .button {
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 25px;
   height: 45px;
   width: 45%;

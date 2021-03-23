@@ -70,7 +70,7 @@ export default {
 
 <style scoped>
 .formAuth {
-  width: 55%;
+  width: 60%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,7 +104,7 @@ export default {
 }
 .sign {
   width: 100%;
-  height: 430px;
+  height: 450px;
   display: none;
   opacity: 0;
   transition: all 2s ease;
@@ -152,10 +152,4 @@ export default {
     width: 100%;
   }
 }
-/* @media screen and (max-width: 800px) {
-  .formAuth {
-    align-items: normal;
-    width: 100%;
-  }
-} */
 </style>

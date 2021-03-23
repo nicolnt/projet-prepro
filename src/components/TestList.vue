@@ -44,8 +44,8 @@ export default {
 
 .testListContent {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 4rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-gap: 2rem;
   margin-top: 2rem;
 }
 @media screen and (max-width: 1024px) {

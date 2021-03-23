@@ -179,6 +179,7 @@ input:-webkit-autofill:active  {
   height: 45px;
   border-radius: 25px;
   padding: 0 30px 0 68px;
+  background-clip: padding-box;
 }
 
 /* Animation de la box-shadow */

@@ -127,7 +127,12 @@ export default {
       this.$refs[id][0].toggle()
     },
     toggleThinking(index){
-      this.$refs[index][1].toggleThinkingSkills()
+      if(this.$refs[index][1] === undefined) {
+        this.$refs[index][0].toggleThinkingSkills()
+      } else {
+        this.$refs[index][1].toggleThinkingSkills()
+      }
+      
     },
     download(){
       // TODO

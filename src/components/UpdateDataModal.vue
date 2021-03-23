@@ -384,7 +384,7 @@ export default {
   justify-content: center;
 }
 .button {
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 25px;
   height: 45px;
   width: 45%;

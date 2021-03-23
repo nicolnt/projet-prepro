@@ -276,7 +276,6 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
   margin-bottom: 5rem;
 }
 .patientResults a {

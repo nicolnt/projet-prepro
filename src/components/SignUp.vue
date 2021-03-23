@@ -64,7 +64,7 @@
           <i class="material-icons" aria-hidden="true">lock_outline</i>
         </span>
       </div>
-      <p>En vous inscrivant, vous acceptez les Conditions générales d'utilisation.</p>
+      <p>En vous inscrivant, vous acceptez les <a v-on:click="goCGU"> Conditions générales d'utilisation. </a></p>
       <div class="btn-submit">
         <div v-if="error" class="connectionError">{{error}}</div>
         <button type="submit" class="button">S'inscrire</button>
@@ -123,7 +123,6 @@ export default {
               this.$router.push({ name: 'PatientsList' }).catch(() => {})
             })
           })})
-         
         })
         .catch(() => {
           this.error = 'Une erreur est survenue. Veuillez réessayer et nous contacter en cas de soucis'
@@ -133,13 +132,21 @@ export default {
          this.error = 'Le mot de passe doit contenir au moins 6 lettres ou chiffres.'
       }
     },
+    goCGU() {
+      if(this.$route.name != 'CGU')
+        this.$router.push({name:'CGU'})
+    }
   }
 }
 </script>
 
 <style scoped>
 p{
-  font-size: 1.6vh;
+  font-size: 14px;
+}
+a {
+  cursor: pointer;
+  color: #FF8D8B;
 }
 h2 {
   margin-bottom: 2vh;

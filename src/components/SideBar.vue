@@ -113,8 +113,9 @@ export default {
 }
 .logo {
   cursor: pointer;
-  width: 45%;
+  width: 150px;
   margin: 2rem 0;
+  padding: 1rem;
 }
 .pages {
   display: flex;

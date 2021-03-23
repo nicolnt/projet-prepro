@@ -14,14 +14,14 @@
           <p><span> Motif : </span> {{patient.testReason}}</p>
           <!-- <p><span> Date de création : </span> {{ this.getDate(patient.dateCreation.toDate()) }}</p> -->
           <div id="actionsPatient">
-            <vs-button color="#9082FF" type="filled" class="btnPatient edit" @click="toggleModal">Modifier les informations</vs-button>
-            <vs-button color="#9082FF" type="filled" class="btnPatient" @click="deletePatient">Supprimer ce patient</vs-button>
+            <vs-button color="#9082FF" type="filled" class="btnPatient edit" @click.native="toggleModal">Modifier les informations</vs-button>
+            <vs-button color="#9082FF" type="filled" class="btnPatient" @click.native="deletePatient">Supprimer ce patient</vs-button>
           </div>
         </div>
       </div>
       <div id="tests-results">
-        <vs-button color="#9082FF" type="filled" v-on:click="goListTests" class="btn">Démarrer un test</vs-button>
-        <vs-button color="#9082FF" type="filled" v-on:click="goResults" class="btn">Voir les résultats</vs-button>
+        <vs-button color="#9082FF" type="filled" @click.native="goListTests" class="btn">Démarrer un test</vs-button>
+        <vs-button color="#9082FF" type="filled" @click.native="goResults" class="btn">Voir les résultats</vs-button>
       </div>
       <UpdateDataModal ref="updateDatasModal" :person="patient" :personType="'patient'"/>
     </div>

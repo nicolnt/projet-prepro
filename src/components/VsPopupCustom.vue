@@ -142,7 +142,7 @@ export default {
             && this.closeOnClickOutside){
           this.$emit('update:active',false)
           this.$emit('close', false)
-        } else if(!this.buttonCloseHidden && event.srcElement == this.$refs.btnclose.$el){
+        } else if(!this.buttonCloseHidden && event.srcElement == this.$refs.btnclose){
           this.$emit('update:active',false)
           this.$emit('close', false)
         }

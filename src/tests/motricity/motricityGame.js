@@ -56,7 +56,7 @@ class Track {
       Track.backgroundCanvas.height = canvasHeight
       Track.backgroundCanvasContext.clearRect(0, 0, canvasWidth, canvasHeight)
       Track.backgroundCanvasContext.drawImage(Track.trackImageBackground, 0, canvasHeight*0.5 - (canvasWidth/imageRatio)*0.5, canvasWidth, canvasWidth / imageRatio)
-
+      
       Track.trackReady = true
     }
   }

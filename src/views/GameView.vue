@@ -42,6 +42,7 @@ export default {
 
 <style scoped>
 .test {
+  position: relative;
   height: 100%;
   width: 100%;
   display: flex;

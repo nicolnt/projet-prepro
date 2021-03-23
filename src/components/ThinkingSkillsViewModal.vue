@@ -25,9 +25,6 @@ export default {
   methods: {
     toggleThinkingSkills() {
       this.popupActive = !this.popupActive;
-    },
-    hello() {
-        console.log("hello")
     }
   },
 }

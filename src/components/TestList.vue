@@ -6,7 +6,7 @@
     <div class="testListContent">
       <TestCard @click.native="startTest('motricity')" testName="Motricité fine" img="motricite-illustration.svg"/>
       <TestCard @click.native="startTest('attentionCapacity')" testName="Capacités attentionnelles" img="capacite-attentionnelle-illustration.svg"/>
-      <TestCard @click.native="startTest('thinkingSkills')" testName="Capacités de raisonnement" img="situation-complexe-illustration.svg"/>
+      <TestCard @click.native="startTest('thinkingSkills')" testName="Capacités de raisonnement" img="capacites-raisonnement-illustration.svg"/>
     </div>
   </div>
 </template>

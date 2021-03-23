@@ -19,12 +19,12 @@
         </div>
         <div class="content">
           <div class="motricityResultsHistory">
-            <div v-for="tentative in motricity.tentatives" :key="tentative.id" class="circuit">
-              <TestTrackViewModal :ref="tentative.idParcours" :capture="tentative.testCapture" :idTest="tentative.idParcours"/>
-              <h4>Circuit {{ tentative.idParcours + 1 }}</h4>
+            <div v-for="(tentative, index) in motricity.tentatives" :key="index" class="circuit">
+              <TestTrackViewModal :ref="index" :capture="tentative.testCapture" :idTest="index"/>
+              <h4>Circuit {{ index + 1 }}</h4>
               <div class="circuitInfo">
-                <WaveScore @click="toggleModal(tentative.idParcours)" :score="tentative.score" showScore="true">
-                  <img class="track" :src="trackImage(tentative.idParcours)">
+                <WaveScore @click="toggleModal(index)" :score="tentative.score" showScore="true">
+                  <img class="track" :src="trackImage(index)">
                   <img class="capture" :src="tentative.testCapture">
                   <div class="fade-overlay">
                     <i class="material-icons" size="large" color="lightgray">zoom_in</i>
@@ -158,54 +158,106 @@ export default {
     db.collection('patients').doc(this.$store.state.currentPatient.id).get()
       .then(docs => {
         this.patient = docs.data()
-      })
-    // Add motricity test results to data
-    const motricity = []
-    db.collection('tentatives').where('idPatient', '==', this.$store.state.currentPatient.id)
-      .get()
-      .then((docs) => {
-        docs.forEach((doc) => {
-          const data = doc.data() 
-          data.score = (data.score * 100).toFixed(2)
-          switch(data.idTest) {
-            case 'motricity':
-              motricity.push(data)
-              break
-          }
-          document.querySelector('.motricityResults').classList.remove('hidden')
-          document.querySelector('#toHide').classList.add('hidden')
-        })
-        // Sort tests by idParcours
-        this.motricity.tentatives = motricity.sort((a, b) => {
-          return parseInt(a.idParcours) - parseInt(b.idParcours)
-        })
-        // Get the more recent result for each parcours
-        let temporary = []
-        for( let i = 0 ; i< 5; i++){
-          let recent = 0
-          this.motricity.tentatives.forEach( item => {
-            if (item.idParcours === i){
+        this.patient.id = docs.id
+        db.collection(`patients/${docs.id}/motricityTest`)
+          .get()
+          .then(motricityRef => {
+            motricityRef.forEach(motricityDoc => {
+              const data = motricityDoc.data()
+              data.score *= 100
+              this.motricity.tentatives.push(data)
+              document.querySelector('.motricityResults').classList.remove('hidden')
+              document.querySelector('#toHide').classList.add('hidden')
+            })
+            this.motricity.average = this.motricity.tentatives.reduce((acc, curr) => acc += curr.score, 0) / this.motricity.tentatives.length
+          })
+
+      if (this.patient.attentionTest) {
+        document.querySelector('.attentionCapacityResults').classList.remove('hidden')
+        document.querySelector('#toHide').classList.add('hidden')
+        this.attentionCapacity.score = this.patient.attentionTest.score
+        this.attentionCapacity.mistakeNb = this.patient.attentionTest.mistakeNb
+        this.attentionCapacity.succeed = this.patient.attentionTest.succeed
+      }
+      if (this.patient.thinkingTest) {
+              document.querySelector('.thinkingSkillsResults').classList.remove('hidden')
+              document.querySelector('#toHide').classList.add('hidden')
+                this.thinkingSkills.allResults = this.patient.thinkingSkills.allResults
+                this.thinkingSkills.succeed = this.patient.thinkingSkills.allResults          
+      }
+
+        // Add test3 results to data
+        db.collection('test3').where('idPatient', '==', this.$store.state.currentPatient.id)
+          .get()
+          .then((docs) => {
+            docs.forEach((doc) => {
+              const data = doc.data() 
+              this.thinkingSkills.result.push(data)
+              document.querySelector('.thinkingSkillsResults').classList.remove('hidden')
+              document.querySelector('#toHide').classList.add('hidden')
+            })
+            let recent = 0
+            this.thinkingSkills.result.forEach( item => {
               if(item.dateTime > recent){
                 recent = item.dateTime
               }
-            }
-          })
-          this.motricity.tentatives.forEach(item =>{ 
-            if (item.idParcours === i){
+            })
+            this.thinkingSkills.result.forEach( item => {
               if(item.dateTime === recent){
-                temporary.push(item)
+                this.thinkingSkills.allResults = item.allResults
+                this.thinkingSkills.succeed = item.succeed
               }
-            }
-  
+            })
           })
-        }
-        this.motricity.tentatives = temporary
-        let average = 0
-        this.motricity.tentatives.forEach ( item => {
-          average += parseInt(item.score)
-        })
-        this.motricity.average = average / this.motricity.tentatives.length
+
       })
+    // Add motricity test results to data
+    //const motricity = []
+    //db.collection('tentatives').where('idPatient', '==', this.$store.state.currentPatient.id)
+    //.get()
+    //.then((docs) => {
+    //docs.forEach((doc) => {
+    //const data = doc.data() 
+    //data.score = (data.score * 100).toFixed(2)
+    //switch(data.idTest) {
+    //case 'motricity':
+    //motricity.push(data)
+    //break
+    //}
+    //document.querySelector('.motricityResults').classList.remove('hidden')
+    //document.querySelector('#toHide').classList.add('hidden')
+    //})
+    //// Sort tests by idParcours
+    //this.motricity.tentatives = motricity.sort((a, b) => {
+    //return parseInt(a.idParcours) - parseInt(b.idParcours)
+    //})
+    //// Get the more recent result for each parcours
+    //let temporary = []
+    //for( let i = 0 ; i< 5; i++){
+    //let recent = 0
+    //this.motricity.tentatives.forEach( item => {
+    //if (item.idParcours === i){
+    //if(item.dateTime > recent){
+    //recent = item.dateTime
+    //}
+    //}
+    //})
+    //this.motricity.tentatives.forEach(item =>{ 
+    //if (item.idParcours === i){
+    //if(item.dateTime === recent){
+    //temporary.push(item)
+    //}
+    //}
+
+    //})
+    //}
+    //this.motricity.tentatives = temporary
+    //let average = 0
+    //this.motricity.tentatives.forEach ( item => {
+    //average += parseInt(item.score)
+    //})
+    //this.motricity.average = average / this.motricity.tentatives.length
+    //})
     db.collection('comments').where('idPatient', '==', this.$store.state.currentPatient.id).get()
       .then(docs => {
         docs.forEach(doc => {
@@ -216,56 +268,9 @@ export default {
             this.motricity.commenting = true
         })
       })
-      
+
     // Add attention capacity test results to data
     //if there are more than one result it displays the more recent
-    db.collection('test2').where('idPatient', '==', this.$store.state.currentPatient.id)
-      .get()
-      .then((docs) => {
-        docs.forEach((doc) => {
-          const data = doc.data()
-          this.attentionCapacity.allResults.push(data)
-          document.querySelector('.attentionCapacityResults').classList.remove('hidden')
-          document.querySelector('#toHide').classList.add('hidden')
-        })
-        let recent = 0
-        this.attentionCapacity.allResults.forEach( item => {
-          if(item.dateTime > recent){
-            recent = item.dateTime
-          }
-        })
-        this.attentionCapacity.allResults.forEach( item => {
-          if(item.dateTime === recent){
-            this.attentionCapacity.score = item.score
-            this.attentionCapacity.mistakeNb = item.mistakeNb
-            this.attentionCapacity.succeed = item.succeed
-          }
-        })
-      })
-
-    // Add test3 results to data
-    db.collection('test3').where('idPatient', '==', this.$store.state.currentPatient.id)
-      .get()
-      .then((docs) => {
-        docs.forEach((doc) => {
-          const data = doc.data() 
-          this.thinkingSkills.result.push(data)
-          document.querySelector('.thinkingSkillsResults').classList.remove('hidden')
-          document.querySelector('#toHide').classList.add('hidden')
-        })
-        let recent = 0
-        this.thinkingSkills.result.forEach( item => {
-          if(item.dateTime > recent){
-            recent = item.dateTime
-          }
-        })
-        this.thinkingSkills.result.forEach( item => {
-          if(item.dateTime === recent){
-            this.thinkingSkills.allResults = item.allResults
-            this.thinkingSkills.succeed = item.succeed
-          }
-        })
-      })
   }
 }
 </script>

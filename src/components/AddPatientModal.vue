@@ -318,6 +318,8 @@ export default {
 #birthday, #gender {
   padding: 0 30px;
   font-family: 'Poppins';
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
 }
 #reason {
   border-radius: 0px;

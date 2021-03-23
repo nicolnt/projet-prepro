@@ -58,12 +58,12 @@ export default {
       game: new Game(require("./data/thinkingSkillsData.json"), this.doAfterSuccess),
       instructions: [
         {
-          img: 'tests_visuals/attentionCapacityTest_eye.jpg',
+          img: 'tests_visuals/thinkingSkillsTest_eye.jpg',
           altImg: '',
           desc: "Observez les illustrations présentées",
         },
         {
-          img: 'tests_visuals/attentionCapacityTest_choice.jpg',
+          img: 'tests_visuals/thinkingSkillsTest_choice.jpg',
           altImg: '',
           desc: "Répondez à la question logique",
         }

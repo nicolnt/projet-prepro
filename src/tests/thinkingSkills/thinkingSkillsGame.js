@@ -61,11 +61,13 @@ class Game {
   }
 
   checkAnswers(answer){
-    if(answer === this.currentLevelData.goodAnswer){
-      this.state.score++
-      this.state.allResults.push(true)
-    } else {
-      this.state.allResults.push(false)
+    if(this.state.doTraining === false){
+      if(answer === this.currentLevelData.goodAnswer){
+        this.state.score++
+        this.state.allResults.push(true)
+      } else {
+        this.state.allResults.push(false)
+      }
     }
     setTimeout(this.callback.bind(this), 500);
   }

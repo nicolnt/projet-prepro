@@ -112,7 +112,8 @@ export default {
       },
       thinkingSkills: {
         allResults : [],
-        succeed : false
+        succeed : false,
+        result : []
       },
       motricity: {
         tentatives: [],
@@ -248,10 +249,21 @@ export default {
       .then((docs) => {
         docs.forEach((doc) => {
           const data = doc.data() 
-          this.thinkingSkills.allResults = data.allResults
-          this.thinkingSkills.succeed = data.succeed
+          this.thinkingSkills.result.push(data)
           document.querySelector('.thinkingSkillsResults').classList.remove('hidden')
           document.querySelector('#toHide').classList.add('hidden')
+        })
+        let recent = 0
+        this.thinkingSkills.result.forEach( item => {
+          if(item.dateTime > recent){
+            recent = item.dateTime
+          }
+        })
+        this.thinkingSkills.result.forEach( item => {
+          if(item.dateTime === recent){
+            this.thinkingSkills.allResults = item.allResults
+            this.thinkingSkills.succeed = item.succeed
+          }
         })
       })
   }

@@ -25,7 +25,7 @@ import Game from "./motricityGame"
 import TestBeginModal from '@/components/TestBeginModal.vue'
 import TestHelpModal from '@/components/TestHelpModal.vue'
 
-import { db } from '../../services/firebase'
+import { db, functions } from '../../services/firebase'
 require('firebase/auth')
 
 export default {
@@ -83,14 +83,32 @@ export default {
           console.error("Error adding document: ", error);
         })
     },
+    sendTeststoDB() {
+      for(let i=0; i<this.game.gameData.testPaths.length; i++) {
+        functions.httpsCallable('sendTestToDB')({
+          patientId: this.$store.state.currentPatient.id,
+          testId: 'motricity',
+          levelId: i+1,
+          captureImg: this.game.gameData.testPaths[i].level.traceImage,
+          score: this.game.gameData.testPaths[i].level.score
+        })
+          .then(() => {
+            console.log("Test sent");
+          })
+          .catch((error) => {
+            console.error("Test not sent: ", error);
+          })
+      }
+    },
     doAfterSuccess() {
       if (this.game.state.doTraining === false) {
         // Level done (not trainings)
-        this.sendLastestTestToDB(this.game.state.currentLevel)
+        //this.sendLastestTestToDB(this.game.state.currentLevel)
       }
       if (this.game.state.doTraining === false && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End test
         this.game.switchToEnd()
+        this.sendTeststoDB()
         this.$emit("ToggleInfosModal");
       } else if (this.game.state.doTraining === true && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End training

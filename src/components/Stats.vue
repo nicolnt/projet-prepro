@@ -91,7 +91,7 @@ import Hero from "@/components/Hero.vue";
 import WaveScore from "@/components/WaveScore.vue";
 import Wave from "@/components/Wave.vue";
 import VueApexCharts from "vue-apexcharts";
-import { db } from "../services/firebase";
+import { db, functions } from "../services/firebase";
 
 export default {
   name: "Stats",
@@ -288,6 +288,8 @@ export default {
     },
   },
   mounted() {
+    const getStats = functions.httpsCallable('getStats')
+    getStats().then(res => { console.log('getStats', res) })
     db.collection("patients")
       .get()
       .then((querySnapshot) => {
@@ -594,4 +596,3 @@ h3 {
   }
 }
 </style>
-

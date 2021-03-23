@@ -3,6 +3,7 @@ import firebase from 'firebase/app'
 import 'firebase/database'
 import 'firebase/storage'
 import 'firebase/firestore';
+import 'firebase/functions'
 
 export const db = firebase
   .initializeApp({
@@ -16,6 +17,8 @@ export const db = firebase
     measurementId: "G-PZJJTNB44C"
   })
   .firestore()
+
+export const functions = firebase.functions()
 
 export const fire = firebase
 

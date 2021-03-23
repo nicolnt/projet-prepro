@@ -295,7 +295,7 @@ class Level {
     }
 
     // NOTE end of the level
-    if (type === 'end' || (this.levelData.startingPoint === false &&  (this.length.inside + this.length.obstacle + this.length.outside)/Track.traceCanvas.width >= this.levelData.meanLength * 0.05 && Level.computeLength(coords, this.startingPoint) <= 10))
+    if (type === 'end' || (this.levelData.startingPoint === false &&  (this.length.inside + this.length.obstacle + this.length.outside)/Track.traceCanvas.width >= this.levelData.meanLength * 0.05 && Level.computeLength(coords, this.startingPoint) <= 15))
       this.levelComplete()
   }
 

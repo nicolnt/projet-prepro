@@ -38,7 +38,7 @@
               <apexchart
                 type="pie"
                 width="100%"
-                height="500"
+                height="100%"
                 :options="chartOptions2"
                 :series="series2"
               ></apexchart>
@@ -52,7 +52,7 @@
             <div class="graphicAveragePatientScore graphic">
               <h3>Score moyen des patients</h3>
               <div class="wrapperResult">
-                <p>{{ this.averagePatientScore }} %</p>
+                <p>{{ (this.averagePatientScore * 100).toFixed(2) }} %</p>
               </div>
             </div>
             <Wave :score="averagePatientScore" />
@@ -60,7 +60,7 @@
           <div class="graphicNbTest graphic">
             <h3>Nombre total de tests passés</h3>
             <div class="wrapperResult">
-              <p>{{ this.nbTest }}</p>
+              <p>{{ score.motricityTests.length / 5 + score.thinkingTests.length + score.attentionTests.length }}</p>
             </div>
             <img class="illustration" src="../assets/background.svg" />
           </div>
@@ -78,8 +78,14 @@
         </div>
       </div>
       <div class="scorePerTest">
-        <WaveScore v-for="score in [40.2, 12.2, 96.58]" :key="score" :score="score" showScore="true">
+        <WaveScore :score="averagePatientMotricityScore * 100" showScore="true">
           <img class="test-logo" :src="require('../assets/' + 'motricite-illustration.svg')">
+        </WaveScore>
+        <WaveScore :score="averagePatientAttentionScore * 100" showScore="true">
+          <img class="test-logo" :src="require('../assets/' + 'capacite-attentionnelle-illustration.svg')">
+        </WaveScore>
+        <WaveScore :score="averagePatientThinkingScore * 100" showScore="true">
+          <img class="test-logo" :src="require('../assets/' + 'capacites-raisonnement-illustration.svg')">
         </WaveScore>
       </div>
     </div>
@@ -101,8 +107,11 @@ export default {
   },
   data() {
     return {
-       meanScores : {
-          motricity: 0,
+      userId: '',
+       score : {
+          motricityTests: [],
+          thinkingTests: [],
+          attentionTests: [],
           stress: 0
        },
        isActive: false,
@@ -133,7 +142,6 @@ export default {
        nbTestFailed: 0,
        /* Graphic 5 */
        patientScore: 0,
-       averagePatientScore: 0,
        /* Graphic 6 */
        nbTest: 0,
        /* Graphic 1 */
@@ -216,6 +224,34 @@ export default {
        },
     };
   },
+  computed: {
+    averagePatientScore() {
+      let score = 0 
+      let denominator = 0 
+      if (this.score.motricityTests.length) {
+        score += this.averagePatientMotricityScore
+        denominator++
+      }
+      if (this.score.attentionTests.length) {
+        score += this.averagePatientAttentionScore
+        denominator++
+      }
+      if (this.score.thinkingTests.length) {
+        score += this.averagePatientThinkingScore
+        denominator++
+      }
+      return score / denominator
+    },
+    averagePatientMotricityScore() {
+      return this.score.motricityTests.reduce((acc, curr) => acc += curr.score, 0) / this.score.motricityTests.length
+    },
+    averagePatientAttentionScore() {
+      return this.score.attentionTests.reduce((acc, curr) => acc += (curr.score/100), 0) / this.score.attentionTests.length
+    },
+    averagePatientThinkingScore() {
+      return this.score.thinkingTests.reduce((acc, curr) => acc += (curr.score), 0) / this.score.thinkingTests.length
+    }
+  },
   methods: {
     getDateMonth(dateISO) {
       let creationDate = new Date(dateISO);
@@ -288,110 +324,128 @@ export default {
     },
   },
   mounted() {
-    db.collection("patients")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          /* Activation of the graphics when number of patient > 9 */
-          this.nbPatient += 1;
-          if (this.nbPatient > 9) {
-            this.isActive = true;
-          }
-          /* Graphic 1 : Number of patients registered per month */
-          //this.patientOrderByMonth = this.getDateMonth(
-            //doc.data().dateCreation.toDate()
-          //);
-          if (this.patientOrderByMonth === 0) {
-            this.patientJanuary += 1;
-          } else if (this.patientOrderByMonth === 1) {
-            this.patientFebruary += 1;
-          } else if (this.patientOrderByMonth === 2) {
-            this.patientMarch += 1;
-          } else if (this.patientOrderByMonth === 3) {
-            this.patientApril += 1;
-          } else if (this.patientOrderByMonth === 4) {
-            this.patientMay += 1;
-          } else if (this.patientOrderByMonth === 5) {
-            this.patientJune += 1;
-          } else if (this.patientOrderByMonth === 6) {
-            this.patientJuly += 1;
-          } else if (this.patientOrderByMonth === 7) {
-            this.patientAugust += 1;
-          } else if (this.patientOrderByMonth === 8) {
-            this.patientSeptember += 1;
-          } else if (this.patientOrderByMonth === 9) {
-            this.patientOctober += 1;
-          } else if (this.patientOrderByMonth === 10) {
-            this.patientNovember += 1;
-          } else if (this.patientOrderByMonth === 11) {
-            this.patientDecember += 1;
-          } else {
-            return;
-          }
-          /* Graphic 2 : Average patient age */
-          if (this.getDateYear(doc.data().birthday) > 17) {
-            this.patientAge += Number(this.getDateYear(doc.data().birthday));
-            this.nbPatientAge += 1;
-          }
-          /* Graphic 3 : Number of men or women */
-          if (doc.data().gender === "0") {
-            this.nbWomen += 1;
-          } else if (doc.data().gender === "1") {
-            this.nbMen += 1;
-          } else {
-            return;
-          }
-        });
-        /* Graphic 1 */
-        this.updateChartNbInscrit(
-          this.patientJanuary,
-          this.patientFebruary,
-          this.patientMarch,
-          this.patientApril,
-          this.patientMay,
-          this.patientJune,
-          this.patientJuly,
-          this.patientAugust,
-          this.patientSeptember,
-          this.patientOctober,
-          this.patientNovember,
-          this.patientDecember
-        );
-        /* Graphic 2 */
-        this.averagePatientAge = Math.round(
-          this.patientAge / this.nbPatientAge
-        );
-        /* Graphic 3 */
-        this.updateChartNbWomenMen(this.nbWomen, this.nbMen);
-      });
-    db.collection("tentatives")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          /* Graphic 4 : Number of tests succeed or failed */
-          this.nbTest += 1;
-          const data = doc.data();
-          if (data.succeed === true) {
-            this.nbTestSucceed += 1;
-          } else if (doc.data().succeed === false) {
-            this.nbTestFailed += 1;
-          } else {
-            return;
-          }
-          /* Graphic 5 : Average score of the test */
-          data.score = (data.score * 100).toFixed(2);
-          this.patientScore += Number(data.score);
-        });
-        /* Graphic 4 */
-        this.updateChartNbTestSucceedFailed(
-          this.nbTestSucceed,
-          this.nbTestFailed
-        );
-        /* Graphic 5 */
-        this.averagePatientScore = Math.round(
-          this.patientScore / this.nbPatient
-        );
-      });
+    db.collection('users').where('email', '==', this.$store.state.user.data.email)
+      .onSnapshot(snapshot => { 
+        this.userId = snapshot.docs[0].id
+        db.collection('patients')
+          .where('idUser', '==', snapshot.docs[0].id)
+          .get()
+          .then(patientRef => {
+            const patientIds = []
+            patientRef.forEach(doc => {
+              patientIds.push(doc.id)
+
+              const patientData = doc.data()
+              if (patientData.attentionTest)
+              {
+                this.score.attentionTests.push(patientData.attentionTest)
+                    if (patientData.attentionTest.succeed)
+                      this.series3[0].data[0] += 1
+                else
+                  this.series3[0].data[1] += 1
+              }
+              if (patientData.thinkingTest) {
+                this.score.thinkingTests.push(patientData.thinkingTest)
+                if (patientData.thinkingTest.succeed)
+                  this.series3[0].data[0] += 1
+                else
+                  this.series3[0].data[1] += 1
+              }
+
+              /* Activation of the graphics when number of patient > 9 */
+              this.nbPatient += 1;
+              if (this.nbPatient > 9) {
+                this.isActive = true;
+              }
+              /* Graphic 1 : Number of patients registered per month */
+              this.patientOrderByMonth = this.getDateMonth(
+                patientData.dateCreation.toDate()
+              );
+              if (this.patientOrderByMonth === 0) {
+                this.patientJanuary += 1;
+              } else if (this.patientOrderByMonth === 1) {
+                this.patientFebruary += 1;
+              } else if (this.patientOrderByMonth === 2) {
+                this.patientMarch += 1;
+              } else if (this.patientOrderByMonth === 3) {
+                this.patientApril += 1;
+              } else if (this.patientOrderByMonth === 4) {
+                this.patientMay += 1;
+              } else if (this.patientOrderByMonth === 5) {
+                this.patientJune += 1;
+              } else if (this.patientOrderByMonth === 6) {
+                this.patientJuly += 1;
+              } else if (this.patientOrderByMonth === 7) {
+                this.patientAugust += 1;
+              } else if (this.patientOrderByMonth === 8) {
+                this.patientSeptember += 1;
+              } else if (this.patientOrderByMonth === 9) {
+                this.patientOctober += 1;
+              } else if (this.patientOrderByMonth === 10) {
+                this.patientNovember += 1;
+              } else if (this.patientOrderByMonth === 11) {
+                this.patientDecember += 1;
+              } else {
+                return;
+              }
+              /* Graphic 2 : Average patient age */
+              //if (this.getDateYear(patientData.birthday)) {
+                this.patientAge += Number(this.getDateYear(patientData.birthday));
+                this.nbPatientAge += 1;
+              //}
+              /* Graphic 3 : Number of men or women */
+              if (patientData.gender === "0") {
+                this.nbWomen += 1;
+              } else if (patientData.gender === "1") {
+                this.nbMen += 1;
+              } else {
+                return;
+              }
+            });
+            /* Graphic 1 */
+            this.updateChartNbInscrit(
+              this.patientJanuary,
+              this.patientFebruary,
+              this.patientMarch,
+              this.patientApril,
+              this.patientMay,
+              this.patientJune,
+              this.patientJuly,
+              this.patientAugust,
+              this.patientSeptember,
+              this.patientOctober,
+              this.patientNovember,
+              this.patientDecember
+            );
+            /* Graphic 2 */
+            this.averagePatientAge = Math.round(
+              this.patientAge / this.nbPatientAge
+            );
+            /* Graphic 3 */
+            this.updateChartNbWomenMen(this.nbWomen, this.nbMen);
+
+
+            //console.log(doc.data())
+            patientIds.forEach(id => {
+              db.collection(`patients/${id}/motricityTest`)
+              .get()
+                .then(motricityRef => {
+                  const tests = []
+                  motricityRef.forEach(motricityDoc => {
+                    this.score.motricityTests.push(motricityDoc.data())
+                    tests.push(motricityDoc.data())
+                  })
+                  if (motricityRef.docs.length) {
+                    if (tests.reduce((acc, curr) => acc += (curr.succeed ? 1 : 0), 0) >= 3)
+                      this.series3[0].data[0] += 1
+                    else
+                      this.series3[0].data[1] += 1
+                    this.series3 = [ this.series3[0] ]
+                  }
+                })
+            })
+          })
+      })
   },
 };
 </script>
@@ -594,4 +648,3 @@ h3 {
   }
 }
 </style>
-

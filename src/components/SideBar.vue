@@ -133,6 +133,9 @@ export default {
 .titlePages {
   margin-left: 10px;
 }
+.titlePages:hover {
+  cursor: pointer;
+}
 .selectedPage {
   display: flex;
   justify-content: flex-start;
@@ -181,6 +184,9 @@ export default {
 }
 .material-icons {
   margin-left: 0;
+}
+.material-icons:hover {
+  cursor: pointer;
 }
 #tag {
   width: 100%;

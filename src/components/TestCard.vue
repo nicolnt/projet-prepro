@@ -30,14 +30,20 @@ export default {
   box-shadow: 0 4px 16px 0 rgba(0,0,0,.05);
   border-radius: 16px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 .header {
   background-color:#9082FF;
   border-radius: 16px 16px 0 0;
   color: white;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .header h3 {
-  padding: .75rem 0;
+  padding: .75rem;
 }
 .testCardContent img{
   width: 50%;
@@ -45,7 +51,7 @@ export default {
 }
 #startTestButton {
   margin-bottom: 1rem;
-  width: 60%;
+  width: 80%;
   border-radius: 16px;
   font-size: 16px;
 }

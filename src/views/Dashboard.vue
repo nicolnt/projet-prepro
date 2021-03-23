@@ -44,7 +44,7 @@ export default {
   overflow-y: scroll;
   z-index: 1;
 }
-@media screen and (max-width: 1025px) {
+@media screen and (max-width: 1024px) {
   #content {
     width: calc(100% - 180px);
   }

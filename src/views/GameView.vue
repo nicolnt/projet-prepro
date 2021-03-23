@@ -58,8 +58,9 @@ export default {
   z-index: 5;
 }
 .test-quit > button {
-  border-radius: 15px;
+  border-radius: 16px;
   padding: 10px 20px;
+  font-size: 16px;
 }
 .test-content {
   background-color: #FFFFFF;

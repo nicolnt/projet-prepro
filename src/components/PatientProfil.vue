@@ -103,10 +103,11 @@ export default {
   border-radius: 16px;
   margin: 10px 0;
   font-size: 16px;
-  padding: 10px 40px;
+  padding: 10px;
+  flex-grow: 1;
 }
 .btnPatient.edit {
-  margin-right: 2rem;
+  margin-right: 20px;
 }
 .btn {
   border-radius: 16px;
@@ -119,14 +120,15 @@ export default {
 #patientDatas {
   display: flex;
   flex-direction: row;
-  width: 60%;
+  flex: 1 75%;
 }
 #patientTxtDatas {
   display: flex;
   flex-direction: column;
   text-align: left;
-  margin-left: 2rem;
+  margin: 0 2rem;
   line-height: 2;
+  flex-grow: 1;
 }
 #patientTxtDatas span {
   font-weight: 500;
@@ -139,7 +141,6 @@ export default {
 #patientDatasActions {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   background-color: white;
   box-shadow: 0px 0px 30px -20px rgba(0,0,0,0.25);
   border-radius: 16px;
@@ -151,16 +152,15 @@ export default {
 #tests-results {
   background-color: white;
   border-radius: 15px;
-  width: 20%;
   height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 15px;
+  flex: 1 25%;
 }
 #imgPatient {
   margin: 10px;
-  width: 24%;
+  width: 125px;
 }
 #modalPatient {
   display: none;
@@ -174,11 +174,11 @@ export default {
     width: 100%;
   }
   #patientTxtDatas {
-    margin-left: 0;
+    margin: 0;
   }
   #tests-results {
     width: 100%;
-    margin-top: 1rem;
+    margin-top: .5rem;
   }
   #imgPatient {
     width: 20%;

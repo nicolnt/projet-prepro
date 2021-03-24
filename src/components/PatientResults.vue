@@ -12,19 +12,19 @@
       </div>
     </div>
     <div class="patientResultsContent">
-      <span id="toHide">Aucun test n'a été effectué par ce patient pour le moment.</span>
+      <p id="toHide">Aucun test n'a été effectué par ce patient pour le moment.</p>
       <div class="motricityResults results hidden">
         <div class="header">
           <h3>Test Motricité fine<span> - réussi à {{motricity.average.toFixed(2)}} %</span><span> - {{ (motricity.average >= 50) ? '': 'non' }} validé</span></h3> 
         </div>
         <div class="content">
           <div class="motricityResultsHistory">
-            <div v-for="tentative in motricity.tentatives" :key="tentative.id" class="circuit">
-              <TestTrackViewModal :ref="tentative.idParcours" :capture="tentative.testCapture" :idTest="tentative.idParcours"/>
-              <h4>Circuit {{ tentative.idParcours + 1 }}</h4>
+            <div v-for="(tentative, index) in motricity.tentatives" :key="index" class="circuit">
+              <TestTrackViewModal :ref="index" :capture="tentative.testCapture" :idTest="index"/>
+              <h4>Circuit {{ index + 1 }}</h4>
               <div class="circuitInfo">
-                <WaveScore @click="toggleModal(tentative.idParcours)" :score="tentative.score" showScore="true">
-                  <img class="track" :src="trackImage(tentative.idParcours)">
+                <WaveScore @click="toggleModal(index)" :score="tentative.score" showScore="true">
+                  <img class="track" :src="trackImage(index)">
                   <img class="capture" :src="tentative.testCapture">
                   <div class="fade-overlay">
                     <i class="material-icons" size="large" color="lightgray">zoom_in</i>
@@ -62,17 +62,18 @@
 
      <div class="thinkingSkillsResults results hidden">
         <div class="header">
-          <h3>Test Comportement en situation complexe<span> - {{ (thinkingSkills.succeed) ? '': 'non' }} validé</span></h3> 
+          <h3>Test Capacités de raisonnement<span> - {{ (thinkingSkills.succeed) ? '': 'non' }} validé</span></h3> 
         </div>
         <div class="content">
           <div class="thinkingSkillsResultsHistory">
-            <div v-for="(smallTest, index) in thinkingSkills.allResults" :key="smallTest.id" class="circuit">
-              <!--<img src="../../source en fonction du numéro de la situation" />-->
+            <div v-for="(smallTest, index) in thinkingSkills.allResults" :key="smallTest.id" class="circuit" id="imageThinkingDiv">
+              <ThinkingSkillsViewModal :ref="index" :idTest="index"/>
+              <img :src="getImageThinkingSkillsResult(index)" @click="toggleThinking(index)" id="thinkingImg"/>
               <h4>Situation {{ index + 1 }} : {{ (smallTest) ? '' : 'non' }} réussie</h4>
             </div>
             <h3><strong>Bilan : test {{ (thinkingSkills.succeed) ? '' : 'non' }} réussi</strong></h3>
           </div>
-          <h4 class="comment-title">Commentaire à propos du test <strong>Comportement en situation complexe</strong> :</h4>
+          <h4 class="comment-title">Commentaire à propos du test <strong>Capacités de raisonnement</strong> :</h4>
           <ResultComment type="thinkingSkillsResults"/>
         </div>
 
@@ -96,10 +97,11 @@ import { db } from '../services/firebase'
 import WaveScore from './WaveScore'
 import ResultComment from './ResultComment'
 import TestTrackViewModal from './TestTrackViewModal'
+import ThinkingSkillsViewModal from './ThinkingSkillsViewModal'
 
 export default {
   name: 'PatientResults',
-  components: { TestTrackViewModal, WaveScore, ResultComment },
+  components: { TestTrackViewModal, WaveScore, ResultComment, ThinkingSkillsViewModal },
   data() {
     return {
       attentionCapacity: {
@@ -110,24 +112,38 @@ export default {
       },
       thinkingSkills: {
         allResults : [],
-        succeed : false
+        succeed : false,
+        result : []
       },
       motricity: {
         tentatives: [],
         average : 0
       },
-      patient: {}
+      patient: {},
+      popupActive: false
     }
   },
   methods: {
     toggleModal(id){
       this.$refs[id][0].toggle()
     },
+    toggleThinking(index){
+      if(this.$refs[index][1] === undefined) {
+        this.$refs[index][0].toggleThinkingSkills()
+      } else {
+        this.$refs[index][1].toggleThinkingSkills()
+      }
+      
+    },
     download(){
       // TODO
     },
     trackImage(id) {
       const image = require(`../tests/motricity/paths/test${id+1}_background.svg`)
+      return image
+    },
+    getImageThinkingSkillsResult(id) {
+      const image = require(`../assets/result_assets/thinkingSkills_screen_${id+1}.png`)
       return image
     },
     getDate(dateISO){ 
@@ -142,54 +158,106 @@ export default {
     db.collection('patients').doc(this.$store.state.currentPatient.id).get()
       .then(docs => {
         this.patient = docs.data()
-      })
-    // Add motricity test results to data
-    const motricity = []
-    db.collection('tentatives').where('idPatient', '==', this.$store.state.currentPatient.id)
-      .get()
-      .then((docs) => {
-        docs.forEach((doc) => {
-          const data = doc.data() 
-          data.score = (data.score * 100).toFixed(2)
-          switch(data.idTest) {
-            case 'motricity':
-              motricity.push(data)
-              break
-          }
-          document.querySelector('.motricityResults').classList.remove('hidden')
-          document.querySelector('#toHide').classList.add('hidden')
-        })
-        // Sort tests by idParcours
-        this.motricity.tentatives = motricity.sort((a, b) => {
-          return parseInt(a.idParcours) - parseInt(b.idParcours)
-        })
-        // Get the more recent result for each parcours
-        let temporary = []
-        for( let i = 0 ; i< 5; i++){
-          let recent = 0
-          this.motricity.tentatives.forEach( item => {
-            if (item.idParcours === i){
+        this.patient.id = docs.id
+        db.collection(`patients/${docs.id}/motricityTest`)
+          .get()
+          .then(motricityRef => {
+            motricityRef.forEach(motricityDoc => {
+              const data = motricityDoc.data()
+              data.score *= 100
+              this.motricity.tentatives.push(data)
+              document.querySelector('.motricityResults').classList.remove('hidden')
+              document.querySelector('#toHide').classList.add('hidden')
+            })
+            this.motricity.average = this.motricity.tentatives.reduce((acc, curr) => acc += curr.score, 0) / this.motricity.tentatives.length
+          })
+
+      if (this.patient.attentionTest) {
+        document.querySelector('.attentionCapacityResults').classList.remove('hidden')
+        document.querySelector('#toHide').classList.add('hidden')
+        this.attentionCapacity.score = this.patient.attentionTest.score
+        this.attentionCapacity.mistakeNb = this.patient.attentionTest.mistakeNb
+        this.attentionCapacity.succeed = this.patient.attentionTest.succeed
+      }
+      if (this.patient.thinkingTest) {
+              document.querySelector('.thinkingSkillsResults').classList.remove('hidden')
+              document.querySelector('#toHide').classList.add('hidden')
+                this.thinkingSkills.allResults = this.patient.thinkingSkills.allResults
+                this.thinkingSkills.succeed = this.patient.thinkingSkills.allResults          
+      }
+
+        // Add test3 results to data
+        db.collection('test3').where('idPatient', '==', this.$store.state.currentPatient.id)
+          .get()
+          .then((docs) => {
+            docs.forEach((doc) => {
+              const data = doc.data() 
+              this.thinkingSkills.result.push(data)
+              document.querySelector('.thinkingSkillsResults').classList.remove('hidden')
+              document.querySelector('#toHide').classList.add('hidden')
+            })
+            let recent = 0
+            this.thinkingSkills.result.forEach( item => {
               if(item.dateTime > recent){
                 recent = item.dateTime
               }
-            }
-          })
-          this.motricity.tentatives.forEach(item =>{ 
-            if (item.idParcours === i){
+            })
+            this.thinkingSkills.result.forEach( item => {
               if(item.dateTime === recent){
-                temporary.push(item)
+                this.thinkingSkills.allResults = item.allResults
+                this.thinkingSkills.succeed = item.succeed
               }
-            }
-  
+            })
           })
-        }
-        this.motricity.tentatives = temporary
-        let average = 0
-        this.motricity.tentatives.forEach ( item => {
-          average += parseInt(item.score)
-        })
-        this.motricity.average = average / this.motricity.tentatives.length
+
       })
+    // Add motricity test results to data
+    //const motricity = []
+    //db.collection('tentatives').where('idPatient', '==', this.$store.state.currentPatient.id)
+    //.get()
+    //.then((docs) => {
+    //docs.forEach((doc) => {
+    //const data = doc.data() 
+    //data.score = (data.score * 100).toFixed(2)
+    //switch(data.idTest) {
+    //case 'motricity':
+    //motricity.push(data)
+    //break
+    //}
+    //document.querySelector('.motricityResults').classList.remove('hidden')
+    //document.querySelector('#toHide').classList.add('hidden')
+    //})
+    //// Sort tests by idParcours
+    //this.motricity.tentatives = motricity.sort((a, b) => {
+    //return parseInt(a.idParcours) - parseInt(b.idParcours)
+    //})
+    //// Get the more recent result for each parcours
+    //let temporary = []
+    //for( let i = 0 ; i< 5; i++){
+    //let recent = 0
+    //this.motricity.tentatives.forEach( item => {
+    //if (item.idParcours === i){
+    //if(item.dateTime > recent){
+    //recent = item.dateTime
+    //}
+    //}
+    //})
+    //this.motricity.tentatives.forEach(item =>{ 
+    //if (item.idParcours === i){
+    //if(item.dateTime === recent){
+    //temporary.push(item)
+    //}
+    //}
+
+    //})
+    //}
+    //this.motricity.tentatives = temporary
+    //let average = 0
+    //this.motricity.tentatives.forEach ( item => {
+    //average += parseInt(item.score)
+    //})
+    //this.motricity.average = average / this.motricity.tentatives.length
+    //})
     db.collection('comments').where('idPatient', '==', this.$store.state.currentPatient.id).get()
       .then(docs => {
         docs.forEach(doc => {
@@ -200,45 +268,9 @@ export default {
             this.motricity.commenting = true
         })
       })
-      
+
     // Add attention capacity test results to data
     //if there are more than one result it displays the more recent
-    db.collection('test2').where('idPatient', '==', this.$store.state.currentPatient.id)
-      .get()
-      .then((docs) => {
-        docs.forEach((doc) => {
-          const data = doc.data()
-          this.attentionCapacity.allResults.push(data)
-          document.querySelector('.attentionCapacityResults').classList.remove('hidden')
-          document.querySelector('#toHide').classList.add('hidden')
-        })
-        let recent = 0
-        this.attentionCapacity.allResults.forEach( item => {
-          if(item.dateTime > recent){
-            recent = item.dateTime
-          }
-        })
-        this.attentionCapacity.allResults.forEach( item => {
-          if(item.dateTime === recent){
-            this.attentionCapacity.score = item.score
-            this.attentionCapacity.mistakeNb = item.mistakeNb
-            this.attentionCapacity.succeed = item.succeed
-          }
-        })
-      })
-
-    // Add test3 results to data
-    db.collection('test3').where('idPatient', '==', this.$store.state.currentPatient.id)
-      .get()
-      .then((docs) => {
-        docs.forEach((doc) => {
-          const data = doc.data() 
-          this.thinkingSkills.allResults = data.allResults
-          this.thinkingSkills.succeed = data.succeed
-          document.querySelector('.thinkingSkillsResults').classList.remove('hidden')
-          document.querySelector('#toHide').classList.add('hidden')
-        })
-      })
   }
 }
 </script>
@@ -249,7 +281,6 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
   margin-bottom: 5rem;
 }
 .patientResults a {
@@ -386,7 +417,6 @@ export default {
 .wave-container:hover .fade-overlay {
   display: block;
 }
-
 .wave-container .fade-overlay {
   display: none;
   position: absolute;
@@ -406,5 +436,18 @@ export default {
 }
 .hidden {
   display : none;
+}
+#imageThinkingDiv{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  width: auto;
+  margin: 10px;
+}
+#toHide{
+  margin: 10px;
+}
+#thinkingImg{
+  width: 250px;
 }
 </style>

@@ -1,7 +1,7 @@
 <!-- SIDEBAR ON THE LEFT WITH PSY'S PROFIL AND NAVIGATION -->
 <template>
   <div class="sideBar">
-    <h2 v-on:click="goDashboard"> Tapitap </h2>
+    <img class="logo" src="../assets/tapitap-logo.png" v-on:click="goDashboard"/>
     <div size="small" id="cardUser">
       <img class="avatar" alt="Avatar woman" src="../assets/avatarPsy.svg"/>
       <div id="txtCardUser">
@@ -111,9 +111,11 @@ export default {
   position: relative;
   z-index: 2;
 }
-.sideBar h2 {
+.logo {
   cursor: pointer;
+  width: 150px;
   margin: 2rem 0;
+  padding: 1rem;
 }
 .pages {
   display: flex;
@@ -132,6 +134,9 @@ export default {
 }
 .titlePages {
   margin-left: 10px;
+}
+.titlePages:hover {
+  cursor: pointer;
 }
 .selectedPage {
   display: flex;
@@ -181,6 +186,9 @@ export default {
 }
 .material-icons {
   margin-left: 0;
+}
+.material-icons:hover {
+  cursor: pointer;
 }
 #tag {
   width: 100%;

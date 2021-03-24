@@ -56,7 +56,7 @@ class Track {
       Track.backgroundCanvas.height = canvasHeight
       Track.backgroundCanvasContext.clearRect(0, 0, canvasWidth, canvasHeight)
       Track.backgroundCanvasContext.drawImage(Track.trackImageBackground, 0, canvasHeight*0.5 - (canvasWidth/imageRatio)*0.5, canvasWidth, canvasWidth / imageRatio)
-
+      
       Track.trackReady = true
     }
   }
@@ -230,7 +230,7 @@ class Level {
       else
         this.length.inside += length
     }
-    console.log('inside:', this.length.inside, '\nobstacle', this.length.obstacle, '\nbeforeStart:', this.length.beforeStart, '\noutside:', this.length.outside)
+    //console.log('inside:', this.length.inside, '\nobstacle', this.length.obstacle, '\nbeforeStart:', this.length.beforeStart, '\noutside:', this.length.outside)
   }
 
   getTraceLength() {
@@ -295,12 +295,11 @@ class Level {
     }
 
     // NOTE end of the level
-    if (type === 'end' || (this.levelData.startingPoint === false &&  (this.length.inside + this.length.obstacle + this.length.outside)/Track.traceCanvas.width >= this.levelData.meanLength * 0.05 && Level.computeLength(coords, this.startingPoint) <= 10))
+    if (type === 'end' || (this.levelData.startingPoint === false &&  (this.length.inside + this.length.obstacle + this.length.outside)/Track.traceCanvas.width >= this.levelData.meanLength * 0.05 && Level.computeLength(coords, this.startingPoint) <= 15))
       this.levelComplete()
   }
 
   computeScoreForCurrentLevel() {
-    const totalLengthRatio = (this.length.inside + this.length.outside + this.length.obstacle) / Track.traceCanvas.width
     this.score = 1
     const tolerance = 0.95
     // Length
@@ -321,8 +320,9 @@ class Level {
     this.score -= Math.pow(this.length.outside / Track.traceCanvas.width / this.levelData.meanLength * 1.1, 4)
 
     this.traceImage = Track.exportTraceImage()
-    console.log('score :', this.score)
-    console.log('length :', totalLengthRatio)
+    //const totalLengthRatio = (this.length.inside + this.length.outside + this.length.obstacle) / Track.traceCanvas.width
+    //console.log('score :', this.score)
+    //console.log('length :', totalLengthRatio)
   }
 
   levelComplete() {

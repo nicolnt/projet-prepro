@@ -130,8 +130,9 @@ export default {
 }
 .save-button {
   margin-top: 10px;
-  width: 20%;
   border-radius: 16px;
+  font-size: 16px;
+  padding: 10px;
 }
 textarea {
   width: 100%;

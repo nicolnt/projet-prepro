@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "app-mobilite-test",
+  "private_key_id": "e13a41cbc545dd8bc7905eb0b9cc09e214bad34b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDeEfinYe7ipEn5\n2HqxbYemtmOhTcIhQy3982QjwAW3CqXCCDwrNFfGK6G8YiOaVY9mVY2hVWlD7z4d\naMDJ3NxghMLhZO58CY8+fsstKOjxG2MOoGxAunZIz99YPPDJHt9EnwAU8/REJQr3\n/4JqLs8Iakvg5//7GM7Og3fpGk0wWu/30NW5azGYyAVzXrvVSeY7AD0ZU/lYX3EV\nDMBuPfqhsf3GsEfhz5cAomJe3hvbJ6ZK1cbke+LXZWp1Rzwp8iYDPWBXby6EqIfJ\n0VJFSbiQUJ7z9jghe6PYbVlfVCqbI/A1xV+m85CHBEWyhdOfXC8fiLC7UwD9/b+M\nGU7xUxi9AgMBAAECggEAO63vuaf/h4goW006t+kcHgkBIG3hwIep2ggpftQRlR32\n6vzEksXX2umJ5zMmp0jcJ1/Rlqx6BChM9KFcwkMpNIUpTGKQFuSIyv5PQv0uEPHP\nvrQNM54IwMuglbmW6i3ySaJDZt4i5Jdh6cEQftHCkNvkNXaT3BrQJT6+oHYRjW86\nu88Y7YlKSsYXPKB6SNU0WW5Q3JQDIhBd52sBM/avh6IiG9afB74/YBCgPnPsOwkO\nFlLHEHs2FPoXc7K3YGjjtnBrkOg8AnE4xwJyCMf1p6+9PllA5RltjTSB3pb8Klzz\nlNBkjyAQtY6MJu4HjaAytLmD8IFDufvhy2Rrtm+kDwKBgQD177ThdiSlywXrIaSl\nidfwjDtw/50rS3jUrEph1rV6St2Ym/PdaKFuGlyzBorCKnTokXl/ud3SoEl7B4Hq\nmYouo5pva5ucaxtz15WDqa0V047/KaF3xMhtF/1jR/wVFqth0+Lc5k9YCuR2jd2k\n/xN1Vq/i2uqzHVREkD9eanbugwKBgQDnKEGPc9O2u3mHW8+olDrgTK7q6p1k97Gu\nh8dPR5WXHkzYI+axeODYfm7m7vj33pEiVKuZC98i3k3hBwxuP1Fpy++R+vBJO417\nURRSXZN1KuXYxEyM0L5s78512oREY2FHawGH0zN3fi1f6daBfvONY1wA0I3NLg9e\nHO/7BfM3vwKBgQC/SWhpDNlIUvcRgaNsViCtKoV5SHfYmuUqla9tFfElY2GkN3ig\nN6eH2d1MKcR3bUptMelMnSaZkq5UkOxNqoq95+ZQz2PDb9N0cLQMKkdD+L76XEkI\nvPgfUk91jyHUzUMT3hhQNJp2IlK8m29PzE44L+qyChAOrLtEcOW47BoBPQKBgQDI\n0ghjAFWmIylplzHJWz3rL7OnEzy6QxZycjONhLtJFmHcRRReio2MiAsBRgu2C/46\nvSR3SgEI4ej23pDGFuw75Zi0UjX+6WX5BG+LPxCkcihNMfzvOUq2iX/sk3LllxEk\nYqppveqwnUX+VcCtsAUXiIKdkpIe9y0SrkEu6/RpMQKBgQCT4bEDyAu2uyWNb8O8\nnZI6m9L/jCIZECb8ZvhNbG+zL0Ipmt7g1HXJACL0I7TYf4Y8M24gCIi6fGfWJThR\njdbbaMbtB7rF5RxEbfnyOHTNzd0iHJOwYI4/YExhkGPv85uq9QnKObKIb18TivDe\narBHa7LuXWVTWsTIPukAUpLHOg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "app-mobilite-test@appspot.gserviceaccount.com",
+  "client_id": "107902284074410350774",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/app-mobilite-test%40appspot.gserviceaccount.com"
+}

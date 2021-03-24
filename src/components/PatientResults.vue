@@ -20,19 +20,19 @@
         <div class="content">
           <div class="motricityResultsHistory">
             <div v-for="(tentative, index) in motricity.tentatives" :key="index" class="circuit">
-              <TestTrackViewModal :ref="index" :capture="tentative.testCapture" :idTest="index"/>
+              <TestTrackViewModal ref="motricity" :capture="tentative.captureImg" :idTest="index"/>
               <h4>Circuit {{ index + 1 }}</h4>
               <div class="circuitInfo">
                 <WaveScore @click="toggleModal(index)" :score="tentative.score" showScore="true">
                   <img class="track" :src="trackImage(index)">
-                  <img class="capture" :src="tentative.testCapture">
+                  <img class="capture" :src="tentative.captureImg">
                   <div class="fade-overlay">
                     <i class="material-icons" size="large" color="lightgray">zoom_in</i>
                   </div>
                 </WaveScore>
                 <div class="circuitInfoContent">
                   <ul>
-                    <li>Score : {{ tentative.score }}/100 </li>
+                    <li>Score : {{ tentative.score.toFixed(2) }}/100 </li>
                     <li>Circuit réussi : {{ (tentative.score >= 50) ? 'oui': 'non' }} </li>
                   </ul>                
                 </div>
@@ -67,7 +67,7 @@
         <div class="content">
           <div class="thinkingSkillsResultsHistory">
             <div v-for="(smallTest, index) in thinkingSkills.allResults" :key="smallTest.id" class="circuit" id="imageThinkingDiv">
-              <ThinkingSkillsViewModal :ref="index" :idTest="index"/>
+              <ThinkingSkillsViewModal ref="thinking" :idTest="index"/>
               <img :src="getImageThinkingSkillsResult(index)" @click="toggleThinking(index)" id="thinkingImg"/>
               <h4>Situation {{ index + 1 }} : {{ (smallTest) ? '' : 'non' }} réussie</h4>
             </div>
@@ -125,14 +125,16 @@ export default {
   },
   methods: {
     toggleModal(id){
-      this.$refs[id][0].toggle()
+      //this.$refs[id][0].toggle()
+      this.$refs.motricity[id].toggle()
     },
     toggleThinking(index){
-      if(this.$refs[index][1] === undefined) {
-        this.$refs[index][0].toggleThinkingSkills()
-      } else {
-        this.$refs[index][1].toggleThinkingSkills()
-      }
+      this.$refs.thinking[index].toggleThinkingSkills()
+      //if(this.$refs[index][1] === undefined) {
+        //this.$refs[index][0].toggleThinkingSkills()
+      //} else {
+        //this.$refs[index][1].toggleThinkingSkills()
+      //}
       
     },
     download(){
@@ -182,8 +184,8 @@ export default {
       if (this.patient.thinkingTest) {
               document.querySelector('.thinkingSkillsResults').classList.remove('hidden')
               document.querySelector('#toHide').classList.add('hidden')
-                this.thinkingSkills.allResults = this.patient.thinkingSkills.allResults
-                this.thinkingSkills.succeed = this.patient.thinkingSkills.allResults          
+                this.thinkingSkills.allResults = this.patient.thinkingTest.allResults
+                this.thinkingSkills.succeed = this.patient.thinkingTest.allResults          
       }
 
         // Add test3 results to data

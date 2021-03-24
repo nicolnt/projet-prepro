@@ -31,7 +31,7 @@ import Game from "./attentionCapacityGame"
 import TestBeginModal from '@/components/TestBeginModal.vue'
 import TestHelpModal from '@/components/TestHelpModal.vue'
 
-import { db } from '../../services/firebase'
+import { functions } from '../../services/firebase'
 require('firebase/auth')
 
 export default {
@@ -77,19 +77,30 @@ export default {
       this.form = []
     },
     sendResultsToDB() {
-      db.collection("test2").add({
-        idPatient: this.$store.state.currentPatient.id,
-        mistakeNb: this.game.userErrors,
-        score: Math.floor(((this.game.score/20)*100)/6),
-        dateTime: Date.now(),
-        succeed: (Math.floor(((this.game.score/20)*100)/6) >= 50) ? true : false
-      })
-        .then(function(docRef) {
-          console.log("Document written with ID: ", docRef.id);
+        functions.httpsCallable('sendAttentionTestToDB')({
+          patientId: this.$store.state.currentPatient.id,
+          userErrors: this.game.userErrors,
+          score: Math.floor(((this.game.score/20)*100)/6),
         })
-        .catch(function(error) {
-          console.error("Error adding document: ", error);
-        })
+          .then(() => {
+            console.log("Test sent");
+          })
+          .catch((error) => {
+            console.error("Test not sent: ", error);
+          })
+      //db.collection("test2").add({
+        //idPatient: this.$store.state.currentPatient.id,
+        //mistakeNb: this.game.userErrors,
+        //score: Math.floor(((this.game.score/20)*100)/6),
+        //dateTime: Date.now(),
+        //succeed: (Math.floor(((this.game.score/20)*100)/6) >= 50) ? true : false
+      //})
+        //.then(function(docRef) {
+          //console.log("Document written with ID: ", docRef.id);
+        //})
+        //.catch(function(error) {
+          //console.error("Error adding document: ", error);
+        //})
     }, 
     doAfterSuccess() {
       if (this.game.state.doTraining === false && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {

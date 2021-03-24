@@ -85,7 +85,7 @@ export default {
     },
     sendTeststoDB() {
       for(let i=0; i<this.game.gameData.testPaths.length; i++) {
-        functions.httpsCallable('sendTestToDB')({
+        functions.httpsCallable('sendMotricityTestToDB')({
           patientId: this.$store.state.currentPatient.id,
           testId: 'motricity',
           levelId: i+1,

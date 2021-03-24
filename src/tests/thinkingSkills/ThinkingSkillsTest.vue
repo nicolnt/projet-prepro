@@ -44,7 +44,7 @@ import Game from "./thinkingSkillsGame"
 import TestBeginModal from '@/components/TestBeginModal.vue'
 import TestHelpModal from '@/components/TestHelpModal.vue'
 
-import { db } from '../../services/firebase'
+import { functions } from '../../services/firebase'
 require('firebase/auth')
 
 export default {
@@ -88,18 +88,29 @@ export default {
       this.game.onSubmit(form)
     },
     sendResultsToDB() {
-      db.collection("test3").add({
-        idPatient: this.$store.state.currentPatient.id,
-        allResults: this.game.state.allResults,
-        dateTime: Date.now(),
-        succeed: (this.game.state.score >= 3) ? true : false
-      })
-        .then(function(docRef) {
-          console.log("Document written with ID: ", docRef.id);
+        functions.httpsCallable('sendThinkingTestToDB')({
+          patientId: this.$store.state.currentPatient.id,
+          allResults: this.game.state.allResults,
+          score: this.game.state.score / 6,
         })
-        .catch(function(error) {
-          console.error("Error adding document: ", error);
-        })
+          .then(() => {
+            console.log("Test sent");
+          })
+          .catch((error) => {
+            console.error("Test not sent: ", error);
+          })
+      //db.collection("test3").add({
+        //idPatient: this.$store.state.currentPatient.id,
+        //allResults: this.game.state.allResults,
+        //dateTime: Date.now(),
+        //succeed: (this.game.state.score >= 3) ? true : false
+      //})
+        //.then(function(docRef) {
+          //console.log("Document written with ID: ", docRef.id);
+        //})
+        //.catch(function(error) {
+          //console.error("Error adding document: ", error);
+        //})
     }, 
     doAfterSuccess() {
       this.picked = 'answer1'

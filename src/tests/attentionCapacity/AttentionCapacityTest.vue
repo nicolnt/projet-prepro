@@ -103,7 +103,7 @@ export default {
         //})
     }, 
     doAfterSuccess() {
-      if (this.game.state.doTraining === false && this.game.currentLevelNumber() == 3) {
+      if (this.game.state.doTraining === false && this.game.currentLevelNumber() == this.game.totalLevelForCurrentType()) {
         //End test
         this.game.switchToEnd()
         this.sendResultsToDB()

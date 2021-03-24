@@ -6,14 +6,13 @@ import 'firebase/firestore';
 
 export const db = firebase
   .initializeApp({
-    apiKey: "AIzaSyCxVkyDV2XCQM9Uo2tZhrCnmHtnfurOX_Y",
-    authDomain: "app-mobilite-test.firebaseapp.com",
-    databaseURL: "https://app-mobilite-test-default-rtdb.firebaseio.com",
-    projectId: "app-mobilite-test",
-    storageBucket: "app-mobilite-test.appspot.com",
-    messagingSenderId: "417546564734",
-    appId: "1:417546564734:web:d1826e669c1e013035542f",
-    measurementId: "G-PZJJTNB44C"
+    apiKey: "AIzaSyCoYwvEpKfdFZj4o4JeAAihEyn6pkGV5UM",
+    authDomain: "tapitap-2be8c.firebaseapp.com",
+    projectId: "tapitap-2be8c",
+    storageBucket: "tapitap-2be8c.appspot.com",
+    messagingSenderId: "317833644838",
+    appId: "1:317833644838:web:3fb47d34482015e8d3cfe7",
+    measurementId: "G-0E3YQMG1LB"
   })
   .firestore()
 

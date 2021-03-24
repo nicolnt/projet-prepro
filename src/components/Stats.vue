@@ -354,9 +354,9 @@ export default {
 
               /* Activation of the graphics when number of patient > 9 */
               this.nbPatient += 1;
-              if (this.nbPatient > 9) {
+              //if (this.nbPatient > 9) {
                 this.isActive = true;
-              }
+              //}
               /* Graphic 1 : Number of patients registered per month */
               this.patientOrderByMonth = this.getDateMonth(
                 patientData.dateCreation.toDate()
